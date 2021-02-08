@@ -1,7 +1,7 @@
 {
-  "name": "template-nojs",
+  "name": "appnest-nojs",
   "version": "1.0.0",
-  "description": "template for html and css only",
+  "description": "",
   "scripts": {
     "sass-watch": "sass src/sass/index.scss:dist/css/style.css --watch",
     "sass-build": "sass src/sass/index.scss:dist/css/style.css --no-source-map",
@@ -12,15 +12,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/webmaxml/template-nojs.git"
+    "url": "git+https://github.com/webmaxml/appnest-nojs.git"
   },
   "keywords": [],
   "author": "webmaxml",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/webmaxml/template-nojs/issues"
+    "url": "https://github.com/webmaxml/appnest-nojs/issues"
   },
-  "homepage": "https://github.com/webmaxml/template-nojs#readme",
+  "homepage": "https://github.com/webmaxml/appnest-nojs#readme",
   "devDependencies": {
     "autoprefixer": "^10.2.1",
     "browser-sync": "^2.26.13",
