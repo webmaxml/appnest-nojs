@@ -1,0 +1,30 @@
+.feature-list { 
+	--size: var( --text_size );
+
+	.feature-list__header { @include text( --ff_header, --fw_bold, --c_h3, size( 18 ), size( 18 ) ); }
+	.feature-list__text   { @include text( --ff_text, --fw_regular, --c_text, size( 15 ), size( 24 ) ); }
+}
+
+
+// grid
+
+.feature-list__item {
+	display: grid;
+
+	& .feature-list__icon   { grid-area: i; }
+	& .feature-list__header { grid-area: h; }
+	& .feature-list__text   { grid-area: t; }
+
+	& .feature-list__icon   { @include align( stretch, start ); }
+	& .feature-list__header { @include align( stretch, start ); }
+	& .feature-list__text   { @include align( stretch, start ); }
+
+	grid-template:
+		"i" max-content
+		"." size( 40 )
+		"h" max-content
+		"." size( 20 )
+		"t" max-content
+     / size( 270 ) 
+}
+

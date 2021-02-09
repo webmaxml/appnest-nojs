@@ -1,0 +1,85 @@
+.vendor-btns {
+	--size: var( --text_size );
+
+	display: flex;
+
+	&__btn {
+		width: size( 170 );
+	}
+}
+
+
+
+// ----------------------------------------- grid -----------------------------------------
+
+.vendor-btns__btn {
+	& .vendor-btns__icon   { grid-area: i; }
+	& .vendor-btns__text   { grid-area: t; }
+	& .vendor-btns__vendor { grid-area: v; }
+
+	& .vendor-btns__text   { @include align( start, end ); }
+	& .vendor-btns__vendor { @include align( start, start ); }
+
+	display: grid;
+	grid-template:
+		". . . . ." size( 13 )
+		". i . t ." auto
+		". i . v ." auto
+		". . . . ." size( 13 )
+		/ 1fr auto size( 9 ) auto 1fr;
+}
+
+
+// ----------------------------------------- style -----------------------------------------
+
+.vendor-btns__btn { 
+	border-width: size( 1 );
+	border-style: solid;
+	border-radius: size( 7 ); 
+
+	&--light {
+		border-color: var( --c_header_text );
+
+		&:hover {
+			background: var( --c_active );
+			border-color: var( --c_active );
+		}
+	}
+
+	&--dark {
+		border-color: var( --c_h2 );
+
+		& .vendor-btns__text { color: var( --c_h2 ); }
+		& .vendor-btns__vendor { color: var( --c_h2 ); }
+
+		&:hover { 
+			background: var( --c_active );
+			border-color: var( --c_active );
+
+			& .vendor-btns__text   { color: var( --c_header_text ); }
+			& .vendor-btns__vendor { color: var( --c_header_text ); } 
+		}
+	}
+}
+
+// меняем иконки на светлые при наведении
+.vendor-btns__apple.vendor-btns__btn--dark:hover .vendor-btns__icon{
+	width: 25em;
+	height: 29em;
+	background-position: -5em -5em;
+}
+
+.vendor-btns__play.vendor-btns__btn--dark:hover .vendor-btns__icon{
+	width: 27em;
+	height: 29em;
+	background-position: -220em -5em;
+}
+
+// ----------------------------------------- text -----------------------------------------
+
+.vendor-btns__text { @include text( --ff_header, --fw_light, --c_header_text, size( 9 ), size( 11 ), uppercase ); }
+.vendor-btns__vendor { @include text( --ff_header, --fw_semi_bold, --c_header_text, size( 16 ), size( 15 ), uppercase ); }
+
+// ----------------------------------------- animation -----------------------------------------
+
+.vendor-btns__btn { transition: .3s; }

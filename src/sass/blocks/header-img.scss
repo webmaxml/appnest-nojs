@@ -1,0 +1,9 @@
+.header-img {
+	--size: 100;
+
+	@include flex( nowrap, center, flex-start );
+
+	&__picture { 
+		width: size( 540 ); 
+	}
+}

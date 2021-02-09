@@ -1,0 +1,15 @@
+.video-overview-text {
+	--size: var( --text_size );
+
+	&__header {
+		@include text( --ff_header, --fw_bold, --c_h2, size( 36 ), size( 48 ) );
+		
+		& b { color: var( --c_accent ); }
+	}
+
+	&__text {
+		margin-top: size( 10 );
+
+		@include text( --ff_text, --fw_regular, --c_text, size( 15 ), size( 24 ) );
+	}
+}

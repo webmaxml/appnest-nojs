@@ -1,0 +1,14 @@
+.feature-img {
+	--size: 100;
+
+	@include flex( nowrap, center, flex-end );
+
+	&__front {
+		margin-left: size( -98 );
+		width: size( 304 );
+	}
+
+	&__back {
+		width: size( 265 );
+	}
+}

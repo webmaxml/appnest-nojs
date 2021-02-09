@@ -1,4 +1,40 @@
-body {
-  color: rgb(80, 10, 209);
-  font-size: 40px;
-}
+@import 'reset';
+@import 'normalize';
+@import 'utilities';
+@import 'vars';
+@import 'fonts';
+@import 'base';
+
+// blocks
+
+@import 'blocks/logo';
+@import 'blocks/nav';
+@import 'blocks/get-btn';
+@import 'blocks/header-text';
+@import 'blocks/header-img';
+@import 'blocks/vendor-btns';
+@import 'blocks/burger';
+@import 'blocks/overview-list';
+@import 'blocks/feature-text';
+@import 'blocks/feature-img';
+@import 'blocks/feature-list';
+@import 'blocks/video-overview-text';
+@import 'blocks/video';
+@import 'blocks/screenshots-text';
+@import 'blocks/screenshots-list';
+@import 'blocks/screenshots-pagination';
+
+// sections
+
+@import 'sections/header';
+@import 'sections/overview';
+@import 'sections/features';
+@import 'sections/video-overview';
+@import 'sections/screenshots';
+
+// pages
+
+@import 'pages/home';
+
+
+@import 'sizes';

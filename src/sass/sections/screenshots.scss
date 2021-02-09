@@ -1,0 +1,33 @@
+.screenshots {
+	background: var( --c_bg2 );
+
+	&__container { @extend %container; }
+}
+
+// grid
+
+.screenshots__container {
+	display: grid;
+
+	& .screenshots-text       { grid-area: t; }
+	& .screenshots-list       { grid-area: l; }
+	& .screenshots-pagination { grid-area: p; }
+
+	& .screenshots-text       { @include align( center, start ); }
+	& .screenshots-list       { @include align( center, start ); }
+	& .screenshots-pagination { @include align( center, start ); }
+
+	& .screenshots-text       { text-align: center; }
+	& .screenshots-list       {  }
+	& .screenshots-pagination {  }
+
+	grid-template: 
+		"." var( --v_padding )
+		"t" max-content
+		"." var( --v_padding )
+		"l" max-content
+		"." var( --v_padding )
+		"p" max-content
+		"." var( --v_padding )
+		/ 1fr;
+}
