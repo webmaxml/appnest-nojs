@@ -1,60 +1,83 @@
 .video-overview {
-	background: var( --c_bg1 );
+  background: var(--c_bg1);
 }
 
 // grid
 
 .video-overview__container {
-	display: grid;
+  display: grid;
 
-	& .video-overview-text { grid-area: t; }
-	& .vendor-btns 	       { grid-area: b; }
-	& .video               { grid-area: v; }
+  & .video-overview-text {
+    grid-area: t;
+  }
+  & .vendor-btns {
+    grid-area: b;
+  }
+  & .video {
+    grid-area: v;
+  }
 
-	& .video-overview-text { @include align( center, start ); }
-	& .vendor-btns 	       { @include align( center, start ); }
-	& .video               { @include align( center, start ); }
+  & .video-overview-text {
+    @include align(center, start);
+  }
+  & .vendor-btns {
+    @include align(center, start);
+  }
+  & .video {
+    @include align(center, start);
+  }
 
-	& .video-overview-text {  
-		margin: 0 15rem;
-		max-width: 500rem;
+  & .video-overview-text {
+    margin: 0 15rem;
+    max-width: 500rem;
 
-		text-align: center;
-	}
-	& .vendor-btns { 
-		margin: 0 15rem;
-		&__link:first-child { margin-right: 30rem; } 
-	}
-	& .video               {  }
+    text-align: center;
+  }
+  & .vendor-btns {
+    margin: 0 15rem;
+    &__link:first-child {
+      margin-right: 30rem;
+    }
+  }
+  & .video {
+  }
 
-	grid-template:
-		"." var( --v_padding )
-		"t" max-content
-		"." var( --v_padding )
-		"v" max-content
-		"." var( --v_padding )
-		"b" max-content
-		"." var( --v_padding )
-		/ 1fr;
+  grid-template:
+    "." var(--v_padding)
+    "t" max-content
+    "." var(--v_padding)
+    "v" max-content
+    "." var(--v_padding)
+    "b" max-content
+    "." var(--v_padding)
+    / 1fr;
 
-	@include from_1280 {
-		& .video-overview-text { @include align( start, start ); }
-		& .vendor-btns 	       { @include align( start, start ); }
-		& .video               { @include align( start, start ); }
+  @include from_1280 {
+    & .video-overview-text {
+      @include align(start, start);
+    }
+    & .vendor-btns {
+      @include align(start, start);
+    }
+    & .video {
+      @include align(start, start);
+    }
 
-		& .video-overview-text {  
-			max-width: auto;
+    & .video-overview-text {
+      max-width: auto;
 
-			text-align: left;
-		}
-		& .video               { margin-left: 17rem; }
+      text-align: left;
+    }
+    & .video {
+      margin-left: 17rem;
+    }
 
-		grid-template:
-			". . v v" 122rem
-			". t v v" max-content
-			". . v v" 48rem
-			". b v v" max-content
-			". . v v" 126rem
-			/ 1fr 600rem 600rem 1fr;
-	}
+    grid-template:
+      ". . v v" 122rem
+      ". t v v" max-content
+      ". . v v" 48rem
+      ". b v v" max-content
+      ". . v v" 126rem
+      / 1fr 600rem 600rem 1fr;
+  }
 }

@@ -1,40 +1,39 @@
-@import 'reset';
-@import 'normalize';
-@import 'utilities';
-@import 'vars';
-@import 'fonts';
-@import 'base';
+@import "reset";
+@import "normalize";
+@import "utilities";
+@import "vars";
+@import "fonts";
+@import "base";
 
 // blocks
 
-@import '../components/blocks/logo/logo';
-@import '../components/blocks/nav/nav';
-@import '../components/blocks/get-btn/get-btn';
-@import '../components/blocks/header-text/header-text';
-@import '../components/blocks/header-img/header-img';
-@import '../components/blocks/vendor-btns/vendor-btns';
-@import '../components/blocks/burger/burger';
-@import '../components/blocks/overview-list/overview-list';
-@import '../components/blocks/feature-text/feature-text';
-@import '../components/blocks/feature-img/feature-img';
-@import '../components/blocks/feature-list/feature-list';
-@import '../components/blocks/video-overview-text/video-overview-text';
-@import '../components/blocks/video/video';
-@import '../components/blocks/screenshots-text/screenshots-text';
-@import '../components/blocks/screenshots-list/screenshots-list';
-@import '../components/blocks/screenshots-pagination/screenshots-pagination';
+@import "../components/blocks/logo/logo";
+@import "../components/blocks/nav/nav";
+@import "../components/blocks/get-btn/get-btn";
+@import "../components/blocks/header-text/header-text";
+@import "../components/blocks/header-img/header-img";
+@import "../components/blocks/vendor-btns/vendor-btns";
+@import "../components/blocks/burger/burger";
+@import "../components/blocks/overview-list/overview-list";
+@import "../components/blocks/feature-text/feature-text";
+@import "../components/blocks/feature-img/feature-img";
+@import "../components/blocks/feature-list/feature-list";
+@import "../components/blocks/video-overview-text/video-overview-text";
+@import "../components/blocks/video/video";
+@import "../components/blocks/screenshots-text/screenshots-text";
+@import "../components/blocks/screenshots-list/screenshots-list";
+@import "../components/blocks/screenshots-pagination/screenshots-pagination";
 
 // sections
 
-@import '../components/sections/header/header';
-@import '../components/sections/overview/overview';
-@import '../components/sections/features/features';
-@import '../components/sections/video-overview/video-overview';
-@import '../components/sections/screenshots/screenshots';
+@import "../components/sections/header/header";
+@import "../components/sections/overview/overview";
+@import "../components/sections/features/features";
+@import "../components/sections/video-overview/video-overview";
+@import "../components/sections/screenshots/screenshots";
 
 // pages
 
-@import '../components/pages/home/home';
+@import "../components/pages/home/home";
 
-
-@import 'sizes';
+@import "sizes";

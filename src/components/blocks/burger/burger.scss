@@ -1,22 +1,22 @@
 .burger {
-	--size: var( --text_size );
+  --size: var(--text_size);
 
-	padding: size( 10 );
-	border: size(1) solid var( --c_header_text );
-	border-radius: size( 6 );
+  padding: size(10);
+  border: size(1) solid var(--c_header_text);
+  border-radius: size(6);
 
-	color: var( --c_header_text );
+  color: var(--c_header_text);
 
-	transition: .3s;
+  transition: 0.3s;
 
-	&:hover {
-		color: var( --c_active );
+  &:hover {
+    color: var(--c_active);
 
-		border-color: var( --c_active );
-	}
+    border-color: var(--c_active);
+  }
 
-	& .fas { 
-		font-size: size( 33 );
-		line-height: size( 35 ); 
-	}
+  & .fas {
+    font-size: size(33);
+    line-height: size(35);
+  }
 }

@@ -1,38 +1,40 @@
 .nav {
-	--size: var( --text_size );
+  --size: var(--text_size);
 
-	&__list { @include flex( wrap, center, stretch ); }
+  &__list {
+    @include flex(wrap, center, stretch);
+  }
 
-	&__item { 
-		padding: 0 size( 15 );
+  &__item {
+    padding: 0 size(15);
 
-		@include text( --ff_header, --fw_regular, --c_header_text, size( 16 ), size( 34 ), uppercase ); 
-	}
+    @include text(--ff_header, --fw_regular, --c_header_text, size(16), size(34), uppercase);
+  }
 
-	&__link {
-		position: relative;
+  &__link {
+    position: relative;
 
-		&::after {
-			position: absolute;
-			left: 50%;
-			bottom: size( -10 );
+    &::after {
+      position: absolute;
+      left: 50%;
+      bottom: size(-10);
 
-			display: block;
-			content: '';
+      display: block;
+      content: "";
 
-			width: 0%;
-			height: 0;	
+      width: 0%;
+      height: 0;
 
-			background: var( --c_header_text );
+      background: var(--c_header_text);
 
-			transition: .3s;
-		}
-		
-		&:hover::after {
-			left: 0;
+      transition: 0.3s;
+    }
 
-			width: 100%;
-			height: size( 1 );
-		}	
-	}
+    &:hover::after {
+      left: 0;
+
+      width: 100%;
+      height: size(1);
+    }
+  }
 }

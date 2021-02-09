@@ -1,30 +1,32 @@
 .screenshots-pagination {
-	--size: 100;
+  --size: 100;
 
-	@include flex( nowrap, flex-start, flex-start );
+  @include flex(nowrap, flex-start, flex-start);
 
-	&__item {
-		margin-right: size( 10 );
+  &__item {
+    margin-right: size(10);
 
-		&:last-child { margin-right: 0; }
+    &:last-child {
+      margin-right: 0;
+    }
 
-		&--active .screenshots-pagination__btn {
-			width: size( 60 );
+    &--active .screenshots-pagination__btn {
+      width: size(60);
 
-			background: var( --c_accent );
-		}
-	}
+      background: var(--c_accent);
+    }
+  }
 
-	&__btn {
-		display: block;
+  &__btn {
+    display: block;
 
-		width: size( 40 );
-		height: size( 7 );
+    width: size(40);
+    height: size(7);
 
-		border-radius: size( 3.5 );
+    border-radius: size(3.5);
 
-		background: var( --c_pagination );
+    background: var(--c_pagination);
 
-		transition: .3s;
-	}
+    transition: 0.3s;
+  }
 }

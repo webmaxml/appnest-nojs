@@ -1,69 +1,100 @@
 .features {
-	background: var( --c_bg2 );
+  background: var(--c_bg2);
 
-	&__container { @extend %container, %nopadding; }
+  &__container {
+    @extend %container, %nopadding;
+  }
 }
 
 // grid
 
 .features__container {
-	display: grid;
+  display: grid;
 
-	& .feature-img  { grid-area: i; }
-	& .feature-text { grid-area: t; }
-	& .feature-list { grid-area: l; }
+  & .feature-img {
+    grid-area: i;
+  }
+  & .feature-text {
+    grid-area: t;
+  }
+  & .feature-list {
+    grid-area: l;
+  }
 
-	& .feature-img  { @include align( center, start ); }
-	& .feature-text { @include align( center, start ); }
-	& .feature-list { @include align( center, start ); }
-	
-	& .feature-list { 
-		@include flex( wrap, center, flex-start );
+  & .feature-img {
+    @include align(center, start);
+  }
+  & .feature-text {
+    @include align(center, start);
+  }
+  & .feature-list {
+    @include align(center, start);
+  }
 
-		text-align: center;
+  & .feature-list {
+    @include flex(wrap, center, flex-start);
 
-		&__item { margin: 35rem 15rem; }
-		& .feature-list__icon { justify-self: center; }
-	}
-	
-	& .feature-text { 
-		margin: 0 15rem; 
+    text-align: center;
 
-		text-align: center; 
-	}
-	
-	--cols_width: 0 1fr 0;
-	grid-template:
-		". . ." var( --v_padding )
-		". t ." max-content
-		". . ." var( --v_padding )
-		". l ." max-content
-		". . ." var( --v_padding )
-		". i ." max-content
-		". . ." var( --v_padding )
-		/ var( --cols_width );
+    &__item {
+      margin: 35rem 15rem;
+    }
+    & .feature-list__icon {
+      justify-self: center;
+    }
+  }
 
-	@include from_600 {
-		--cols_width: 1fr 500rem 1fr;
-	}
+  & .feature-text {
+    margin: 0 15rem;
 
-	@include from_1280 {
-		& .feature-img  { @include align( start, start ); }
-		& .feature-text { @include align( start, start ); }
-		& .feature-list { @include align( start, start ); }
+    text-align: center;
+  }
 
-		& .feature-img  { margin: 8rem 15rem 0 15rem; }
-		& .feature-text { text-align: left; }
-		& .feature-list { text-align: left; & .feature-list__icon { justify-self: start; } }
+  --cols_width: 0 1fr 0;
+  grid-template:
+    ". . ." var(--v_padding)
+    ". t ." max-content
+    ". . ." var(--v_padding)
+    ". l ." max-content
+    ". . ." var(--v_padding)
+    ". i ." max-content
+    ". . ." var(--v_padding)
+    / var(--cols_width);
 
-		grid-template:
-			". ." 122rem
-			"i t" max-content
-			"i ." 10rem
-			"i l" max-content
-			". ." 140rem
-			/ 1fr 1fr;
-	}	
+  @include from_600 {
+    --cols_width: 1fr 500rem 1fr;
+  }
+
+  @include from_1280 {
+    & .feature-img {
+      @include align(start, start);
+    }
+    & .feature-text {
+      @include align(start, start);
+    }
+    & .feature-list {
+      @include align(start, start);
+    }
+
+    & .feature-img {
+      margin: 8rem 15rem 0 15rem;
+    }
+    & .feature-text {
+      text-align: left;
+    }
+    & .feature-list {
+      text-align: left;
+      & .feature-list__icon {
+        justify-self: start;
+      }
+    }
+
+    grid-template:
+      ". ." 122rem
+      "i t" max-content
+      "i ." 10rem
+      "i l" max-content
+      ". ." 140rem
+      / 1fr 1fr;
+  }
 }
-
-

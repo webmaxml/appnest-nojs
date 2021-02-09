@@ -1,16 +1,18 @@
 .get-btn {
-	--size: var( --text_size );
+  --size: var(--text_size);
 
-	padding: size( 20 ) size( 34 );
-	border: size( 1 ) solid var( --c_header_text);
-	border-radius: size( 32 ); 
+  padding: size(20) size(34);
+  border: size(1) solid var(--c_header_text);
+  border-radius: size(32);
 
-	transition: .3s;
+  transition: 0.3s;
 
-	&:hover { 
-		background: var( --c_active );
-		border-color: var( --c_active );
-	}
+  &:hover {
+    background: var(--c_active);
+    border-color: var(--c_active);
+  }
 
-	&__link { @include text( --ff_header, --fw_semi_bold, --c_header_text, size( 16 ), size( 16 ), uppercase ); }
+  &__link {
+    @include text(--ff_header, --fw_semi_bold, --c_header_text, size(16), size(16), uppercase);
+  }
 }
