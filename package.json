@@ -1,27 +1,28 @@
 {
-  "name": "appnest-nojs",
+  "name": "template-nojs",
   "version": "1.0.0",
-  "description": "nojs landing page",
+  "description": "template for html and css only",
   "scripts": {
-    "dev": "webpack serve --mode=development",
-    "build": "webpack --mode=production --env prod",
-    "sync": "browser-sync start --server dist --files dist --port 3000 --no-notify --no-online --no-ui --no-ghost-mode --no-open"
+    "dev": "webpack serve --mode=development --config webpack.dev.config.js",
+    "build": "webpack --mode=production --config webpack.prod.config.js",
+    "test-dist": "browser-sync start --server dist --files dist --port 3000 --no-notify --no-online --no-ui --no-ghost-mode"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/webmaxml/appnest-nojs.git"
+    "url": "git+https://github.com/webmaxml/template-nojs.git"
   },
   "keywords": [],
   "author": "webmaxml",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/webmaxml/appnest-nojs/issues"
+    "url": "https://github.com/webmaxml/template-nojs/issues"
   },
-  "homepage": "https://github.com/webmaxml/appnest-nojs#readme",
+  "homepage": "https://github.com/webmaxml/template-nojs#readme",
   "devDependencies": {
     "autoprefixer": "^10.2.1",
     "browser-sync": "^2.26.14",
     "concurrently": "^5.3.0",
+    "copy-webpack-plugin": "^7.0.0",
     "css-loader": "^5.0.1",
     "cssnano": "^4.1.10",
     "eslint": "^7.19.0",
@@ -29,6 +30,10 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
+    "handlebars": "^4.7.6",
+    "handlebars-loader": "^1.7.1",
+    "html-webpack-plugin": "^5.0.0",
+    "imagemin-webpack-plugin": "^2.4.2",
     "mini-css-extract-plugin": "^1.3.6",
     "postcss": "^8.2.4",
     "postcss-cli": "^8.3.1",
