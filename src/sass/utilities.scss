@@ -1,9 +1,27 @@
-@function size($value) {
-  @return calc(#{$value}rem * (var(--size) / 100));
+// stripping units from value
+@function strip-unit($value) {
+  @return $value / ($value * 0 + 1);
 }
 
-@mixin responsive-width {
-  width: calc(100% * (var(--size) / 100));
+// value become dependent on --size value
+@function size($value) {
+  @return calc(#{strip-unit($value)} * (var(--size) / 100));
+}
+
+// --size value slowly progresses from min to max between min-vw and max-vw
+@mixin fluid-size($min-size, $max-size, $min-vw, $max-vw) {
+  --size: #{$min-size};
+
+  @media screen and (min-width: #{$min-vw}) {
+    --size: calc(#{$min-size} + #{strip-unit($max-size - $min-size)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)}));
+  }
+  @media screen and (min-width: #{$max-vw}) {
+    --size: #{$max-size};
+  }
+}
+
+@mixin fluid-text-size {
+  @include fluid-size(60px, 100px, 320px, 1280px);
 }
 
 @mixin text($ff, $fw, $c, $fz, $lh, $tt: false, $ta: false, $td: false, $fs: false) {

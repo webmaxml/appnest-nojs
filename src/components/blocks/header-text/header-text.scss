@@ -1,5 +1,5 @@
 .header-text {
-  --size: var(--text_size);
+  @include fluid-text-size;
 
   &__header {
     @include text(--ff_header, --fw_bold, --c_header_text, size(48), size(52), uppercase);

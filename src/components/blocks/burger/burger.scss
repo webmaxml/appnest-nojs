@@ -1,5 +1,5 @@
 .burger {
-  --size: var(--text_size);
+  @include fluid-text-size;
 
   padding: size(10);
   border: size(1) solid var(--c_header_text);

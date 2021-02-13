@@ -1,5 +1,5 @@
 .nav {
-  --size: var(--text_size);
+  --size: 100px;
 
   &__list {
     @include flex(wrap, center, stretch);

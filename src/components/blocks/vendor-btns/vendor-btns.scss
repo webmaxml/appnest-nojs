@@ -1,5 +1,5 @@
 .vendor-btns {
-  --size: var(--text_size);
+  @include fluid-text-size;
 
   display: flex;
 
