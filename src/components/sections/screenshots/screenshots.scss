@@ -22,13 +22,13 @@
   }
 
   & .screenshots-text {
-    @include align(center, start);
+    @include align-self(center, start);
   }
   & .screenshots-list {
-    @include align(center, start);
+    @include align-self(center, start);
   }
   & .screenshots-pagination {
-    @include align(center, start);
+    @include align-self(center, start);
   }
 
   & .screenshots-text {

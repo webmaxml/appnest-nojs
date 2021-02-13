@@ -37,53 +37,9 @@
 // placeholders
 
 %container {
-  width: 320rem;
-  padding-left: 15rem;
-  padding-right: 15rem;
+  max-width: 1200px;
+  padding-left: 15px;
+  padding-right: 15px;
   margin-left: auto;
   margin-right: auto;
-
-  @include from_360 {
-    width: 360rem;
-  }
-  @include from_375 {
-    width: 375rem;
-  }
-  @include from_393 {
-    width: 393rem;
-  }
-  @include from_412 {
-    width: 412rem;
-  }
-  @include from_480 {
-    width: 480rem;
-  }
-
-  @include from_600 {
-    width: 500rem;
-  }
-  @include from_768 {
-    width: 668rem;
-  }
-  @include from_800 {
-    width: 700rem;
-  }
-  @include from_834 {
-    width: 734rem;
-  }
-  @include from_960 {
-    width: 860rem;
-  }
-  @include from_1024 {
-    width: 924rem;
-  }
-
-  @include from_1280 {
-    width: 1200rem;
-  }
-}
-
-%nopadding {
-  padding-left: 0;
-  padding-right: 0;
 }

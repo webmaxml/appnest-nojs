@@ -1,5 +1,5 @@
 .header-img {
-  @include fluid-size(30px, 100px, 320px, 1280px);
+  @include fluid-size(30px, 320px, 1280px, 100px);
   @include flex(nowrap, center, flex-start);
 
   &__picture {

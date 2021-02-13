@@ -1,3 +1,5 @@
+// ----------------------------------------- functions -----------------------------------------
+
 // stripping units from value
 @function strip-unit($value) {
   @return $value / ($value * 0 + 1);
@@ -5,23 +7,75 @@
 
 // value become dependent on --size value
 @function size($value) {
-  @return calc(#{strip-unit($value)} * (var(--size) / 100));
+  // one of the multiplying operands must be unitless
+  // size is always px, so we need to strip the value
+  $stripped: strip-unit($value);
+  @return calc(#{$stripped} * (var(--size) / 100));
 }
 
-// --size value slowly progresses from min to max between min-vw and max-vw
-@mixin fluid-size($min-size, $max-size, $min-vw, $max-vw) {
-  --size: #{$min-size};
+// ----------------------------------------- prop mixins -----------------------------------------
 
-  @media screen and (min-width: #{$min-vw}) {
-    --size: calc(#{$min-size} + #{strip-unit($max-size - $min-size)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)}));
+@mixin responsive-prop($prop, $val0, $vw1, $val1, $vw2: false, $val2: false, $vw3: false, $val3: false, $vw4: false, $val4: false) {
+  #{$prop}: #{$val0};
+
+  @media screen and (min-width: #{strip-unit($vw1)}px) {
+    #{$prop}: #{$val1};
   }
-  @media screen and (min-width: #{$max-vw}) {
-    --size: #{$max-size};
+
+  @if $vw2 and $val2 {
+    @media screen and (min-width: #{strip-unit($vw2)}px) {
+      #{$prop}: #{$val2};
+    }
   }
+  @if $vw3 and $val3 {
+    @media screen and (min-width: #{strip-unit($vw3)}px) {
+      #{$prop}: #{$val3};
+    }
+  }
+  @if $vw4 and $val4 {
+    @media screen and (min-width: #{strip-unit($vw4)}px) {
+      #{$prop}: #{$val4};
+    }
+  }
+}
+
+@mixin fluid-prop($prop, $min, $min-vw, $max-vw, $max) {
+  #{$prop}: #{$min};
+
+  @media screen and (min-width: #{strip-unit($min-vw)}px) {
+    #{$prop}: calc(#{$min} + #{strip-unit($max - $min)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)}));
+  }
+  @media screen and (min-width: #{strip-unit($max-vw)}px) {
+    #{$prop}: #{$max};
+  }
+}
+
+// ----------------------------------------- size mixins -----------------------------------------
+
+@mixin static-size {
+  --size: 100px;
+}
+
+@mixin responsive-size($val0, $vw1, $val1, $vw2: false, $val2: false, $vw3: false, $val3: false, $vw4: false, $val4: false) {
+  @include responsive-prop(--size, $val0, $vw1, $val1, $vw2, $val2, $vw3, $val3, $vw4, $val4);
+}
+
+@mixin fluid-size($min, $min-vw, $max-vw, $max) {
+  @include fluid-prop(--size, $min, $min-vw, $max-vw, $max);
 }
 
 @mixin fluid-text-size {
-  @include fluid-size(60px, 100px, 320px, 1280px);
+  @include fluid-size(60px, 320px, 1280px, 100px);
+}
+
+
+// ----------------------------------------- other mixins -----------------------------------------
+
+
+@mixin cell($area, $justify, $align) {
+  grid-area: $area;
+  justify-self: $justify;
+  align-self: $align;
 }
 
 @mixin text($ff, $fw, $c, $fz, $lh, $tt: false, $ta: false, $td: false, $fs: false) {
@@ -51,7 +105,7 @@
   align-items: $a;
 }
 
-@mixin align($justify, $align) {
+@mixin align-self($justify, $align) {
   justify-self: $justify;
   align-self: $align;
 }
@@ -61,101 +115,101 @@
   @media only screen and (min-width: 360px) {
     @content;
   }
-} // от 180
+}
 @mixin from_375 {
   @media only screen and (min-width: 375px) {
     @content;
   }
-} // от 187
+}
 @mixin from_393 {
   @media only screen and (min-width: 393px) {
     @content;
   }
-} // от 196
+}
 @mixin from_412 {
   @media only screen and (min-width: 412px) {
     @content;
   }
-} // от 206
+}
 @mixin from_480 {
   @media only screen and (min-width: 480px) {
     @content;
   }
-} // от 240
+}
 
 // tablet
 @mixin from_600 {
   @media only screen and (min-width: 600px) {
     @content;
   }
-} // от 300
+}
 @mixin from_768 {
   @media only screen and (min-width: 768px) {
     @content;
   }
-} // от 384
+}
 @mixin from_800 {
   @media only screen and (min-width: 800px) {
     @content;
   }
-} // от 400
+}
 @mixin from_834 {
   @media only screen and (min-width: 834px) {
     @content;
   }
-} // от 417
+}
 @mixin from_960 {
   @media only screen and (min-width: 960px) {
     @content;
   }
-} // от 480
+}
 @mixin from_1024 {
   @media only screen and (min-width: 1024px) {
     @content;
   }
-} // от 512
+}
 
 // desktop
 @mixin from_1280 {
   @media only screen and (min-width: 1280px) {
     @content;
   }
-} // от 640
+}
 @mixin from_1366 {
   @media only screen and (min-width: 1366px) {
     @content;
   }
-} // от 683
+}
 @mixin from_1440 {
   @media only screen and (min-width: 1440px) {
     @content;
   }
-} // от 720
+}
 @mixin from_1536 {
   @media only screen and (min-width: 1536px) {
     @content;
   }
-} // от 768
+}
 @mixin from_1600 {
   @media only screen and (min-width: 1600px) {
     @content;
   }
-} // от 800
+}
 @mixin from_1920 {
   @media only screen and (min-width: 1920px) {
     @content;
   }
-} // от 960
+}
 @mixin from_2560 {
   @media only screen and (min-width: 2560px) {
     @content;
   }
-} // от 1280
+}
 @mixin from_3840 {
   @media only screen and (min-width: 3840px) {
     @content;
   }
-} // от 1920
+}
 
 @mixin from_($w) {
   @media only screen and (min-width: #{$w}px ) {

@@ -73,7 +73,7 @@
   }
 
   & .overview-list__outer-circle {
-    @include align(center, center);
+    @include align-self(center, center);
   }
 
   grid-template:

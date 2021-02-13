@@ -2,7 +2,7 @@
   background: var(--c_bg1);
 
   &__container {
-    @extend %container, %nopadding;
+    @extend %container;
   }
 }
 
@@ -16,7 +16,7 @@
   }
 
   & .overview-list {
-    @include align(center, start);
+    @include align-self(center, start);
   }
 
   & .overview-list {

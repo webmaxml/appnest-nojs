@@ -18,13 +18,13 @@
   }
 
   & .video-overview-text {
-    @include align(center, start);
+    @include align-self(center, start);
   }
   & .vendor-btns {
-    @include align(center, start);
+    @include align-self(center, start);
   }
   & .video {
-    @include align(center, start);
+    @include align-self(center, start);
   }
 
   & .video-overview-text {
@@ -54,13 +54,13 @@
 
   @include from_1280 {
     & .video-overview-text {
-      @include align(start, start);
+      @include align-self(start, start);
     }
     & .vendor-btns {
-      @include align(start, start);
+      @include align-self(start, start);
     }
     & .video {
-      @include align(start, start);
+      @include align-self(start, start);
     }
 
     & .video-overview-text {

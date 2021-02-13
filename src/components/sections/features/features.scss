@@ -2,7 +2,7 @@
   background: var(--c_bg2);
 
   &__container {
-    @extend %container, %nopadding;
+    @extend %container;
   }
 }
 
@@ -22,13 +22,13 @@
   }
 
   & .feature-img {
-    @include align(center, start);
+    @include align-self(center, start);
   }
   & .feature-text {
-    @include align(center, start);
+    @include align-self(center, start);
   }
   & .feature-list {
-    @include align(center, start);
+    @include align-self(center, start);
   }
 
   & .feature-list {
@@ -67,13 +67,13 @@
 
   @include from_1280 {
     & .feature-img {
-      @include align(start, start);
+      @include align-self(start, start);
     }
     & .feature-text {
-      @include align(start, start);
+      @include align-self(start, start);
     }
     & .feature-list {
-      @include align(start, start);
+      @include align-self(start, start);
     }
 
     & .feature-img {

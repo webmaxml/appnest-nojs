@@ -25,13 +25,13 @@
   }
 
   & .feature-list__icon {
-    @include align(stretch, start);
+    @include align-self(stretch, start);
   }
   & .feature-list__header {
-    @include align(stretch, start);
+    @include align-self(stretch, start);
   }
   & .feature-list__text {
-    @include align(stretch, start);
+    @include align-self(stretch, start);
   }
 
   grid-template:

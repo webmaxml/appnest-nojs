@@ -3,8 +3,71 @@
 
   display: flex;
 
-  &__btn {
+  &__link {
     width: size(170);
+  }
+
+  &__btn {
+    display: block;
+
+    width: 100%;
+    border-width: size(1);
+    border-style: solid;
+    border-radius: size(7);
+
+    transition: 0.3s;
+
+    &--light {
+      border-color: var(--c_header_text);
+
+      &:hover {
+        background: var(--c_active);
+        border-color: var(--c_active);
+      }
+    }
+
+    &--dark {
+      border-color: var(--c_h2);
+
+      & .vendor-btns__text {
+        color: var(--c_h2);
+      }
+      & .vendor-btns__vendor {
+        color: var(--c_h2);
+      }
+
+      &:hover {
+        background: var(--c_active);
+        border-color: var(--c_active);
+
+        & .vendor-btns__text {
+          color: var(--c_header_text);
+        }
+        & .vendor-btns__vendor {
+          color: var(--c_header_text);
+        }
+      }
+    }
+  }
+
+  &__text {
+    @include text(--ff_header, --fw_light, --c_header_text, size(9), size(11), uppercase);
+  }
+  &__vendor {
+    @include text(--ff_header, --fw_semi_bold, --c_header_text, size(16), size(15), uppercase);
+  }
+
+  // меняем иконки на светлые при наведении
+  &__apple.vendor-btns__btn--dark:hover .vendor-btns__icon {
+    width: 25em;
+    height: 29em;
+    background-position: -5em -5em;
+  }
+
+  &__play.vendor-btns__btn--dark:hover .vendor-btns__icon {
+    width: 27em;
+    height: 29em;
+    background-position: -220em -5em;
   }
 }
 
@@ -22,85 +85,19 @@
   }
 
   & .vendor-btns__text {
-    @include align(start, end);
+    justify-self: start;
+    align-self: end;
   }
   & .vendor-btns__vendor {
-    @include align(start, start);
+    justify-self: start;
+    align-self: start;
   }
 
   display: grid;
   grid-template:
     ". . . . ." size(13)
-    ". i . t ." auto
-    ". i . v ." auto
+    ". i . t ." max-content
+    ". i . v ." max-content
     ". . . . ." size(13)
-    / 1fr auto size(9) auto 1fr;
-}
-
-// ----------------------------------------- style -----------------------------------------
-
-.vendor-btns__btn {
-  border-width: size(1);
-  border-style: solid;
-  border-radius: size(7);
-
-  &--light {
-    border-color: var(--c_header_text);
-
-    &:hover {
-      background: var(--c_active);
-      border-color: var(--c_active);
-    }
-  }
-
-  &--dark {
-    border-color: var(--c_h2);
-
-    & .vendor-btns__text {
-      color: var(--c_h2);
-    }
-    & .vendor-btns__vendor {
-      color: var(--c_h2);
-    }
-
-    &:hover {
-      background: var(--c_active);
-      border-color: var(--c_active);
-
-      & .vendor-btns__text {
-        color: var(--c_header_text);
-      }
-      & .vendor-btns__vendor {
-        color: var(--c_header_text);
-      }
-    }
-  }
-}
-
-// меняем иконки на светлые при наведении
-.vendor-btns__apple.vendor-btns__btn--dark:hover .vendor-btns__icon {
-  width: 25em;
-  height: 29em;
-  background-position: -5em -5em;
-}
-
-.vendor-btns__play.vendor-btns__btn--dark:hover .vendor-btns__icon {
-  width: 27em;
-  height: 29em;
-  background-position: -220em -5em;
-}
-
-// ----------------------------------------- text -----------------------------------------
-
-.vendor-btns__text {
-  @include text(--ff_header, --fw_light, --c_header_text, size(9), size(11), uppercase);
-}
-.vendor-btns__vendor {
-  @include text(--ff_header, --fw_semi_bold, --c_header_text, size(16), size(15), uppercase);
-}
-
-// ----------------------------------------- animation -----------------------------------------
-
-.vendor-btns__btn {
-  transition: 0.3s;
+    / 1fr max-content size(9) max-content 1fr;
 }
