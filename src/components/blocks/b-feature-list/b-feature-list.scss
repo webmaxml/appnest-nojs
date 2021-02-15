@@ -1,0 +1,44 @@
+.b-feature-list {
+  --size: var(--text_size);
+
+  .b-feature-list__header {
+    @include text(--ff_header, --fw_bold, --c_h3, size(18), size(18));
+  }
+  .b-feature-list__text {
+    @include text(--ff_text, --fw_regular, --c_text, size(15), size(24));
+  }
+}
+
+// grid
+
+.b-feature-list__item {
+  display: grid;
+
+  & .b-feature-list__icon {
+    grid-area: i;
+  }
+  & .b-feature-list__header {
+    grid-area: h;
+  }
+  & .b-feature-list__text {
+    grid-area: t;
+  }
+
+  & .b-feature-list__icon {
+    @include align-self(stretch, start);
+  }
+  & .b-feature-list__header {
+    @include align-self(stretch, start);
+  }
+  & .b-feature-list__text {
+    @include align-self(stretch, start);
+  }
+
+  grid-template:
+    "i" max-content
+    "." size(40)
+    "h" max-content
+    "." size(20)
+    "t" max-content
+    / size(270);
+}

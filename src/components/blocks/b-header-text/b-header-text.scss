@@ -1,0 +1,27 @@
+.b-header-text {
+  @include fluid-text-size;
+
+  &__header {
+    @include text(--ff_header, --fw_bold, --c_header_text, size(48), size(52), uppercase);
+  }
+
+  &__accent {
+    @include text(--ff_header, --fw_light, --c_accent, size(48), size(52), uppercase);
+
+    & > b {
+      font-weight: var(--fw_bold);
+    }
+  }
+
+  &__secondary-header {
+    display: block;
+
+    @include text(--ff_header, --fw_light, --c_header_text, size(36), size(52), uppercase);
+  }
+
+  &__text {
+    margin-top: size(20);
+
+    @include text(--ff_header, --fw_regular, --c_header_text, size(18), size(30));
+  }
+}

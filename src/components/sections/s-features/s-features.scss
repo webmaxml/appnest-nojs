@@ -1,0 +1,100 @@
+.s-features {
+  background: var(--c_bg2);
+
+  &__container {
+    @extend %container;
+  }
+}
+
+// grid
+
+.s-features__container {
+  display: grid;
+
+  & .b-feature-img {
+    grid-area: i;
+  }
+  & .b-feature-text {
+    grid-area: t;
+  }
+  & .b-feature-list {
+    grid-area: l;
+  }
+
+  & .b-feature-img {
+    @include align-self(center, start);
+  }
+  & .b-feature-text {
+    @include align-self(center, start);
+  }
+  & .b-feature-list {
+    @include align-self(center, start);
+  }
+
+  & .b-feature-list {
+    @include flex(wrap, center, flex-start);
+
+    text-align: center;
+
+    &__item {
+      margin: 35rem 15rem;
+    }
+    & .b-feature-list__icon {
+      justify-self: center;
+    }
+  }
+
+  & .b-feature-text {
+    margin: 0 15rem;
+
+    text-align: center;
+  }
+
+  --cols_width: 0 1fr 0;
+  grid-template:
+    ". . ." var(--v_padding)
+    ". t ." max-content
+    ". . ." var(--v_padding)
+    ". l ." max-content
+    ". . ." var(--v_padding)
+    ". i ." max-content
+    ". . ." var(--v_padding)
+    / var(--cols_width);
+
+  @include from_600 {
+    --cols_width: 1fr 500rem 1fr;
+  }
+
+  @include from_1280 {
+    & .b-feature-img {
+      @include align-self(start, start);
+    }
+    & .b-feature-text {
+      @include align-self(start, start);
+    }
+    & .b-feature-list {
+      @include align-self(start, start);
+    }
+
+    & .b-feature-img {
+      margin: 8rem 15rem 0 15rem;
+    }
+    & .b-feature-text {
+      text-align: left;
+    }
+    & .b-feature-list {
+      text-align: left;
+      & .b-feature-list__icon {
+        justify-self: start;
+      }
+    }
+
+    grid-template:
+      ". ." 122rem
+      "i t" max-content
+      "i ." 10rem
+      "i l" max-content
+      ". ." 140rem
+      / 1fr 1fr;
+  }
+}

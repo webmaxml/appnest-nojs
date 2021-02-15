@@ -1,0 +1,83 @@
+.s-video-overview {
+  background: var(--c_bg1);
+}
+
+// grid
+
+.s-video-overview__container {
+  display: grid;
+
+  & .b-video-overview-text {
+    grid-area: t;
+  }
+  & .b-vendor-btns {
+    grid-area: b;
+  }
+  & .b-video {
+    grid-area: v;
+  }
+
+  & .b-video-overview-text {
+    @include align-self(center, start);
+  }
+  & .b-vendor-btns {
+    @include align-self(center, start);
+  }
+  & .b-video {
+    @include align-self(center, start);
+  }
+
+  & .b-video-overview-text {
+    margin: 0 15rem;
+    max-width: 500rem;
+
+    text-align: center;
+  }
+  & .b-vendor-btns {
+    margin: 0 15rem;
+    &__link:first-child {
+      margin-right: 30rem;
+    }
+  }
+  & .b-video {
+  }
+
+  grid-template:
+    "." var(--v_padding)
+    "t" max-content
+    "." var(--v_padding)
+    "v" max-content
+    "." var(--v_padding)
+    "b" max-content
+    "." var(--v_padding)
+    / 1fr;
+
+  @include from_1280 {
+    & .b-video-overview-text {
+      @include align-self(start, start);
+    }
+    & .b-vendor-btns {
+      @include align-self(start, start);
+    }
+    & .b-video {
+      @include align-self(start, start);
+    }
+
+    & .b-video-overview-text {
+      max-width: auto;
+
+      text-align: left;
+    }
+    & .b-video {
+      margin-left: 17rem;
+    }
+
+    grid-template:
+      ". . v v" 122rem
+      ". t v v" max-content
+      ". . v v" 48rem
+      ". b v v" max-content
+      ". . v v" 126rem
+      / 1fr 600rem 600rem 1fr;
+  }
+}

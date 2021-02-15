@@ -1,0 +1,32 @@
+.b-screenshots-pagination {
+  --size: 100;
+
+  @include flex(nowrap, flex-start, flex-start);
+
+  &__item {
+    margin-right: size(10);
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &--active .b-screenshots-pagination__btn {
+      width: size(60);
+
+      background: var(--c_accent);
+    }
+  }
+
+  &__btn {
+    display: block;
+
+    width: size(40);
+    height: size(7);
+
+    border-radius: size(3.5);
+
+    background: var(--c_pagination);
+
+    transition: 0.3s;
+  }
+}

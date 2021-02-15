@@ -7,33 +7,32 @@
 
 // blocks
 
-@import "../components/blocks/logo/logo";
-@import "../components/blocks/nav/nav";
-@import "../components/blocks/get-btn/get-btn";
-@import "../components/blocks/header-text/header-text";
-@import "../components/blocks/header-img/header-img";
-@import "../components/blocks/vendor-btns/vendor-btns";
-@import "../components/blocks/burger/burger";
-@import "../components/blocks/overview-list/overview-list";
-@import "../components/blocks/feature-text/feature-text";
-@import "../components/blocks/feature-img/feature-img";
-@import "../components/blocks/feature-list/feature-list";
-@import "../components/blocks/video-overview-text/video-overview-text";
-@import "../components/blocks/video/video";
-@import "../components/blocks/screenshots-text/screenshots-text";
-@import "../components/blocks/screenshots-list/screenshots-list";
-@import "../components/blocks/screenshots-pagination/screenshots-pagination";
+@import "../components/blocks/b-logo/b-logo";
+@import "../components/blocks/b-nav/b-nav";
+@import "../components/blocks/b-get-btn/b-get-btn";
+@import "../components/blocks/b-header-text/b-header-text";
+@import "../components/blocks/b-header-img/b-header-img";
+@import "../components/blocks/b-vendor-btns/b-vendor-btns";
+@import "../components/blocks/b-burger/b-burger";
+@import "../components/blocks/b-overview-list/b-overview-list";
+@import "../components/blocks/b-feature-text/b-feature-text";
+@import "../components/blocks/b-feature-img/b-feature-img";
+@import "../components/blocks/b-feature-list/b-feature-list";
+@import "../components/blocks/b-video-overview-text/b-video-overview-text";
+@import "../components/blocks/b-video/b-video";
+@import "../components/blocks/b-screenshots-text/b-screenshots-text";
+@import "../components/blocks/b-screenshots-list/b-screenshots-list";
+@import "../components/blocks/b-screenshots-pagination/b-screenshots-pagination";
 
 // sections
 
-@import "../components/sections/header/header";
-@import "../components/sections/overview/overview";
-@import "../components/sections/features/features";
-@import "../components/sections/video-overview/video-overview";
-@import "../components/sections/screenshots/screenshots";
+@import "../components/sections/s-header/s-header";
+@import "../components/sections/s-overview/s-overview";
+@import "../components/sections/s-features/s-features";
+@import "../components/sections/s-video-overview/s-video-overview";
+@import "../components/sections/s-screenshots/s-screenshots";
 
 // pages
 
 @import "../components/pages/home/home";
 
-// @import "sizes";

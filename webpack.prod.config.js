@@ -24,7 +24,8 @@ module.exports = {
         options: {
           partialDirs: [
             path.resolve(__dirname, 'src/hbs'),
-            path.resolve(__dirname, 'src/components')
+            path.resolve(__dirname, 'src/components/blocks'),
+            path.resolve(__dirname, 'src/components/sections')
           ]
         }
       }

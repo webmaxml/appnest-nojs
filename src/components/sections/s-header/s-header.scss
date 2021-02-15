@@ -1,0 +1,144 @@
+.s-header {
+  position: relative;
+  z-index: 0;
+
+  // @include responsive-height(320, 518, 1050);
+  // @include responsive-height(360, 640, 1050);
+  // @include responsive-height(393, 660, 1050);
+  // @include responsive-height(412, 702, 1050);
+  // @include responsive-height(600, 845, 1050);
+  // @include responsive-height(768, 533, 1050);
+  // @include responsive-height(1024, 560, 1050);
+  // @include responsive-height(1280, 1050, 1050);
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    content: "";
+
+    width: 100%;
+    height: 100%;
+
+    background: var(--c_overlay);
+  }
+
+  &__top-grid {
+    @extend %container;
+  }
+  &__center-grid {
+    @extend %container;
+  }
+}
+
+// grid
+
+// .s-header {
+//   display: grid;
+
+//   &__top-grid {
+//     grid-area: t;
+//   }
+//   &__center-grid {
+//     grid-area: c;
+//   }
+
+//   --padding: 1fr;
+//   grid-template:
+//     "t" max-content
+//     "." var(--padding)
+//     "c" max-content
+//     "." var(--padding)
+//     / 1fr;
+
+//   @include from_1280 {
+//     --padding: 155rem;
+//   }
+// }
+
+.s-header__top-grid {
+  display: grid;
+  
+  & .b-logo {
+    @include cell(l, start, center);
+  }
+  & .b-nav {
+    @include cell(n, center, center);
+    @include responsive-prop(display, none, 1024px, flex);
+  }
+  & .b-burger {
+    @include cell(b, start, center);
+    @include responsive-prop(display, block, 1024px, none);
+  }
+  & .b-get-btn {
+    @include cell(g, end, center);
+  }
+
+  @include fluid-prop(--p, 15px, 320px, 1280px, 57px);
+
+  grid-template:
+    ". . . . ." var(--p)
+    "b . l . g" max-content
+    / max-content 15px max-content 1fr max-content;
+
+  @include from_1024 {
+    grid-template:
+      ". . ." var(--p)
+      "l n g" max-content
+      /1fr max-content 1fr;
+  }
+}
+
+.s-header__center-grid {
+  display: grid;
+
+  & .b-header-text {
+    grid-area: t;
+    @include align-self(center, start);
+  }
+  & .b-header-img {
+    grid-area: i;
+    @include align-self(center, start);
+  }
+  & .b-vendor-btns {
+    grid-area: v;
+    @include align-self(center, start);
+    text-align: center;
+
+    &__link:first-child {
+      margin-right: 30rem;
+    }
+  }
+
+  grid-template:
+    "t" max-content
+    "." var(--v_padding)
+    "i" max-content
+    "." var(--v_padding)
+    "v" max-content
+    / 1fr;
+
+  // @include from_768 {
+  //   & .b-header-img {
+  //     @include align-self(end, start);
+  //   }
+  //   & .b-vendor-btns {
+  //     @include align-self(start, start);
+  //   }
+
+  //   & .b-header-text {
+  //     margin-top: -10rem;
+  //     text-align: left;
+  //   }
+
+  //   grid-template:
+  //     ". i" max-content
+  //     "t i" max-content
+  //     ". i" 50rem
+  //     "v i" max-content
+  //     ". i" max-content
+  //     / 1fr 1fr;
+  // }
+}
