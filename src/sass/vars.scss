@@ -34,12 +34,14 @@
   --fw_black: 900;
 }
 
+$text-breakpoints: (320: 60px, 1280: 100px);
+
 // placeholders
 
 %container {
   max-width: 1200px;
-  padding-left: 15px;
-  padding-right: 15px;
+  @include prop(padding-left, fluid, (320: 15px, 768: 45px, 1280: 15px));
+  @include prop(padding-right, fluid, (320: 15px, 768: 45px, 1280: 15px));
   margin-left: auto;
   margin-right: auto;
 }

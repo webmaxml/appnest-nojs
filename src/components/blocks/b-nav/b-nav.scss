@@ -1,6 +1,4 @@
 .b-nav {
-  --size: 100px;
-
   &__list {
     @include flex(wrap, center, stretch);
   }

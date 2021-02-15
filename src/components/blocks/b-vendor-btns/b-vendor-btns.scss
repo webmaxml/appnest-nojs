@@ -1,10 +1,14 @@
 .b-vendor-btns {
-  @include fluid-text-size;
-
   display: flex;
+
+  text-align: center;
 
   &__link {
     width: size(170);
+
+    &:first-child {
+      margin-right: 30rem;
+    }
   }
 
   &__btn {

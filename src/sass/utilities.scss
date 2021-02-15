@@ -1,111 +1,143 @@
+@use "sass:meta";
+@use "sass:list";
+@use "sass:string";
+
 // ----------------------------------------- functions -----------------------------------------
 
-// stripping units from value
+// stripping units
 @function strip-unit($value) {
+  $type: meta.type-of($value);
+  @if $type != number {
+    @error "strip-unit() expects 'number', '#{$type}' - provided";
+  }
   @return $value / ($value * 0 + 1);
+}
+
+// convert to px
+@function to-px($value) {
+  $type: meta.type-of($value);
+  @if $type != number {
+    @error "to-px() expects 'number', '#{$type}' - provided";
+  }
+  @return strip-unit($value) * 1px;
+}
+
+// returns var(value) or just value
+@function process-var($value) {
+  $is-string: meta.type-of($value) == string;
+  @if $is-string {
+    $is-var: string.index($value, '--') == 1;
+    @return if($is-var, var($value), $value);
+  } @else {
+    @return $value;
+  }
 }
 
 // value become dependent on --size value
 @function size($value) {
+  $type: meta.type-of($value);
+  @if $type != number {
+    @error "size() expects 'number', '#{$type}' - provided";
+  }
   // one of the multiplying operands must be unitless
   // size is always px, so we need to strip the value
-  $stripped: strip-unit($value);
-  @return calc(#{$stripped} * (var(--size) / 100));
+  @return calc(#{strip-unit($value)} * (var(--size) / 100));
 }
 
-// ----------------------------------------- prop mixins -----------------------------------------
+// ----------------------------------------- prop mixin -----------------------------------------
 
-@mixin responsive-prop($prop, $val0, $vw1, $val1, $vw2: false, $val2: false, $vw3: false, $val3: false, $vw4: false, $val4: false) {
-  #{$prop}: #{$val0};
-
-  @media screen and (min-width: #{strip-unit($vw1)}px) {
-    #{$prop}: #{$val1};
+@mixin prop($prop, $val, $breakpoints: ()) {
+  $prop-type: meta.type-of($prop);
+  $bp-type: meta.type-of($breakpoints);
+  @if $prop-type != string {
+    @error "$prop in prop() must be 'string', '#{$prop-type}' - provided";
+  }
+  @if $bp-type != list and $bp-type != map {
+    @error "$breakpoints in prop() must be 'list' or 'map', '#{$bp-type}' - provided";
   }
 
-  @if $vw2 and $val2 {
-    @media screen and (min-width: #{strip-unit($vw2)}px) {
-      #{$prop}: #{$val2};
+  @if $val == "fluid" {
+    // first and last breakpoints
+    $first-bp: list.nth($breakpoints, 1); 
+    $last-bp: list.nth($breakpoints, -1); 
+    $last-i: list.index($breakpoints, $last-bp);
+
+    // set first value for prop
+    $first-value: to-px(list.nth($first-bp, 2));
+    #{$prop}: $first-value;
+
+    // for every breakpoint except last form fluid value
+    @each $bp in $breakpoints {
+      $current-i: list.index($breakpoints, $bp);
+
+      @if $current-i != $last-i {
+        $next-bp: list.nth($breakpoints, $current-i + 1);
+
+        $vw1: to-px(list.nth($bp, 1));
+        $vw2: to-px(list.nth($next-bp, 1));
+        $value1: to-px(list.nth($bp, 2));
+        $value2: to-px(list.nth($next-bp, 2));
+
+        @media screen and (min-width: $vw1) {
+          #{$prop}: calc(#{$value1} + #{strip-unit($value2 - $value1)} * ((100vw - #{$vw1}) / #{strip-unit($vw2 - $vw1)}));
+        }
+      }
+    }
+
+    // set last value for prop
+    $last-vw: to-px(list.nth($last-bp, 1));
+    $last-value: to-px(list.nth($last-bp, 2));
+
+    @media screen and (min-width: $last-vw) {
+      #{$prop}: $last-value;
+    }
+  } @else {
+    #{$prop}: $val;
+
+    @each $vw, $value in $breakpoints {
+      @media screen and (min-width: to-px($vw)) {
+        #{$prop}: $value;
+      }
     }
   }
-  @if $vw3 and $val3 {
-    @media screen and (min-width: #{strip-unit($vw3)}px) {
-      #{$prop}: #{$val3};
-    }
-  }
-  @if $vw4 and $val4 {
-    @media screen and (min-width: #{strip-unit($vw4)}px) {
-      #{$prop}: #{$val4};
-    }
-  }
 }
-
-@mixin fluid-prop($prop, $min, $min-vw, $max-vw, $max) {
-  #{$prop}: #{$min};
-
-  @media screen and (min-width: #{strip-unit($min-vw)}px) {
-    #{$prop}: calc(#{$min} + #{strip-unit($max - $min)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)}));
-  }
-  @media screen and (min-width: #{strip-unit($max-vw)}px) {
-    #{$prop}: #{$max};
-  }
-}
-
-// ----------------------------------------- size mixins -----------------------------------------
-
-@mixin static-size {
-  --size: 100px;
-}
-
-@mixin responsive-size($val0, $vw1, $val1, $vw2: false, $val2: false, $vw3: false, $val3: false, $vw4: false, $val4: false) {
-  @include responsive-prop(--size, $val0, $vw1, $val1, $vw2, $val2, $vw3, $val3, $vw4, $val4);
-}
-
-@mixin fluid-size($min, $min-vw, $max-vw, $max) {
-  @include fluid-prop(--size, $min, $min-vw, $max-vw, $max);
-}
-
-@mixin fluid-text-size {
-  @include fluid-size(60px, 320px, 1280px, 100px);
-}
-
 
 // ----------------------------------------- other mixins -----------------------------------------
 
-
-@mixin cell($area, $justify, $align) {
+@mixin cell($area, $justify: null, $align: null) {
   grid-area: $area;
   justify-self: $justify;
   align-self: $align;
 }
 
-@mixin text($ff, $fw, $c, $fz, $lh, $tt: false, $ta: false, $td: false, $fs: false) {
-  font-family: var($ff);
-  font-weight: var($fw);
-  color: var($c);
-  font-size: $fz;
-  line-height: $lh;
-  @if $tt {
-    text-transform: $tt;
-  }
-  @if $ta {
-    text-align: $ta;
-  }
-  @if $td {
-    text-decoration: $td;
-  }
-  @if $fs {
-    font-style: $fs;
-  }
+@mixin text($ff: null, 
+            $fw: null, 
+            $c: null, 
+            $fz: null, 
+            $lh: null, 
+            $tt: null, 
+            $ta: null, 
+            $td: null, 
+            $fs: null) {
+  font-family: process-var($ff);
+  font-weight: process-var($fw);
+  font-style: process-var($fs);
+  font-size: process-var($fz);
+  line-height: process-var($lh);
+  color: process-var($c);
+  text-transform: process-var($tt);
+  text-align: process-var($ta);
+  text-decoration: process-var($td);
 }
 
-@mixin flex($w, $j, $a) {
+@mixin flex($w: null, $j: null, $a: null) {
   display: flex;
   flex-flow: row $w;
   justify-content: $j;
   align-items: $a;
 }
 
-@mixin align-self($justify, $align) {
+@mixin align-self($justify: null, $align: null) {
   justify-self: $justify;
   align-self: $align;
 }

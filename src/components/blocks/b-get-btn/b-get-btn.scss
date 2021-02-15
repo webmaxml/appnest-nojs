@@ -1,6 +1,4 @@
 .b-get-btn {
-  @include fluid-text-size;
-
   padding: size(20) size(34);
   border: size(1) solid var(--c_header_text);
   border-radius: size(32);

@@ -60,32 +60,36 @@
 
 .s-header__top-grid {
   display: grid;
+
+  @include prop(--v-padding, fluid, (320: 15px, 1280: 57px));
   
   & .b-logo {
     @include cell(l, start, center);
+    @include prop(--size, fluid, $text-breakpoints);
   }
   & .b-nav {
     @include cell(n, center, center);
-    @include responsive-prop(display, none, 1024px, flex);
+    @include prop(--size, 100px);
+    @include prop(display, none, (1024: flex));
   }
   & .b-burger {
     @include cell(b, start, center);
-    @include responsive-prop(display, block, 1024px, none);
+    @include prop(--size, fluid, $text-breakpoints);
+    @include prop(display, block, (1024: none));
   }
   & .b-get-btn {
     @include cell(g, end, center);
+    @include prop(--size, fluid, $text-breakpoints);
   }
 
-  @include fluid-prop(--p, 15px, 320px, 1280px, 57px);
-
   grid-template:
-    ". . . . ." var(--p)
+    ". . . . ." var(--v-padding)
     "b . l . g" max-content
     / max-content 15px max-content 1fr max-content;
 
   @include from_1024 {
     grid-template:
-      ". . ." var(--p)
+      ". . ." var(--v-padding)
       "l n g" max-content
       /1fr max-content 1fr;
   }
@@ -94,51 +98,44 @@
 .s-header__center-grid {
   display: grid;
 
+  @include prop(--v-padding, fluid, (320: 45px, 1280: 155px));
+
   & .b-header-text {
-    grid-area: t;
-    @include align-self(center, start);
+    @include cell(t, center, start);
+    @include prop(--size, fluid, $text-breakpoints);
+    @include prop(text-align, center, (768: left));
+    @include prop(margin-top, 0, (768: -10px));
   }
   & .b-header-img {
-    grid-area: i;
-    @include align-self(center, start);
+    @include cell(i, null, start);
+    @include prop(--size, fluid, (320: 30px, 1280: 100px));
+    @include prop(justify-self, center, (768: end));
   }
   & .b-vendor-btns {
-    grid-area: v;
-    @include align-self(center, start);
-    text-align: center;
-
-    &__link:first-child {
-      margin-right: 30rem;
-    }
+    @include cell(v, center, start);
+    @include prop(--size, fluid, $text-breakpoints);
+    @include prop(justify-self, center, (768: start));
   }
 
   grid-template:
+    "." var(--v-padding)
     "t" max-content
-    "." var(--v_padding)
+    "." 50px
     "i" max-content
-    "." var(--v_padding)
+    "." 50px
     "v" max-content
+    "." var(--v-padding)
     / 1fr;
 
-  // @include from_768 {
-  //   & .b-header-img {
-  //     @include align-self(end, start);
-  //   }
-  //   & .b-vendor-btns {
-  //     @include align-self(start, start);
-  //   }
-
-  //   & .b-header-text {
-  //     margin-top: -10rem;
-  //     text-align: left;
-  //   }
-
-  //   grid-template:
-  //     ". i" max-content
-  //     "t i" max-content
-  //     ". i" 50rem
-  //     "v i" max-content
-  //     ". i" max-content
-  //     / 1fr 1fr;
-  // }
+  @include from_768 {
+    grid-template:
+      ". ." var(--v-padding)
+      ". i" max-content
+      "t i" max-content
+      ". i" 50px
+      "v i" max-content
+      ". i" max-content
+      ". ." var(--v-padding)
+      / 1fr 1fr;
+  }
 }
