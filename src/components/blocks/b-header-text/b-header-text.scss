@@ -1,10 +1,10 @@
 .b-header-text {
   &__header {
-    @include text(--ff_header, --fw_bold, --c_header_text, size(48), size(52), uppercase);
+    @include text(--ff_header, --fw_bold, size(48), size(52), --c_header_text, $tt: uppercase);
   }
 
   &__accent {
-    @include text(--ff_header, --fw_light, --c_accent, size(48), size(52), uppercase);
+    @include text(--ff_header, --fw_light, size(48), size(52), --c_accent, $tt: uppercase);
 
     & > b {
       font-weight: var(--fw_bold);
@@ -14,12 +14,12 @@
   &__secondary-header {
     display: block;
 
-    @include text(--ff_header, --fw_light, --c_header_text, size(36), size(52), uppercase);
+    @include text(--ff_header, --fw_light, size(36), size(52), --c_header_text, $tt: uppercase);
   }
 
   &__text {
     margin-top: size(20);
 
-    @include text(--ff_header, --fw_regular, --c_header_text, size(18), size(30));
+    @include text(--ff_header, --fw_regular, size(18), size(30), --c_header_text);
   }
 }

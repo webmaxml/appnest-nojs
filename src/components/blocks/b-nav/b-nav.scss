@@ -6,7 +6,7 @@
   &__item {
     padding: 0 size(15);
 
-    @include text(--ff_header, --fw_regular, --c_header_text, size(16), size(34), uppercase);
+    @include text(--ff_header, --fw_regular, size(16), size(34), --c_header_text, $tt: uppercase);
   }
 
   &__link {

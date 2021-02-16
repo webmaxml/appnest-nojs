@@ -2,10 +2,10 @@
   --size: var(--text_size);
 
   .b-feature-list__header {
-    @include text(--ff_header, --fw_bold, --c_h3, size(18), size(18));
+    @include text(--ff_header, --fw_bold, size(18), size(18), --c_h3);
   }
   .b-feature-list__text {
-    @include text(--ff_text, --fw_regular, --c_text, size(15), size(24));
+    @include text(--ff_text, --fw_regular, size(15), size(24), --c_text);
   }
 }
 

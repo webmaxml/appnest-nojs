@@ -50,10 +50,10 @@
   }
 
   &__header {
-    @include text(--ff_header, --fw_bold, --c_h3, size(18), size(18), $ta: center);
+    @include text(--ff_header, --fw_bold, size(18), size(18), --c_h3, $ta: center);
   }
   &__text {
-    @include text(--ff_text, --fw_regular, --c_text, size(15), size(24), $ta: center);
+    @include text(--ff_text, --fw_regular, size(15), size(24), --c_text, $ta: center);
   }
 }
 

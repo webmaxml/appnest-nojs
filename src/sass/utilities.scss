@@ -112,22 +112,22 @@
 
 @mixin text($ff: null, 
             $fw: null, 
-            $c: null, 
             $fz: null, 
             $lh: null, 
+            $c: null, 
+            $fs: null,
             $tt: null, 
-            $ta: null, 
             $td: null, 
-            $fs: null) {
+            $ta: null) { 
   font-family: process-var($ff);
   font-weight: process-var($fw);
-  font-style: process-var($fs);
   font-size: process-var($fz);
   line-height: process-var($lh);
   color: process-var($c);
+  font-style: process-var($fs);
   text-transform: process-var($tt);
-  text-align: process-var($ta);
   text-decoration: process-var($td);
+  text-align: process-var($ta);
 }
 
 @mixin flex($w: null, $j: null, $a: null) {
@@ -255,5 +255,34 @@
   }
   @media only screen and ( min-width: #{$min-width}px ) and ( max-height: #{$max-height}px ) {
     height: 100vh;
+  }
+}
+
+@mixin screen-height-section($bps) {
+  $bps-type: meta.type-of($bps);
+  @if $bps-type != list and $bps-type != map {
+    @error "screen-height-section() expects 'list' or 'map', '#{$bps-type}' - provided";
+  }
+
+  @each $width, $height-list in $bps {
+    $width-type: meta.type-of($width);
+    $height-list-type: meta.type-of($height-list);
+    @if $width-type != number {
+      @error "screen width must be 'number' in screen-height-section(), '#{$width-type}' - provided";
+    }
+    @if $height-list-type != list {
+      @error "height list must be 'list' in screen-height-section(), '#{$height-list-type}' - provided";
+    }
+
+    $width: to-px($width);
+    $min-height: to-px(list.nth($height-list, 1));
+    $max-height: to-px(list.nth($height-list, 2));
+
+    @media only screen and ( min-width: $width ) {
+      min-height: $min-height;
+    }
+    @media only screen and ( min-width: $width ) and ( max-height: $max-height ) {
+      height: 100vh;
+    }
   }
 }
