@@ -26,7 +26,7 @@
 @function process-var($value) {
   $is-string: meta.type-of($value) == string;
   @if $is-string {
-    $is-var: string.index($value, '--') == 1;
+    $is-var: string.index($value, "--") == 1;
     @return if($is-var, var($value), $value);
   } @else {
     @return $value;
@@ -58,8 +58,8 @@
 
   @if $val == "fluid" {
     // first and last breakpoints
-    $first-bp: list.nth($breakpoints, 1); 
-    $last-bp: list.nth($breakpoints, -1); 
+    $first-bp: list.nth($breakpoints, 1);
+    $last-bp: list.nth($breakpoints, -1);
     $last-i: list.index($breakpoints, $last-bp);
 
     // set first value for prop
@@ -79,7 +79,9 @@
         $value2: to-px(list.nth($next-bp, 2));
 
         @media screen and (min-width: $vw1) {
-          #{$prop}: calc(#{$value1} + #{strip-unit($value2 - $value1)} * ((100vw - #{$vw1}) / #{strip-unit($vw2 - $vw1)}));
+          #{$prop}: calc(
+            #{$value1} + #{strip-unit($value2 - $value1)} * ((100vw - #{$vw1}) / #{strip-unit($vw2 - $vw1)})
+          );
         }
       }
     }
@@ -110,15 +112,7 @@
   align-self: $align;
 }
 
-@mixin text($ff: null, 
-            $fw: null, 
-            $fz: null, 
-            $lh: null, 
-            $c: null, 
-            $fs: null,
-            $tt: null, 
-            $td: null, 
-            $ta: null) { 
+@mixin text($ff: null, $fw: null, $fz: null, $lh: null, $c: null, $fs: null, $tt: null, $td: null, $ta: null) {
   font-family: process-var($ff);
   font-weight: process-var($fw);
   font-size: process-var($fz);
@@ -278,11 +272,17 @@
     $min-height: to-px(list.nth($height-list, 1));
     $max-height: to-px(list.nth($height-list, 2));
 
-    @media only screen and ( min-width: $width ) {
-      min-height: $min-height;
-    }
-    @media only screen and ( min-width: $width ) and ( max-height: $max-height ) {
-      height: 100vh;
+    @if $min-height == $max-height {
+      @media only screen and (min-width: $width) {
+        height: auto;
+      }
+    } @else {
+      @media only screen and (min-width: $width) {
+        min-height: $min-height;
+      }
+      @media only screen and (min-width: $width) and (max-height: $max-height) {
+        height: 100vh;
+      }
     }
   }
 }
