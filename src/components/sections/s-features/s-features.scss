@@ -2,99 +2,58 @@
   background: var(--c_bg2);
 
   &__container {
-    @extend %container;
+    @extend %container-no-padding;
   }
 }
 
-// grid
+// ----------------------------------------- grid -----------------------------------------
 
 .s-features__container {
   display: grid;
 
   & .b-feature-img {
-    grid-area: i;
+    @include cell(i, null, start);
+    @include prop(--size, fluid, (320: 50px, 1024: 100px));
+    @include prop(justify-self, center, (1200: start));
+    @include prop(margin, 0, (1280: 8px 15px 0 15px));
   }
   & .b-feature-text {
-    grid-area: t;
+    @include cell(t, null, start);
+    @include prop(--size, fluid, $text-breakpoints);
+    @include prop(justify-self, center, (1200: start));
+    @include prop(width, 300px, (600: 500px, 1200: auto));
+    @include prop(text-align, center, (1200: left));
   }
   & .b-feature-list {
-    grid-area: l;
-  }
+    @include cell(l, null, start);
+    @include prop(--size, fluid, $text-breakpoints);
+    @include prop(justify-self, center, (1200: start));
+    @include prop(width, 300px, (600: 600px, 1200: auto));
+    @include prop(text-align, center, (1200: left));
 
-  & .b-feature-img {
-    @include align-self(center, start);
-  }
-  & .b-feature-text {
-    @include align-self(center, start);
-  }
-  & .b-feature-list {
-    @include align-self(center, start);
-  }
-
-  & .b-feature-list {
-    @include flex(wrap, center, flex-start);
-
-    text-align: center;
-
-    &__item {
-      margin: 35rem 15rem;
-    }
     & .b-feature-list__icon {
-      justify-self: center;
+      @include prop(margin, auto, (1200: 0));
     }
   }
 
-  & .b-feature-text {
-    margin: 0 15rem;
-
-    text-align: center;
-  }
-
-  --cols_width: 0 1fr 0;
+  @include prop(--t-padding, fluid, (320: 45px, 1200: 122px));
+  @include prop(--b-padding, fluid, (320: 45px, 1200: 140px));
   grid-template:
-    ". . ." var(--v_padding)
-    ". t ." max-content
-    ". . ." var(--v_padding)
-    ". l ." max-content
-    ". . ." var(--v_padding)
-    ". i ." max-content
-    ". . ." var(--v_padding)
-    / var(--cols_width);
+    "." var(--t-padding)
+    "t" max-content
+    "." var(--t-padding)
+    "l" max-content
+    "." var(--t-padding)
+    "i" max-content
+    "." var(--b-padding)
+    / 1fr;
 
-  @include from_600 {
-    --cols_width: 1fr 500rem 1fr;
-  }
-
-  @include from_1280 {
-    & .b-feature-img {
-      @include align-self(start, start);
-    }
-    & .b-feature-text {
-      @include align-self(start, start);
-    }
-    & .b-feature-list {
-      @include align-self(start, start);
-    }
-
-    & .b-feature-img {
-      margin: 8rem 15rem 0 15rem;
-    }
-    & .b-feature-text {
-      text-align: left;
-    }
-    & .b-feature-list {
-      text-align: left;
-      & .b-feature-list__icon {
-        justify-self: start;
-      }
-    }
-
+  @include from_(1200) {
     grid-template:
-      ". ." 122rem
-      "i t" max-content
-      "i ." 10rem
-      "i l" max-content
-      ". ." 140rem
-      / 1fr 1fr;
+    ". ." var(--t-padding)
+    "i t" max-content
+    "i l" max-content
+    ". ." var(--b-padding)
+    / 1fr 1fr;
   }
 }

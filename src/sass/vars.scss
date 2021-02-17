@@ -45,3 +45,8 @@ $text-breakpoints: (320: 60px, 1280: 100px);
   margin-left: auto;
   margin-right: auto;
 }
+%container-no-padding {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}

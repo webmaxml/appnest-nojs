@@ -1,6 +1,6 @@
 .b-feature-text {
-  --size: var(--text_size);
-
+  padding: 0 15px;
+  
   &__header {
     @include text(--ff_header, --fw_bold, size(36), size(48), --c_h2);
 
@@ -11,7 +11,6 @@
 
   &__text {
     margin-top: size(10);
-
     @include text(--ff_text, --fw_regular, size(15), size(24), --c_text);
   }
 }

@@ -1,6 +1,4 @@
 .b-feature-img {
-  --size: 100;
-
   @include flex(nowrap, center, flex-end);
 
   &__front {

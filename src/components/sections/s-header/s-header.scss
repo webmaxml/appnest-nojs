@@ -98,8 +98,6 @@
 .s-header__center-grid {
   display: grid;
 
-  // @include prop(--v-padding, fluid, (320: 45px, 1280: 155px));
-
   & .b-header-text {
     @include cell(t, center, start);
     @include prop(--size, fluid, $text-breakpoints);
@@ -118,24 +116,20 @@
   }
 
   grid-template:
-    // "." var(--v-padding)
     "t" max-content
     "." 50px
     "i" max-content
     "." 50px
     "v" max-content
-    // "." var(--v-padding)
     / 1fr;
 
   @include from_768 {
     grid-template:
-      // ". ." var(--v-padding)
       ". i" max-content
       "t i" max-content
       ". i" 50px
       "v i" max-content
       ". i" max-content
-      // ". ." var(--v-padding)
       / 1fr 1fr;
   }
 }

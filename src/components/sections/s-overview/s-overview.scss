@@ -1,18 +1,20 @@
 .s-overview {
   background: var(--c_bg1);
+
+  &__container {
+    @extend %container-no-padding;
+  }
 }
 
-// grid
+// ----------------------------------------- grid -----------------------------------------
 
 .s-overview__container {
   display: grid;
-  margin-left: auto;
-  margin-right: auto;
-  @include prop(width, 300px, (600: 600px, 1200: 1200px));
 
   & .b-overview-list {
     @include cell(o, center, start);
     @include prop(--size, fluid, $text-breakpoints);
+    @include prop(width, 300px, (600: 600px, 1200: auto));
 
     &__item {
       @include prop(margin-top, size(45), (1200: size(15)));
