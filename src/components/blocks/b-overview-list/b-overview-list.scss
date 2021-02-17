@@ -1,8 +1,10 @@
 .b-overview-list {
-  --size: var(--text_size);
+  @include flex(wrap, center, flex-start);
 
   &__item {
     width: size(270);
+    margin-left: size(15);
+    margin-right: size(15);
 
     &:nth-child(1) .b-overview-list__icon-circle {
       background: var(--c_active);
@@ -63,17 +65,13 @@
   display: grid;
 
   & .b-overview-list__outer-circle {
-    grid-area: c;
+    @include cell(c, center, center);
   }
   & .b-overview-list__header {
-    grid-area: h;
+    @include cell(h);
   }
   & .b-overview-list__text {
-    grid-area: t;
-  }
-
-  & .b-overview-list__outer-circle {
-    @include align-self(center, center);
+    @include cell(t);
   }
 
   grid-template:

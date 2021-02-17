@@ -1,45 +1,29 @@
 .s-overview {
   background: var(--c_bg1);
-
-  &__container {
-    @extend %container;
-  }
 }
 
 // grid
 
 .s-overview__container {
   display: grid;
+  margin-left: auto;
+  margin-right: auto;
+  @include prop(width, 300px, (600: 600px, 1200: 1200px));
 
   & .b-overview-list {
-    grid-area: o;
-  }
-
-  & .b-overview-list {
-    @include align-self(center, start);
-  }
-
-  & .b-overview-list {
-    @include flex(wrap, center, flex-start);
+    @include cell(o, center, start);
+    @include prop(--size, fluid, $text-breakpoints);
 
     &__item {
-      margin: 15rem;
+      @include prop(margin-top, size(45), (1200: size(15)));
+      @include prop(margin-bottom, size(45), (1200: size(15)));
     }
   }
 
-  --cols_width: 0 1fr 0;
+  @include prop(--v-padding, fluid, (320: 45px, 1280: 126px));
   grid-template:
-    ". . ." var(--v_padding)
-    ". o ." max-content
-    ". . ." var(--v_padding)
-    / var(--cols_width);
-
-  @include from_600 {
-    --cols_width: 1fr 500rem 1fr;
-  }
-
-  @include from_1280 {
-    --v_padding: 126rem;
-    --cols_width: 0 1fr 0;
-  }
+    "." var(--v-padding)
+    "o" max-content
+    "." var(--v-padding)
+    / 1fr;
 }
