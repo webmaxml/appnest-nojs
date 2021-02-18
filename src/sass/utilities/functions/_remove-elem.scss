@@ -1,0 +1,26 @@
+@use 'sass:meta';
+@use 'sass:list';
+@use 'sass:map';
+@use 'is-list' as *;
+@use 'is-map' as *;
+
+@function remove-elem($list, $elem) {
+  @if is-list($list) {
+    @if list.index($list, $elem) {
+      $result: ();
+      @each $item in $list {
+        @if $item != $elem {
+          $result: list.append($result, $item);
+        }
+      }
+
+      @return $result;
+    } @else {
+      @return list;
+    }
+  } @else if is-map($list) {
+    @return map.remove($list, $elem);
+  } @else {
+    @error "$list in remove-elem() must be 'list' of 'map', '#{meta.type-of($list)}' - provided"
+  }
+}

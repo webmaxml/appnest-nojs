@@ -1,0 +1,45 @@
+
+
+
+@mixin process-fluid($prop, $bps) {
+  @if not is-string($prop) {
+    @error "$prop in process-fluid() must be 'string', '#{meta.type-of($prop)}' - provided";
+  }
+  @if not is-map($bps) {
+    @error "$bps in process-fluid() must be 'map', '#{meta.type-of($bps)}' - provided";
+  }
+
+  $vws: map-keys($bps);
+  $values: map-values($bps);
+
+  // set first value for prop
+  #{$prop}: to-px(list.nth($values, 1));
+
+  // for every breakpoint except last form fluid value
+  @each $bp in $bps {
+    $current-i: list.index($bps, $bp);
+
+    @if $current-i != $last-i {
+      $next-bp: list.nth($bps, $current-i + 1);
+
+      $vw1: to-px(list.nth($bp, 1));
+      $vw2: to-px(list.nth($next-bp, 1));
+      $value1: to-px(list.nth($bp, 2));
+      $value2: to-px(list.nth($next-bp, 2));
+
+      @media screen and (min-width: $vw1) {
+        #{$prop}: calc(
+          #{$value1} + #{strip-unit($value2 - $value1)} * ((100vw - #{$vw1}) / #{strip-unit($vw2 - $vw1)})
+        );
+      }
+    }
+  }
+
+  // set last value for prop
+  $last-vw: to-px(list.nth($vws, 1));
+  $last-value: to-px(list.nth($values, -1));
+
+  @media screen and (min-width: $last-vw) {
+    #{$prop}: $last-value;
+  }
+}

@@ -1,0 +1,12 @@
+@use 'sass:meta';
+@use 'sass:list';
+@use 'is-list' as *;
+@use 'is-map' as *;
+
+@function is-last-elem($list, $elem) {
+  @if is-list($list) or is-map($list) {
+    @return list.nth($list, -1) == $elem;
+  } @else {
+    @error "$list in is-last-elem() must be 'list' of 'map', '#{meta.type-of($list)}' - provided"
+  }
+}
