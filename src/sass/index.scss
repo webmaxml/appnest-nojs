@@ -11,6 +11,14 @@
 @use 'pages';
 
 
+@use 'utilities/mixins/test' as *;
 @use 'utilities/functions/to-px' as *;
 
-@debug to-px((320: 16));
+
+body {
+  @include process-value(padding-top, fluid (
+    600: 40,
+    800: 200,
+    1000: 100
+  ));
+}

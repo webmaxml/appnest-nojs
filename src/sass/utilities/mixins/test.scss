@@ -6,28 +6,7 @@
 @use '../functions/to-px' as *;
 @use '../functions/remove-elem' as *;
 @use 'process-breakpoints' as *;
-
-/*
-
-@incluse flex(
-  $d: row,
-  $w: nowrap,
-  $j: center (768: flex-start)
-  $a: flex-start
-);
-
-
-value                  - can be list
-value (map)            - can be list (map)
-(map)
-
-не map и не list - value
-list - либо value, либо value + map
-map - map
-
-*/
-
-
+@use 'process-fluid' as *;
 
 
 @mixin process-value($prop, $value) {
@@ -41,8 +20,16 @@ map - map
     $bps: list.nth($value, -1);
     $init-value: remove-elem($value, $bps);
 
-    #{$prop}: $init-value;
-    @include process-breakpoints($prop, $bps);
+    @if list.length($init-value) == 1 {
+      $init-value: list.nth($init-value, 1);
+    }
+
+    @if $init-value == 'fluid' {
+      @include process-fluid($prop, $bps);
+    } @else {
+      #{$prop}: $init-value;
+      @include process-breakpoints($prop, $bps);
+    }
   } @else {
     #{$prop}: $value;
   }

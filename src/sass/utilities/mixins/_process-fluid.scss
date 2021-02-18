@@ -1,5 +1,11 @@
-
-
+@use 'sass:meta';
+@use 'sass:list';
+@use 'sass:map';
+@use '../functions/is-string' as *;
+@use '../functions/is-map' as *;
+@use '../functions/to-px' as *;
+@use '../functions/is-last-elem' as *;
+@use '../functions/strip-unit' as *;
 
 @mixin process-fluid($prop, $bps) {
   @if not is-string($prop) {
@@ -9,35 +15,30 @@
     @error "$bps in process-fluid() must be 'map', '#{meta.type-of($bps)}' - provided";
   }
 
-  $vws: map-keys($bps);
-  $values: map-values($bps);
+  // convert keys and values to px
+  $bps: to-px($bps);
+
+  $vws: map.keys($bps);
+  $values: map.values($bps);
 
   // set first value for prop
-  #{$prop}: to-px(list.nth($values, 1));
+  #{$prop}: list.nth($values, 1);
 
   // for every breakpoint except last form fluid value
-  @each $bp in $bps {
-    $current-i: list.index($bps, $bp);
+  @each $vw, $value in $bps {
+    @if not is-last-elem($vws, $vw) {
+      $next-vw: list.nth($vws, list.index($vws, $vw) + 1);
+      $next-value: list.nth($values, list.index($values, $value) + 1);
 
-    @if $current-i != $last-i {
-      $next-bp: list.nth($bps, $current-i + 1);
-
-      $vw1: to-px(list.nth($bp, 1));
-      $vw2: to-px(list.nth($next-bp, 1));
-      $value1: to-px(list.nth($bp, 2));
-      $value2: to-px(list.nth($next-bp, 2));
-
-      @media screen and (min-width: $vw1) {
-        #{$prop}: calc(
-          #{$value1} + #{strip-unit($value2 - $value1)} * ((100vw - #{$vw1}) / #{strip-unit($vw2 - $vw1)})
-        );
+      @media screen and (min-width: $vw) {
+        #{$prop}: calc(#{$value} + #{strip-unit($next-value - $value)} * ((100vw - #{$vw}) / #{strip-unit($next-vw - $vw)}));
       }
     }
   }
 
   // set last value for prop
-  $last-vw: to-px(list.nth($vws, 1));
-  $last-value: to-px(list.nth($values, -1));
+  $last-vw: list.nth($vws, -1);
+  $last-value: list.nth($values, -1);
 
   @media screen and (min-width: $last-vw) {
     #{$prop}: $last-value;
