@@ -1,0 +1,5 @@
+@use 'sass:meta';
+
+@function is-list($value) {
+  @return meta.type-of($value) == list;
+}

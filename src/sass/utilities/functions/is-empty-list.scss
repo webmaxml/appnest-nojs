@@ -1,0 +1,10 @@
+@use 'sass:list';
+@use 'is-list' as *;
+
+@function is-empty-list($value) {
+  @if is-list($value) and list.length($value) == 0 {
+    @return true;
+  } @else {
+    @return false;
+  }
+}

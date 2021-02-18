@@ -1,0 +1,11 @@
+@use 'sass:meta';
+@use 'is-number' as *;
+@use 'strip-unit' as *;
+
+@function to-px($value) {
+  @if not is-number($value) {
+    @error "to-px() expects 'number', '#{meta.type-of($value)}' - provided";
+  }
+  
+  @return strip-unit($value) * 1px;
+}

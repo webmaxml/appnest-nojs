@@ -1,0 +1,43 @@
+@use '../utilities/vars/breakpoints' as *;
+@use '../utilities/placeholders/container' as *;
+@use '../utilities/mixins/cell' as *;
+@use '../utilities/mixins/prop' as *;
+@use '../utilities/mixins/media' as *;
+
+.s-screenshots {
+  background: var(--c_bg2);
+
+  &__container {
+    @extend %container;
+  }
+}
+
+// grid
+
+.s-screenshots__container {
+  display: grid;
+
+  & .b-screenshots-text {
+    @include cell(t, center, start);
+  }
+  & .b-screenshots-list {
+    @include cell(l, center, start);
+  }
+  & .b-screenshots-pagination {
+    @include cell(p, center, start);
+  }
+  
+  & .b-screenshots-text {
+    text-align: center;
+  }
+
+  grid-template:
+    "." var(--v_padding)
+    "t" max-content
+    "." var(--v_padding)
+    "l" max-content
+    "." var(--v_padding)
+    "p" max-content
+    "." var(--v_padding)
+    / 1fr;
+}

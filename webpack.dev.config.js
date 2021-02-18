@@ -25,9 +25,9 @@ module.exports = {
         loader: 'handlebars-loader',
         options: {
           partialDirs: [
-            path.resolve(__dirname, 'src/hbs'),
-            path.resolve(__dirname, 'src/components/blocks'),
-            path.resolve(__dirname, 'src/components/sections')
+            path.resolve(__dirname, 'src/hbs/partials'),
+            path.resolve(__dirname, 'src/hbs/blocks'),
+            path.resolve(__dirname, 'src/hbs/sections')
           ]
         }
       }
@@ -36,7 +36,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'src/components/pages/home/home.hbs',
+      template: 'src/hbs/home.hbs',
       hash: true,
       minify: false
     })

@@ -1,0 +1,42 @@
+@use '../utilities/functions/size' as *;
+@use '../utilities/mixins/flex' as *;
+@use '../utilities/mixins/text' as *;
+
+.b-nav {
+  &__list {
+    @include flex(wrap, center, stretch);
+  }
+
+  &__item {
+    padding: 0 size(15);
+
+    @include text(--ff_header, --fw_regular, size(16), size(34), --c_header_text, $tt: uppercase);
+  }
+
+  &__link {
+    position: relative;
+
+    &::after {
+      position: absolute;
+      left: 50%;
+      bottom: size(-10);
+
+      display: block;
+      content: "";
+
+      width: 0%;
+      height: 0;
+
+      background: var(--c_header_text);
+
+      transition: 0.3s;
+    }
+
+    &:hover::after {
+      left: 0;
+
+      width: 100%;
+      height: size(1);
+    }
+  }
+}

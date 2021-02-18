@@ -1,7 +1,0 @@
-.b-header-img {
-  @include flex(nowrap, center, flex-start);
-
-  &__picture {
-    width: size(540px);
-  }
-}

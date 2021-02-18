@@ -1,0 +1,58 @@
+@use '../utilities/vars/breakpoints' as *;
+@use '../utilities/placeholders/container' as *;
+@use '../utilities/mixins/cell' as *;
+@use '../utilities/mixins/prop' as *;
+@use '../utilities/mixins/media' as *;
+
+.s-video-overview {
+  background: var(--c_bg1);
+}
+
+// ----------------------------------------- grid -----------------------------------------
+
+.s-video-overview__container {
+  display: grid;
+
+  & .b-video-overview-text {
+    @include cell(t, null, start);
+    @include prop(--size, fluid, $text-breakpoints);
+    @include prop(justify-self, center, (1280: start));
+    @include prop(width, null, (1200: 600px));
+    @include prop(text-align, center, (1280: left));
+  }
+  & .b-vendor-btns {
+    @include cell(b, null, start);
+    @include prop(--size, fluid, $text-breakpoints);
+    @include prop(width, null, (1200: 600px));
+    @include prop(justify-self, center, (1280: start));
+
+    padding: 0 15px;
+    margin-left: auto;
+  }
+  & .b-video {
+    @include cell(v, null, start);
+    @include prop(--size, 100px);
+    @include prop(justify-self, center, (1280: start));
+    @include prop(margin-left, 0, (1280: 17px));
+  }
+
+  grid-template:
+    "." var(--v_padding)
+    "t" max-content
+    "." var(--v_padding)
+    "v" max-content
+    "." var(--v_padding)
+    "b" max-content
+    "." var(--v_padding)
+    / 1fr;
+
+  @include from_(1200) {
+    grid-template:
+      ". v" 122px
+      "t v" max-content
+      ". v" 48px
+      "b v" max-content
+      ". v" 126px
+      / 1fr 1fr;
+  }
+}

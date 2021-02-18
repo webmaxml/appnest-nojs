@@ -1,0 +1,13 @@
+@use '../functions/process-var' as *;
+
+@mixin text($ff: null, $fw: null, $fz: null, $lh: null, $c: null, $fs: null, $tt: null, $td: null, $ta: null) {
+  font-family: process-var($ff);
+  font-weight: process-var($fw);
+  font-size: process-var($fz);
+  line-height: process-var($lh);
+  color: process-var($c);
+  font-style: process-var($fs);
+  text-transform: process-var($tt);
+  text-decoration: process-var($td);
+  text-align: process-var($ta);
+}

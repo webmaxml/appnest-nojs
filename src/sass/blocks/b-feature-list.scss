@@ -1,0 +1,24 @@
+@use '../utilities/functions/size' as *;
+@use '../utilities/mixins/flex' as *;
+@use '../utilities/mixins/text' as *;
+
+.b-feature-list {
+  @include flex(wrap, center, flex-start);
+
+  &__item {
+    width: size(270);
+    margin: size(35) size(15);
+  }
+  &__icon {
+    display: block;
+  }
+
+  &__header {
+    margin-top: size(40);
+    @include text(--ff_header, --fw_bold, size(18), size(18), --c_h3);
+  }
+  &__text {
+    margin-top: size(20);
+    @include text(--ff_text, --fw_regular, size(15), size(24), --c_text);
+  }
+}

@@ -1,0 +1,10 @@
+@use 'sass:string';
+@use 'is-string' as *;
+
+@function process-var($value) {
+  @if is-string($value) and string.index($value, "--") == 1 {
+    @return var($value);
+  } @else {
+    @return $value;
+  }
+}

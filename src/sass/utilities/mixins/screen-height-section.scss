@@ -1,0 +1,38 @@
+@use 'sass:meta';
+@use 'sass:list';
+@use '../functions/is-number' as *;
+@use '../functions/is-list' as *;
+@use '../functions/is-map' as *;
+@use '../functions/to-px' as *;
+
+@mixin screen-height-section($bps) {
+  @if not is-map($bps) {
+    @error "screen-height-section() expects 'map', '#{meta.type-of($bps)}' - provided";
+  }
+
+  @each $width, $height-list in $bps {
+    @if not is-number($width) {
+      @error "screen width must be 'number' in screen-height-section(), '#{meta.type-of($width)}' - provided";
+    }
+    @if not is-list($height-list) {
+      @error "height list must be 'list' in screen-height-section(), '#{meta.type-of($height-list)}' - provided";
+    }
+
+    $width: to-px($width);
+    $min-height: to-px(list.nth($height-list, 1));
+    $max-height: to-px(list.nth($height-list, 2));
+
+    @if $min-height == $max-height {
+      @media only screen and (min-width: $width) {
+        height: auto;
+      }
+    } @else {
+      @media only screen and (min-width: $width) {
+        min-height: $min-height;
+      }
+      @media only screen and (min-width: $width) and (max-height: $max-height) {
+        height: 100vh;
+      }
+    }
+  }
+}

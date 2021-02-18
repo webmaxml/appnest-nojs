@@ -1,0 +1,13 @@
+@use 'sass:meta';
+@use 'is-number' as *;
+@use 'strip-unit' as *;
+
+// value become dependent on --size value
+@function size($value) {
+  @if not is-number($value) {
+    @error "size() expects 'number', '#{meta.type-of($value)}' - provided";
+  }
+  // one of the multiplying operands must be unitless
+  // size is always px, so we need to strip the value
+  @return calc(#{strip-unit($value)} * (var(--size) / 100));
+}

@@ -1,0 +1,5 @@
+@mixin cell($area, $justify: null, $align: null) {
+  grid-area: $area;
+  justify-self: $justify;
+  align-self: $align;
+}

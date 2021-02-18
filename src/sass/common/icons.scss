@@ -1,0 +1,132 @@
+@use '../utilities/functions/size' as *;
+
+// завязка на --size внутри блока, чтобы иконка масштабировалась с изменением --size
+.icon {
+  font-size: size(1);
+}
+
+.icon-Apple {
+  width: 25em;
+  height: 29em;
+  background-position: -5em -5em;
+}
+
+.icon-Apple-dark {
+  width: 25em;
+  height: 29em;
+  background-position: -40em -5em;
+}
+
+.icon-Branding-Icon {
+  width: 50em;
+  height: 45em;
+  background-position: -75em -5em;
+}
+
+.icon-Edit-Icon {
+  width: 32em;
+  height: 40em;
+  background-position: -135em -5em;
+}
+
+.icon-Forma-1 {
+  width: 33em;
+  height: 35em;
+  background-position: -177em -5em;
+}
+
+.icon-Icon {
+  width: 39em;
+  height: 35em;
+  background-position: -5em -50em;
+}
+
+.icon-Icon2 {
+  width: 39em;
+  height: 35em;
+  background-position: -177em -50em;
+}
+
+.icon-Icon3 {
+  width: 33em;
+  height: 35em;
+  background-position: -5em -95em;
+}
+
+.icon-Play-Icon {
+  width: 72em;
+  height: 71em;
+  background-position: -48em -95em;
+}
+
+.icon-Play-store {
+  width: 27em;
+  height: 29em;
+  background-position: -220em -5em;
+}
+
+.icon-Play-store-dark {
+  width: 27em;
+  height: 29em;
+  background-position: -130em -95em;
+}
+
+.icon-Setting {
+  width: 40em;
+  height: 40em;
+  background-position: -167em -95em;
+}
+
+.icon-User-Friendly {
+  width: 48em;
+  height: 40em;
+  background-position: -130em -145em;
+}
+
+.icon-appnest {
+  width: 118em;
+  height: 24em;
+  background-position: -5em -195em;
+}
+
+.icon-appnest_dark {
+  width: 118em;
+  height: 24em;
+  background-position: -133em -195em;
+}
+
+.icon-awards {
+  width: 52em;
+  height: 60em;
+  background-position: -257em -5em;
+}
+
+.icon-download {
+  width: 72em;
+  height: 60em;
+  background-position: -226em -75em;
+}
+
+.icon-happy {
+  width: 64em;
+  height: 60em;
+  background-position: -5em -229em;
+}
+
+.icon-img_icon {
+  width: 52em;
+  height: 52em;
+  background-position: -261em -145em;
+}
+
+.icon-star {
+  width: 14em;
+  height: 14em;
+  background-position: -5em -145em;
+}
+
+.icon-users {
+  width: 66em;
+  height: 60em;
+  background-position: -79em -229em;
+}
