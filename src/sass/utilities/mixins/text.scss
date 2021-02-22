@@ -1,13 +1,13 @@
-@use '../functions/process-var' as *;
+@use 'prop' as *;
 
 @mixin text($ff: null, $fw: null, $fz: null, $lh: null, $c: null, $fs: null, $tt: null, $td: null, $ta: null) {
-  font-family: process-var($ff);
-  font-weight: process-var($fw);
-  font-size: process-var($fz);
-  line-height: process-var($lh);
-  color: process-var($c);
-  font-style: process-var($fs);
-  text-transform: process-var($tt);
-  text-decoration: process-var($td);
-  text-align: process-var($ta);
+  @include prop(font-family, $ff);
+  @include prop(font-weight, $fw);
+  @include prop(font-size, $fz);
+  @include prop(line-height, $lh);
+  @include prop(color, $c);
+  @include prop(font-style, $fs);
+  @include prop(text-transform, $tt);
+  @include prop(text-decoration, $td);
+  @include prop(text-align, $ta);
 }

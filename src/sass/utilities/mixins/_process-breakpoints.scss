@@ -2,6 +2,7 @@
 @use '../functions/is-string' as *;
 @use '../functions/is-map' as *;
 @use '../functions/to-px' as *;
+@use '../functions/process-var' as *;
 
 
 @mixin process-breakpoints($prop, $bps) {
@@ -14,7 +15,7 @@
 
   @each $vw, $value in $bps {
     @media screen and (min-width: to-px($vw)) {
-      #{$prop}: $value;
+      #{$prop}: process-var($value);
     }
   }
 }

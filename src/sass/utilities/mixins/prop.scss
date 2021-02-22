@@ -5,6 +5,7 @@
 @use '../functions/is-map' as *;
 @use '../functions/to-px' as *;
 @use '../functions/remove-elem' as *;
+@use '../functions/process-var' as *;
 @use 'process-breakpoints' as *;
 @use 'process-fluid' as *;
 
@@ -31,12 +32,12 @@
     @if $init-value == 'fluid' {
       @include process-fluid($prop, $bps);
     } @else {
-      #{$prop}: $init-value;
+      #{$prop}: process-var($init-value);
       @include process-breakpoints($prop, $bps);
     }
 
     // if the value is not the list with breakpoints or map, then its just value
   } @else {
-    #{$prop}: $value;
+    #{$prop}: process-var($value);
   }
 }

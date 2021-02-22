@@ -14,6 +14,13 @@
   }
 
   &__link {
-    @include text(--ff_header, --fw_semi_bold, size(16), size(16), --c_header_text, $tt: uppercase);
+    @include text(
+      $ff: --ff_header, 
+      $fw: --fw_semi_bold, 
+      $fz: size(16), 
+      $lh: size(16), 
+      $c: --c_header_text, 
+      $tt: uppercase
+    );
   }
 }

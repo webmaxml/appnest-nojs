@@ -1,5 +1,6 @@
 @use '../utilities/vars/breakpoints' as *;
 @use '../utilities/placeholders/container' as *;
+@use '../utilities/functions/size' as *;
 @use '../utilities/mixins/cell' as *;
 @use '../utilities/mixins/prop' as *;
 @use '../utilities/mixins/media' as *;

@@ -5,7 +5,13 @@
   --size: var(--text_size);
 
   &__header {
-    @include text(--ff_header, --fw_bold, size(36), size(48), --c_h2);
+    @include text(
+      $ff: --ff_header, 
+      $fw: --fw_bold, 
+      $fz: size(36), 
+      $lh: size(48), 
+      $c: --c_h2
+    );
 
     & b {
       color: var(--c_accent);
@@ -15,6 +21,12 @@
   &__text {
     margin-top: size(10);
 
-    @include text(--ff_text, --fw_regular, size(15), size(24), --c_text);
+    @include text(
+      $ff: --ff_text, 
+      $fw: --fw_regular, 
+      $fz: size(15), 
+      $lh: size(24), 
+      $c: --c_text
+    );
   }
 }

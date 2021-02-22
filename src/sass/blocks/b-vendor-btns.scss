@@ -59,10 +59,24 @@
   }
 
   &__text {
-    @include text(--ff_header, --fw_light, size(9), size(11), --c_header_text, null, uppercase);
+    @include text(
+      $ff: --ff_header, 
+      $fw: --fw_light, 
+      $fz: size(9), 
+      $lh: size(11), 
+      $c: --c_header_text, 
+      $tt: uppercase
+    );
   }
   &__vendor {
-    @include text(--ff_header, --fw_semi_bold, size(16), size(15), --c_header_text, null, uppercase);
+    @include text(
+      $ff: --ff_header, 
+      $fw: --fw_semi_bold, 
+      $fz: size(16), 
+      $lh: size(15), 
+      $c: --c_header_text,
+      $tt: uppercase
+    );
   }
 
   // меняем иконки на светлые при наведении

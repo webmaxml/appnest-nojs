@@ -3,11 +3,25 @@
 
 .b-header-text {
   &__header {
-    @include text(--ff_header, --fw_bold, size(48), size(52), --c_header_text, $tt: uppercase);
+    @include text(
+      $ff: --ff_header, 
+      $fw: --fw_bold, 
+      $fz: size(48), 
+      $lh: size(52), 
+      $c: --c_header_text, 
+      $tt: uppercase
+    );
   }
 
   &__accent {
-    @include text(--ff_header, --fw_light, size(48), size(52), --c_accent, $tt: uppercase);
+    @include text(
+      $ff: --ff_header, 
+      $fw: --fw_light, 
+      $fz: size(48), 
+      $lh: size(52), 
+      $c: --c_accent, 
+      $tt: uppercase
+    );
 
     & > b {
       font-weight: var(--fw_bold);
@@ -17,12 +31,25 @@
   &__secondary-header {
     display: block;
 
-    @include text(--ff_header, --fw_light, size(36), size(52), --c_header_text, $tt: uppercase);
+    @include text(
+      $ff: --ff_header, 
+      $fw: --fw_light, 
+      $fz: size(36), 
+      $lh: size(52), 
+      $c: --c_header_text, 
+      $tt: uppercase
+    );
   }
 
   &__text {
     margin-top: size(20);
 
-    @include text(--ff_header, --fw_regular, size(18), size(30), --c_header_text);
+    @include text(
+      $ff: --ff_header, 
+      $fw: --fw_regular, 
+      $fz: size(18), 
+      $lh: size(30), 
+      $c: --c_header_text
+    );
   }
 }

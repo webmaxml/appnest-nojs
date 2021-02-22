@@ -57,10 +57,24 @@
   }
 
   &__header {
-    @include text(--ff_header, --fw_bold, size(18), size(18), --c_h3, $ta: center);
+    @include text(
+      $ff: --ff_header, 
+      $fw: --fw_bold, 
+      $fz: size(18), 
+      $lh: size(18), 
+      $c: --c_h3, 
+      $ta: center
+    );
   }
   &__text {
-    @include text(--ff_text, --fw_regular, size(15), size(24), --c_text, $ta: center);
+    @include text(
+      $ff: --ff_text, 
+      $fw: --fw_regular, 
+      $fz: size(15), 
+      $lh: size(24), 
+      $c: --c_text, 
+      $ta: center
+    );
   }
 }
 
