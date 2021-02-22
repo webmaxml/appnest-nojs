@@ -1,0 +1,13 @@
+@use 'sass:meta';
+@use '../functions/is-map' as *;
+@use 'prop' as *;
+
+@mixin vars($vars) {
+  @if not is-map($vars) {
+    @error "$vars in vars() must be 'map', '#{meta.type-of($vars)}' - provided";
+  }
+
+  @each $var, $value in $vars {
+    @include prop($var, $value);
+  }
+}

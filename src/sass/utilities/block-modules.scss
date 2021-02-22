@@ -1,6 +1,12 @@
 @forward 'functions/size';
 @forward 'mixins/position';
-@forward 'mixins/block';
+@forward 'mixins/display';
+@forward 'mixins/transform';
 @forward 'mixins/flex';
+@forward 'mixins/grid';
+@forward 'mixins/table';
+@forward 'mixins/align';
+@forward 'mixins/box';
 @forward 'mixins/text';
-@forward 'mixins/prop';
+@forward 'mixins/style';
+@forward 'mixins/animation';

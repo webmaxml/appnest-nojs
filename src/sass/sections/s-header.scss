@@ -5,27 +5,25 @@
 
   &::before {
     @include position(absolute, $t: 0, $l: 0, $z: -1);
-    @include block($w: 100%, $h: 100%);
-
-    content: "";
-
-    background: var(--c_overlay);
+    @include display($c: "");
+    @include box($w: 100%, $h: 100%);
+    @include style($b: --c_overlay);
   }
 
   &__top-grid {
     @extend %container;
-    width: 100%;
+    @include box($w: 100%);
   }
   &__center-grid {
     @extend %container;
-    width: 100%;
+    @include box($w: 100%);
   }
 }
 
 // ----------------------------------------- grid -----------------------------------------
 
 .s-header {
-  display: grid;
+  @include display(grid);
 
   @include screen-height-section((
     320: 560 700,
@@ -39,11 +37,10 @@
   ));
   
   &__top-grid {
-    @include position();
-    @include cell(t);
+    @include grid($a: t);
   }
   &__center-grid {
-    @include cell(c);
+    @include grid($a: c);
   }
 
   @include prop(--v-padding, 1fr (1280: 155px));
@@ -56,7 +53,7 @@
 }
 
 .s-header__top-grid {
-  display: grid;
+  @include display(grid);
 
   & .b-logo {
     @include cell(l, start, center);
