@@ -1,5 +1,7 @@
-@mixin cell($area, $justify: null, $align: null) {
-  grid-area: $area;
-  justify-self: $justify;
-  align-self: $align;
+@use 'prop' as *;
+
+@mixin cell($area: null, $j: null, $a: null) {
+  @include prop(grid-area, $area);
+  @include prop(justify-self, $j);
+  @include prop(align-self, $a);
 }

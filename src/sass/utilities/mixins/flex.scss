@@ -1,6 +1,9 @@
-@mixin flex($w: null, $j: null, $a: null) {
-  display: flex;
-  flex-flow: row $w;
-  justify-content: $j;
-  align-items: $a;
+@use 'prop' as *;
+
+@mixin flex($w: null, $j: null, $a: null, $d: flex, $f: null) {
+  @include prop(display, $d);
+  @include prop(flex-direction, $f);
+  @include prop(flex-wrap, $w);
+  @include prop(justify-content, $j);
+  @include prop(align-items, $a);
 }
