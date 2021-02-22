@@ -15,16 +15,16 @@
 
   & .b-video-overview-text {
     @include cell(t, null, start);
-    @include prop(--size, fluid, $text-breakpoints);
-    @include prop(justify-self, center, (1280: start));
-    @include prop(width, null, (1200: 600px));
-    @include prop(text-align, center, (1280: left));
+    @include prop(--size, fluid $text-breakpoints);
+    @include prop(justify-self, center (1280: start));
+    @include prop(width, null (1200: 600px));
+    @include prop(text-align, center (1280: left));
   }
   & .b-vendor-btns {
     @include cell(b, null, start);
-    @include prop(--size, fluid, $text-breakpoints);
-    @include prop(width, null, (1200: 600px));
-    @include prop(justify-self, center, (1280: start));
+    @include prop(--size, fluid $text-breakpoints);
+    @include prop(width, null (1200: 600px));
+    @include prop(justify-self, center (1280: start));
 
     padding: 0 15px;
     margin-left: auto;
@@ -32,8 +32,8 @@
   & .b-video {
     @include cell(v, null, start);
     @include prop(--size, 100px);
-    @include prop(justify-self, center, (1280: start));
-    @include prop(margin-left, 0, (1280: 17px));
+    @include prop(justify-self, center (1280: start));
+    @include prop(margin-left, 0 (1280: 17px));
   }
 
   grid-template:

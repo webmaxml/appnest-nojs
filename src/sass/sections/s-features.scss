@@ -19,31 +19,31 @@
 
   & .b-feature-img {
     @include cell(i, null, start);
-    @include prop(--size, fluid, (320: 50px, 1024: 100px));
-    @include prop(justify-self, center, (1200: start));
-    @include prop(margin, 0, (1280: 8px 15px 0 15px));
+    @include prop(--size, fluid (320: 50px, 1024: 100px));
+    @include prop(justify-self, center (1200: start));
+    @include prop(margin, 0 (1280: 8px 15px 0 15px));
   }
   & .b-feature-text {
     @include cell(t, null, start);
-    @include prop(--size, fluid, $text-breakpoints);
-    @include prop(justify-self, center, (1200: start));
-    @include prop(width, 300px, (600: 500px, 1200: auto));
-    @include prop(text-align, center, (1200: left));
+    @include prop(--size, fluid $text-breakpoints);
+    @include prop(justify-self, center (1200: start));
+    @include prop(width, 300px (600: 500px, 1200: auto));
+    @include prop(text-align, center (1200: left));
   }
   & .b-feature-list {
     @include cell(l, null, start);
-    @include prop(--size, fluid, $text-breakpoints);
-    @include prop(justify-self, center, (1200: start));
-    @include prop(width, 300px, (600: 600px, 1200: auto));
-    @include prop(text-align, center, (1200: left));
+    @include prop(--size, fluid $text-breakpoints);
+    @include prop(justify-self, center (1200: start));
+    @include prop(width, 300px (600: 600px, 1200: auto));
+    @include prop(text-align, center (1200: left));
 
     & .b-feature-list__icon {
-      @include prop(margin, auto, (1200: 0));
+      @include prop(margin, auto (1200: 0));
     }
   }
 
-  @include prop(--t-padding, fluid, (320: 45px, 1200: 122px));
-  @include prop(--b-padding, fluid, (320: 45px, 1200: 140px));
+  @include prop(--t-padding, fluid (320: 45px, 1200: 122px));
+  @include prop(--b-padding, fluid (320: 45px, 1200: 140px));
   grid-template:
     "." var(--t-padding)
     "t" max-content

@@ -3,61 +3,40 @@
 @use '../functions/is-string' as *;
 @use '../functions/is-list' as *;
 @use '../functions/is-map' as *;
-@use '../functions/strip-unit' as *;
 @use '../functions/to-px' as *;
+@use '../functions/remove-elem' as *;
+@use 'process-breakpoints' as *;
+@use 'process-fluid' as *;
 
-@mixin prop($prop, $val, $breakpoints: ()) {
+
+@mixin prop($prop, $value) {
   @if not is-string($prop) {
     @error "$prop in prop() must be 'string', '#{meta.type-of($prop)}' - provided";
   }
-  @if not is-map($breakpoints) and not is-list($breakpoints) {
-    @error "$breakpoints in prop() must be 'map', '#{meta.type-of($breakpoints)}' - provided";
-  }
 
-  @if $val == "fluid" {
-    // first and last breakpoints
-    $first-bp: list.nth($breakpoints, 1);
-    $last-bp: list.nth($breakpoints, -1);
-    $last-i: list.index($breakpoints, $last-bp);
+  // if is map - the value is just breakpoints
+  @if is-map($value) {
+    @include process-breakpoints($prop, $value);
 
-    // set first value for prop
-    $first-value: to-px(list.nth($first-bp, 2));
-    #{$prop}: $first-value;
+    // if it is list with breakpoints as last elements 
+  } @else if is-list($value) and is-map(list.nth($value, -1)) {
+    $bps: list.nth($value, -1);
+    $init-value: remove-elem($value, $bps);
 
-    // for every breakpoint except last form fluid value
-    @each $bp in $breakpoints {
-      $current-i: list.index($breakpoints, $bp);
-
-      @if $current-i != $last-i {
-        $next-bp: list.nth($breakpoints, $current-i + 1);
-
-        $vw1: to-px(list.nth($bp, 1));
-        $vw2: to-px(list.nth($next-bp, 1));
-        $value1: to-px(list.nth($bp, 2));
-        $value2: to-px(list.nth($next-bp, 2));
-
-        @media screen and (min-width: $vw1) {
-          #{$prop}: calc(
-            #{$value1} + #{strip-unit($value2 - $value1)} * ((100vw - #{$vw1}) / #{strip-unit($vw2 - $vw1)})
-          );
-        }
-      }
+    // strip the list, if it has just one value
+    @if list.length($init-value) == 1 {
+      $init-value: list.nth($init-value, 1);
     }
 
-    // set last value for prop
-    $last-vw: to-px(list.nth($last-bp, 1));
-    $last-value: to-px(list.nth($last-bp, 2));
-
-    @media screen and (min-width: $last-vw) {
-      #{$prop}: $last-value;
+    @if $init-value == 'fluid' {
+      @include process-fluid($prop, $bps);
+    } @else {
+      #{$prop}: $init-value;
+      @include process-breakpoints($prop, $bps);
     }
+
+    // if the value is not the list with breakpoints or map, then its just value
   } @else {
-    #{$prop}: $val;
-
-    @each $vw, $value in $breakpoints {
-      @media screen and (min-width: to-px($vw)) {
-        #{$prop}: $value;
-      }
-    }
+    #{$prop}: $value;
   }
 }

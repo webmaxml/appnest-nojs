@@ -9,7 +9,7 @@
   position: relative;
   z-index: 0; 
 
-  @include prop(--v-padding, 1fr, (1280: 155px));
+  @include prop(--v-padding, 1fr (1280: 155px));
   @include screen-height-section((
     320: 560 700,
     360: 580 1050,
@@ -68,25 +68,25 @@
 .s-header__top-grid {
   display: grid;
 
-  @include prop(--v-padding, fluid, (320: 15px, 1280: 57px));
+  @include prop(--v-padding, fluid (320: 15px, 1280: 57px));
   
   & .b-logo {
     @include cell(l, start, center);
-    @include prop(--size, fluid, $text-breakpoints);
+    @include prop(--size, fluid $text-breakpoints);
   }
   & .b-nav {
     @include cell(n, center, center);
     @include prop(--size, 100px);
-    @include prop(display, none, (1024: flex));
+    @include prop(display, none (1024: flex));
   }
   & .b-burger {
     @include cell(b, start, center);
-    @include prop(--size, fluid, $text-breakpoints);
-    @include prop(display, block, (1024: none));
+    @include prop(--size, fluid $text-breakpoints);
+    @include prop(display, block (1024: none));
   }
   & .b-get-btn {
     @include cell(g, end, center);
-    @include prop(--size, fluid, $text-breakpoints);
+    @include prop(--size, fluid $text-breakpoints);
   }
 
   grid-template:
@@ -107,19 +107,19 @@
 
   & .b-header-text {
     @include cell(t, center, start);
-    @include prop(--size, fluid, $text-breakpoints);
-    @include prop(text-align, center, (768: left));
-    @include prop(margin-top, 0, (768: -10px));
+    @include prop(--size, fluid $text-breakpoints);
+    @include prop(text-align, center (768: left));
+    @include prop(margin-top, 0 (768: -10px));
   }
   & .b-header-img {
     @include cell(i, null, start);
-    @include prop(--size, fluid, (320: 30px, 1280: 100px));
-    @include prop(justify-self, center, (768: end));
+    @include prop(--size, fluid (320: 30px, 1280: 100px));
+    @include prop(justify-self, center (768: end));
   }
   & .b-vendor-btns {
     @include cell(v, null, start);
-    @include prop(--size, fluid, $text-breakpoints);
-    @include prop(justify-self, center, (768: start));
+    @include prop(--size, fluid $text-breakpoints);
+    @include prop(justify-self, center (768: start));
   }
 
   grid-template:

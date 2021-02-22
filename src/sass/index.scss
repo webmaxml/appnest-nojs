@@ -9,16 +9,3 @@
 @use 'blocks';
 @use 'sections';
 @use 'pages';
-
-
-@use 'utilities/mixins/test' as *;
-@use 'utilities/functions/to-px' as *;
-
-
-body {
-  @include process-value(padding-top, fluid (
-    600: 40,
-    800: 200,
-    1000: 100
-  ));
-}

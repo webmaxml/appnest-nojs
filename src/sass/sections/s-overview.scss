@@ -19,16 +19,16 @@
 
   & .b-overview-list {
     @include cell(o, center, start);
-    @include prop(--size, fluid, $text-breakpoints);
-    @include prop(width, 300px, (600: 600px, 1200: auto));
+    @include prop(--size, fluid $text-breakpoints);
+    @include prop(width, 300px (600: 600px, 1200: auto));
 
     &__item {
-      @include prop(margin-top, size(45), (1200: size(15)));
-      @include prop(margin-bottom, size(45), (1200: size(15)));
+      @include prop(margin-top, size(45) (1200: size(15)));
+      @include prop(margin-bottom, size(45) (1200: size(15)));
     }
   }
 
-  @include prop(--v-padding, fluid, (320: 45px, 1280: 126px));
+  @include prop(--v-padding, fluid (320: 45px, 1280: 126px));
   grid-template:
     "." var(--v-padding)
     "o" max-content
