@@ -1,0 +1,9 @@
+@use 'prop' as *;
+
+@mixin transform($t: null, $to: null, $p: null, $po: null, $bv: null) {
+  @include prop(transform, $t);
+  @include prop(transform-origin, $to);
+  @include prop(perspective, $p);
+  @include prop(perspective-origin, $po);
+  @include prop(backface-visibility, $bv);
+}

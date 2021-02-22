@@ -1,25 +1,13 @@
-@use '../utilities/vars/breakpoints' as *;
-@use '../utilities/placeholders/container' as *;
-@use '../utilities/functions/size' as *;
-@use '../utilities/mixins/cell' as *;
-@use '../utilities/mixins/prop' as *;
-@use '../utilities/mixins/media' as *;
-@use '../utilities/mixins/screen-height-section' as *;
+@use '../utilities/section-modules' as *;
 
 .s-header {
-  position: relative;
-  z-index: 0; 
+  @include position(relative, $z: 0);
 
   &::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
+    @include position(absolute, $t: 0, $l: 0, $z: -1);
+    @include block($w: 100%, $h: 100%);
 
     content: "";
-
-    width: 100%;
-    height: 100%;
 
     background: var(--c_overlay);
   }
@@ -51,6 +39,7 @@
   ));
   
   &__top-grid {
+    @include position();
     @include cell(t);
   }
   &__center-grid {

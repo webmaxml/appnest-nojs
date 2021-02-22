@@ -1,9 +1,8 @@
 @use 'prop' as *;
 
-@mixin flex($w: null, $j: null, $a: null, $d: flex, $f: null) {
-  @include prop(display, $d);
-  @include prop(flex-direction, $f);
+@mixin flex($d: null, $w: null, $g: null, $s: null) {
+  @include prop(flex-direction, $d);
   @include prop(flex-wrap, $w);
-  @include prop(justify-content, $j);
-  @include prop(align-items, $a);
+  @include prop(flex-grow, $g);
+  @include prop(flex-shrink, $s);
 }
