@@ -1,0 +1,12 @@
+@use 'prop' as *;
+
+@mixin align($jc: null, $ji: null, $js: null, $ac: null, $ai: null, $as: null, $ta: null, $va: null) {
+  @include prop(justify-content, $jc);
+  @include prop(justify-items, $ji);
+  @include prop(justify-self, $js);
+  @include prop(align-content, $ac);
+  @include prop(align-items, $ai);
+  @include prop(align-self, $as);
+  @include prop(text-align, $ta);
+  @include prop(vertical-align, $va);
+}
