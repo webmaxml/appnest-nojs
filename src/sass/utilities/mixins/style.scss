@@ -1,0 +1,33 @@
+@use 'prop' as *;
+
+@mixin style(
+  $b: null,
+  $bi: null,
+  $bp: null,
+  $bs: null,
+  $br: null,
+  $ba: null,
+  $bo: null,
+  $bcl: null,
+  $bco: null,
+  $co: null,
+  $bsh: null,
+  $cu: null,
+  $f: null,
+  $o: null
+) {
+  @include prop(background, $b);
+  @include prop(background-image, $bi);
+  @include prop(background-position, $bp);
+  @include prop(background-size, $bs);
+  @include prop(background-repeat, $br);
+  @include prop(background-attachment, $ba);
+  @include prop(background-origin, $bo);
+  @include prop(background-clip, $bcl);
+  @include prop(background-color, $bco);
+  @include prop(color, $co);
+  @include prop(box-shadow, $bsh);
+  @include prop(cursor, $cu);
+  @include prop(filter, $f);
+  @include prop(opacity, $o);
+}

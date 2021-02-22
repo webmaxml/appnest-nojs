@@ -1,0 +1,33 @@
+@use 'prop' as *;
+
+@mixin animation(
+  $a: null,
+  $an: null,
+  $adu: null,
+  $atf: null,
+  $ade: null,
+  $aic: null,
+  $adi: null,
+  $afm: null,
+  $aps: null,
+  $t: null,
+  $tp: null,
+  $tdu: null,
+  $ttf: null,
+  $tde: null
+) {
+  @include prop(animation, $a);
+  @include prop(animation-name, $an);
+  @include prop(animation-duration, $adu);
+  @include prop(animation-timing-function, $atf);
+  @include prop(animation-delay, $ade);
+  @include prop(animation-iteration-count, $aic);
+  @include prop(animation-direction, $adi);
+  @include prop(animation-fill-mode, $afm);
+  @include prop(animation-play-state, $aps);
+  @include prop(transition, $t);
+  @include prop(transition-property, $tp);
+  @include prop(transition-duration, $tdu);
+  @include prop(transition-timing-function, $ttf);
+  @include prop(transition-delay, $tde);
+}
