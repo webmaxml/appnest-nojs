@@ -1,7 +1,6 @@
 @use 'prop' as *;
 
-@mixin block(
-  $d: null, 
+@mixin box(
   $w: null,
   $min-w: null,
   $max-w: null,
@@ -24,7 +23,6 @@
   $m-bottom: null,
   $m-left: null,
 ) {
-  @include prop(display, $d);
   @include prop(width, $w);
   @include prop(min-width, $min-w);
   @include prop(max-width, $max-w);
