@@ -2,8 +2,9 @@
 @use '../utilities/placeholders/container' as *;
 @use '../utilities/functions/size' as *;
 @use '../utilities/mixins/cell' as *;
-@use '../utilities/mixins/prop' as *;
+@use '../utilities/mixins/block' as *;
 @use '../utilities/mixins/media' as *;
+@use '../utilities/mixins/prop' as *;
 
 .s-overview {
   background: var(--c_bg1);
@@ -19,13 +20,16 @@
   display: grid;
 
   & .b-overview-list {
-    @include cell(o, center, start);
-    @include prop(--size, fluid $text-breakpoints);
-    @include prop(width, 300px (600: 600px, 1200: auto));
+    @include cell(o, center, start, fluid $text-breakpoints);
+    @include block(
+      $w: 300px (600: 600px, 1200: auto)
+    );
 
     &__item {
-      @include prop(margin-top, size(45) (1200: size(15)));
-      @include prop(margin-bottom, size(45) (1200: size(15)));
+      @include block(
+        $m-top: size(45) (1200: size(15)),
+        $m-bottom: size(45) (1200: size(15)),
+      );
     }
   }
 

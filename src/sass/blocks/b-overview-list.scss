@@ -2,14 +2,17 @@
 @use '../utilities/mixins/flex' as *;
 @use '../utilities/mixins/text' as *;
 @use '../utilities/mixins/cell' as *;
+@use '../utilities/mixins/block' as *;
 
 .b-overview-list {
   @include flex(wrap, center, flex-start);
 
   &__item {
-    width: size(270);
-    margin-left: size(15);
-    margin-right: size(15);
+    @include block(
+      $w: size(270),
+      $m-left: size(15),
+      $m-right: size(15),
+    );
 
     &:nth-child(1) .b-overview-list__icon-circle {
       background: var(--c_active);
@@ -28,53 +31,44 @@
   &__outer-circle {
     @include flex(nowrap, center, center);
 
-    width: size(145);
-    height: size(145);
+    @include block(
+      $w: size(145),
+      $h: size(145),
+      $b-radius: 100%
+    );
 
     background: var(--c_header_text);
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
-    border-radius: 100%;
   }
 
   &__inner-circle {
     @include flex(nowrap, center, center);
 
-    width: size(115);
-    height: size(115);
+    @include block(
+      $w: size(115),
+      $h: size(115),
+      $b-radius: 100%
+    );
 
     background: var(--c_header_text);
     box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
-    border-radius: 100%;
   }
 
   &__icon-circle {
     @include flex(nowrap, center, center);
 
-    width: size(85);
-    height: size(85);
-
-    border-radius: 100%;
+    @include block(
+      $w: size(85),
+      $h: size(85),
+      $b-radius: 100%
+    );
   }
 
   &__header {
-    @include text(
-      $ff: --ff_header, 
-      $fw: --fw_bold, 
-      $fz: size(18), 
-      $lh: size(18), 
-      $c: --c_h3, 
-      $ta: center
-    );
+    @include text(--ff_header, --fw_bold, size(18), size(18), --c_h3, $ta: center);
   }
   &__text {
-    @include text(
-      $ff: --ff_text, 
-      $fw: --fw_regular, 
-      $fz: size(15), 
-      $lh: size(24), 
-      $c: --c_text, 
-      $ta: center
-    );
+    @include text(--ff_text, --fw_regular, size(15), size(24), --c_text, $ta: center);
   }
 }
 

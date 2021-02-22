@@ -11,33 +11,36 @@
 
 
 @mixin prop($prop, $value) {
-  @if not is-string($prop) {
-    @error "$prop in prop() must be 'string', '#{meta.type-of($prop)}' - provided";
-  }
-
-  // if is map - the value is just breakpoints
-  @if is-map($value) {
-    @include process-breakpoints($prop, $value);
-
-    // if it is list with breakpoints as last elements 
-  } @else if is-list($value) and is-map(list.nth($value, -1)) {
-    $bps: list.nth($value, -1);
-    $init-value: remove-elem($value, $bps);
-
-    // strip the list, if it has just one value
-    @if list.length($init-value) == 1 {
-      $init-value: list.nth($init-value, 1);
+  // do something only if value not null/false
+  @if $value {
+    @if not is-string($prop) {
+      @error "$prop in prop() must be 'string', '#{meta.type-of($prop)}' - provided";
     }
 
-    @if $init-value == 'fluid' {
-      @include process-fluid($prop, $bps);
+    // if is map - the value is just breakpoints
+    @if is-map($value) {
+      @include process-breakpoints($prop, $value);
+
+      // if it is list with breakpoints as last elements 
+    } @else if is-list($value) and is-map(list.nth($value, -1)) {
+      $bps: list.nth($value, -1);
+      $init-value: remove-elem($value, $bps);
+
+      // strip the list, if it has just one value
+      @if list.length($init-value) == 1 {
+        $init-value: list.nth($init-value, 1);
+      }
+
+      @if $init-value == 'fluid' {
+        @include process-fluid($prop, $bps);
+      } @else {
+        #{$prop}: process-var($init-value);
+        @include process-breakpoints($prop, $bps);
+      }
+
+      // if the value is not the list with breakpoints or map, then its just value
     } @else {
-      #{$prop}: process-var($init-value);
-      @include process-breakpoints($prop, $bps);
+      #{$prop}: process-var($value);
     }
-
-    // if the value is not the list with breakpoints or map, then its just value
-  } @else {
-    #{$prop}: process-var($value);
   }
 }
