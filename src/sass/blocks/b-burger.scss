@@ -1,22 +1,16 @@
-@use '../utilities/functions/size' as *;
+@use '../utilities/block-modules' as *;
 
 .b-burger {
-  padding: size(10);
-  border: size(1) solid var(--c_header_text);
-  border-radius: size(6);
-
-  color: var(--c_header_text);
-
-  transition: 0.3s;
+  @include box($p: size(10), $b: size(1) solid var(--c_header_text), $br: size(6));
+  @include style($co: --c_header_text);
+  @include animation($t: 0.3s);
 
   &:hover {
-    color: var(--c_active);
-
-    border-color: var(--c_active);
+    @include style($co: --c_active);
+    @include box($bc: --c_active);
   }
 
   & .fas {
-    font-size: size(33);
-    line-height: size(35);
+    @include text($fz: size(33), $lh: size(35));
   }
 }

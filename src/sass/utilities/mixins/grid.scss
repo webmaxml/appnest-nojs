@@ -1,39 +1,39 @@
 @use 'prop' as *;
 
 @mixin grid(
+  $a: null,
+  $t: null,
   $tc: null,
   $tr: null,
   $ac: null,
   $ar: null,
   $af: null,
-  $g: null,
-  $cg: null,
   $rg: null,
+  $cg: null,
+  $g: null,
   $cs: null,
   $ce: null,
+  $c: null,
   $rs: null,
   $re: null,
-  $c: null,
   $r: null,
-  $a: null,
-  $ta: null,
-  $t: null
+  $ta: null
 ) {
+  @include prop(grid-area, $a);
+  @include prop(grid-template, $t);
   @include prop(grid-template-columns, $tc);
   @include prop(grid-template-rows, $tr);
   @include prop(grid-auto-columns, $ac);
   @include prop(grid-auto-rows, $ar);
   @include prop(grid-auto-flow, $af);
-  @include prop(grid-gap, $g);
-  @include prop(grid-column-gap, $cg);
   @include prop(grid-row-gap, $rg);
+  @include prop(grid-column-gap, $cg);
+  @include prop(grid-gap, $g);
   @include prop(grid-column-start, $cs);
   @include prop(grid-column-end, $ce);
+  @include prop(grid-column, $c);
   @include prop(grid-row-start, $rs);
   @include prop(grid-row-end, $re);
-  @include prop(grid-column, $c);
   @include prop(grid-row, $r);
-  @include prop(grid-area, $a);
   @include prop(grid-template-areas, $ta);
-  @include prop(grid-template, $t);
 }

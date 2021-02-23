@@ -1,30 +1,16 @@
 @use '../utilities/section-modules' as *;
 
 .s-header {
+  @include vars((--v-padding: 1fr (1280: 155px)));
   @include position(relative, $z: 0);
-
-  &::before {
-    @include position(absolute, $t: 0, $l: 0, $z: -1);
-    @include display($c: "");
-    @include box($w: 100%, $h: 100%);
-    @include style($b: --c_overlay);
-  }
-
-  &__top-grid {
-    @extend %container;
-    @include box($w: 100%);
-  }
-  &__center-grid {
-    @extend %container;
-    @include box($w: 100%);
-  }
-}
-
-// ----------------------------------------- grid -----------------------------------------
-
-.s-header {
   @include display(grid);
-
+  @include grid(
+    $t: "t" max-content
+        "." var(--v-padding)
+        "c" max-content
+        "." var(--v-padding)
+        / 1fr
+  );
   @include screen-height-section((
     320: 560 700,
     360: 580 1050,
@@ -35,94 +21,92 @@
     1024: 768 1050,
     1280: 1050 1050
   ));
-  
+
+  &::before {
+    @include position(absolute, $t: 0, $l: 0, $z: -1);
+    @include display($c: "");
+    @include box($w: 100%, $h: 100%);
+    @include style($b: --c_overlay);
+  }
+
   &__top-grid {
-    @include grid($a: t);
+    @extend %container;
+    @include vars((--v-padding: fluid (320: 15px, 1280: 57px)));
+    @include display(grid);
+    @include grid(
+      $a: t,
+      $t: ". . . . ." var(--v-padding)
+          "b . l . g" max-content
+          / max-content 15px max-content 1fr max-content
+          (
+            1024: ". . ." var(--v-padding)
+                  "l n g" max-content
+                  /1fr max-content 1fr
+          )
+    );
+    @include box($w: 100%);
+
+    & .b-logo {
+      @include vars((--size: fluid $text-breakpoints));
+      @include grid($a: l);
+      @include align($js: start, $as: center);
+    }
+    & .b-nav {
+      @include vars((--size: 100px));
+      @include display($d: none (1024: flex));
+      @include grid($a: n);
+      @include align($js: center, $as: center);
+    }
+    & .b-burger {
+      @include vars((--size: fluid $text-breakpoints));
+      @include display($d: block (1024: none));
+      @include grid($a: b);
+      @include align($js: start, $as: center);
+    }
+    & .b-get-btn {
+      @include vars((--size: fluid $text-breakpoints));
+      @include grid($a: g);
+      @include align($js: end, $as: center);
+    }
   }
   &__center-grid {
-    @include grid($a: c);
-  }
+    @extend %container;
+    @include display(grid);
+    @include grid(
+      $a: c,
+      $t: "t" max-content
+          "." 50px
+          "i" max-content
+          "." 50px
+          "v" max-content
+          / 1fr
+          (
+            768: ". i" max-content
+                 "t i" max-content
+                 ". i" 50px
+                 "v i" max-content
+                 ". i" max-content
+                 / 1fr 1fr
+          )
+    );
+    @include box($w: 100%);
 
-  @include prop(--v-padding, 1fr (1280: 155px));
-  grid-template:
-    "t" max-content
-    "." var(--v-padding)
-    "c" max-content
-    "." var(--v-padding)
-    / 1fr;
-}
-
-.s-header__top-grid {
-  @include display(grid);
-
-  & .b-logo {
-    @include cell(l, start, center);
-    @include prop(--size, fluid $text-breakpoints);
-  }
-  & .b-nav {
-    @include cell(n, center, center);
-    @include prop(--size, 100px);
-    @include prop(display, none (1024: flex));
-  }
-  & .b-burger {
-    @include cell(b, start, center);
-    @include prop(--size, fluid $text-breakpoints);
-    @include prop(display, block (1024: none));
-  }
-  & .b-get-btn {
-    @include cell(g, end, center);
-    @include prop(--size, fluid $text-breakpoints);
-  }
-  
-  @include prop(--v-padding, fluid (320: 15px, 1280: 57px));
-  grid-template:
-    ". . . . ." var(--v-padding)
-    "b . l . g" max-content
-    / max-content 15px max-content 1fr max-content;
-
-  @include from_1024 {
-    grid-template:
-      ". . ." var(--v-padding)
-      "l n g" max-content
-      /1fr max-content 1fr;
-  }
-}
-
-.s-header__center-grid {
-  display: grid;
-
-  & .b-header-text {
-    @include cell(t, center, start);
-    @include prop(--size, fluid $text-breakpoints);
-    @include prop(text-align, center (768: left));
-    @include prop(margin-top, 0 (768: -10px));
-  }
-  & .b-header-img {
-    @include cell(i, null, start);
-    @include prop(--size, fluid (320: 30px, 1280: 100px));
-    @include prop(justify-self, center (768: end));
-  }
-  & .b-vendor-btns {
-    @include cell(v, null, start);
-    @include prop(--size, fluid $text-breakpoints);
-    @include prop(justify-self, center (768: start));
-  }
-
-  grid-template:
-    "t" max-content
-    "." 50px
-    "i" max-content
-    "." 50px
-    "v" max-content
-    / 1fr;
-
-  @include from_768 {
-    grid-template:
-      ". i" max-content
-      "t i" max-content
-      ". i" 50px
-      "v i" max-content
-      ". i" max-content
-      / 1fr 1fr;
+    & .b-header-text {
+      @include vars((--size: fluid $text-breakpoints));
+      @include grid($a: t);
+      @include align($js: center, $as: start, $ta: center (768: left));
+      @include box($m-top: 0 (768: -10px));
+    }
+    & .b-header-img {
+      @include vars((--size: fluid (320: 30px, 1280: 100px)));
+      @include grid($a: i);
+      @include align($js: center (768: end), $as: start);
+      @include box($m-top: 0 (768: -10px));
+    }
+    & .b-vendor-btns {
+      @include vars((--size: fluid $text-breakpoints));
+      @include grid($a: v);
+      @include align($js: center (768: start), $as: start);
+    }
   }
 }

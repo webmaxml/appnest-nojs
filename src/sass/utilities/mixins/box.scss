@@ -8,20 +8,20 @@
   $min-h: null,
   $max-h: null,
   $p: null,
-  $p-top: null,
-  $p-right: null,
-  $p-bottom: null,
-  $p-left: null,
+  $pt: null,
+  $pr: null,
+  $pb: null,
+  $pl: null,
   $b: null,
-  $b-width: null,
-  $b-style: null,
-  $b-color: null,
-  $b-radius: null,
+  $bw: null,
+  $bs: null,
+  $bc: null,
+  $br: null,
   $m: null,
-  $m-top: null,
-  $m-right: null,
-  $m-bottom: null,
-  $m-left: null,
+  $mt: null,
+  $mr: null,
+  $mb: null,
+  $ml: null,
 ) {
   @include prop(width, $w);
   @include prop(min-width, $min-w);
@@ -30,18 +30,18 @@
   @include prop(min-height, $min-h);
   @include prop(max-height, $max-h);
   @include prop(padding, $p);
-  @include prop(padding-top, $p-top);
-  @include prop(padding-right, $p-right);
-  @include prop(padding-bottom, $p-bottom);
-  @include prop(padding-left, $p-left);
+  @include prop(padding-top, $pt);
+  @include prop(padding-right, $pr);
+  @include prop(padding-bottom, $pb);
+  @include prop(padding-left, $pl);
   @include prop(border, $b);
-  @include prop(border-width, $b-width);
-  @include prop(border-style, $b-style);
-  @include prop(border-color, $b-color);
-  @include prop(border-radius, $b-radius);
+  @include prop(border-width, $bw);
+  @include prop(border-style, $bs);
+  @include prop(border-color, $bc);
+  @include prop(border-radius, $br);
   @include prop(margin, $m);
-  @include prop(margin-top, $m-top);
-  @include prop(margin-right, $m-right);
-  @include prop(margin-bottom, $m-bottom);
-  @include prop(margin-left, $m-left);
+  @include prop(margin-top, $mt);
+  @include prop(margin-right, $mr);
+  @include prop(margin-bottom, $mb);
+  @include prop(margin-left, $ml);
 }
