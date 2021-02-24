@@ -10,9 +10,8 @@
   $bo: null,
   $bcl: null,
   $bco: null,
-  $co: null,
   $bsh: null,
-  $cu: null,
+  $c: null,
   $f: null,
   $o: null
 ) {
@@ -25,9 +24,8 @@
   @include prop(background-origin, $bo);
   @include prop(background-clip, $bcl);
   @include prop(background-color, $bco);
-  @include prop(color, $co);
   @include prop(box-shadow, $bsh);
-  @include prop(cursor, $cu);
+  @include prop(cursor, $c);
   @include prop(filter, $f);
   @include prop(opacity, $o);
 }
