@@ -1,8 +1,16 @@
 @use 'sass:string';
 @use 'is-string' as *;
+@use 'is-list' as *;
 
 @function process-var($value) {
-  @if is-string($value) and string.index($value, "--") == 1 {
+  @if is-list($value) {
+    $result: ();
+    @each $elem in $value {
+      $result: list.append($result, process-var($elem));
+    }
+    
+    @return $result;
+  } @else if is-string($value) and string.index($value, "--") == 1 {
     @return var($value);
   } @else {
     @return $value;
