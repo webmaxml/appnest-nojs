@@ -2,8 +2,8 @@
 
 @mixin grid(
   $gr-ar: null,
-  $gr-te-ar: null,
   $gr-te: null,
+  $gr-te-ar: null,
 
   $gr-te-co: null,
   $gr-te-ro: null,
@@ -25,8 +25,8 @@
   $gr-ro-en: null
 ) {
   @include prop(grid-area, $gr-ar);
-  @include prop(grid-template-areas, $gr-te-ar);
   @include prop(grid-template, $gr-te);
+  @include prop(grid-template-areas, $gr-te-ar);
 
   @include prop(grid-template-columns, $gr-te-co);
   @include prop(grid-template-rows, $gr-te-ro);

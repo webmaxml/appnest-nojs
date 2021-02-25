@@ -1,6 +1,12 @@
 @use 'prop' as *;
 
 @mixin animation(
+  $tr: null,
+  $tr-pr: null,
+  $tr-du: null,
+  $tr-ti-fu: null,
+  $tr-de: null,
+
   $an: null,
   $an-na: null,
   $an-du: null,
@@ -9,14 +15,14 @@
   $an-it-co: null,
   $an-di: null,
   $an-fi-mo: null,
-  $an-pl-st: null,
-
-  $tr: null,
-  $tr-pr: null,
-  $tr-du: null,
-  $tr-ti-fu: null,
-  $tr-de: null
+  $an-pl-st: null
 ) {
+  @include prop(transition, $tr);
+  @include prop(transition-property, $tr-pr);
+  @include prop(transition-duration, $tr-du);
+  @include prop(transition-timing-function, $tr-ti-fu);
+  @include prop(transition-delay, $tr-de);
+
   @include prop(animation, $an);
   @include prop(animation-name, $an-na);
   @include prop(animation-duration, $an-du);
@@ -26,10 +32,4 @@
   @include prop(animation-direction, $an-di);
   @include prop(animation-fill-mode, $an-fi-mo);
   @include prop(animation-play-state, $an-pl-st);
-
-  @include prop(transition, $tr);
-  @include prop(transition-property, $tr-pr);
-  @include prop(transition-duration, $tr-du);
-  @include prop(transition-timing-function, $tr-ti-fu);
-  @include prop(transition-delay, $tr-de);
 }
