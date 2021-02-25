@@ -26,7 +26,7 @@
   @include prop(align-self, $al-se);
 
   // set display only for parent, not for flex element
-  @if not $fl-gr and not $fl-sh and not $fl-ba {
+  @if not $fl-gr and not $fl-sh and not $fl-ba and not $al-se {
     @include prop(display, $di);
   }
 

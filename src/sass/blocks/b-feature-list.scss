@@ -1,8 +1,7 @@
 @use '../utilities/block-modules' as *;
 
 .b-feature-list {
-  @include flex($fl-wr: wrap);
-  @include align($ju-co: center, $al-it: flex-start);
+  @include flex($fl-wr: wrap, $ju-co: center, $al-it: flex-start);
 
   &__item {
     @include box($wi: size(270), $ma: size(35) size(15));

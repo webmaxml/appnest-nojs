@@ -1,8 +1,7 @@
 @use '../utilities/block-modules' as *;
 
 .b-header-img {
-  @include flex($fl-wr: nowrap);
-  @include align($ju-co: center, $al-it: flex-start);
+  @include flex($fl-wr: nowrap, $ju-co: center, $al-it: flex-start);
 
   &__picture {
     @include box($wi: size(540));

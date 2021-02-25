@@ -1,82 +1,66 @@
-@use '../utilities/functions/size' as *;
-@use '../utilities/mixins/text' as *;
-@use '../utilities/mixins/cell' as *;
+@use '../utilities/block-modules' as *;
 
 .b-vendor-btns {
-  display: flex;
 
-  text-align: center;
+  @include text($te-al: center);
 
   &__link {
-    width: size(170);
+    @include box($wi: size(170));
 
     &:first-child {
-      margin-right: 30px;
+      @include box($ma-ri: size(30));
     }
   }
 
   &__btn {
-    display: block;
+    @include display($di: block);
+    @include box($wi: 100%);
+    @include style($bo-wi: size(1), $bo-st: solid, $bo-ra: size(7));
+    @include animation($tr: 0.3s);
 
-    width: 100%;
-    border-width: size(1);
-    border-style: solid;
-    border-radius: size(7);
-
-    transition: 0.3s;
+    @include grid(
+      $gr-te: ". . . . ." size(13)
+              ". i . t ." max-content
+              ". i . v ." max-content
+              ". . . . ." size(13)
+              / 1fr max-content size(9) max-content 1fr
+    );
 
     &--light {
-      border-color: var(--c_header_text);
+      @include style($bo-co: --c-header-text);
 
       &:hover {
-        background: var(--c_active);
-        border-color: var(--c_active);
+        @include style($ba: --c-active, $bo-co: --c-active);
       }
     }
 
     &--dark {
-      border-color: var(--c_h2);
+      @include style($bo-co: --c-h2);
 
-      & .b-vendor-btns__text {
-        color: var(--c_h2);
-      }
-      & .b-vendor-btns__vendor {
-        color: var(--c_h2);
-      }
+      & .b-vendor-btns__text { @include text($co: --c-h2); }
+      & .b-vendor-btns__vendor { @include text($co: --c-h2); }
 
       &:hover {
-        background: var(--c_active);
-        border-color: var(--c_active);
+        @include style($ba: --c-active, $bo-co: --c-active);
 
-        & .b-vendor-btns__text {
-          color: var(--c_header_text);
-        }
-        & .b-vendor-btns__vendor {
-          color: var(--c_header_text);
-        }
+        & .b-vendor-btns__text { @include text($co: --c-header-text); }
+        & .b-vendor-btns__vendor { @include text($co: --c-header-text);}
       }
     }
   }
+  &__icon {
+    @include grid($gr-ar: i);
+  }
 
   &__text {
-    @include text(
-      $ff: --ff_header, 
-      $fw: --fw_light, 
-      $fz: size(9), 
-      $lh: size(11), 
-      $c: --c_header_text, 
-      $tt: uppercase
-    );
+    @include grid($gr-ar: t, $ju-se: start, $al-se: end);
+
+    @include text($fo-fa: --ff-header, $fo-we: --fw-light, $fo-si: size(9), $li-he: size(11), $co: --c-header-text, $te-tr: uppercase);
   }
   &__vendor {
-    @include text(
-      $ff: --ff_header, 
-      $fw: --fw_semi_bold, 
-      $fz: size(16), 
-      $lh: size(15), 
-      $c: --c_header_text,
-      $tt: uppercase
-    );
+    @include grid($gr-ar: v, $ju-se: start, $al-se: start);
+
+    @include text($fo-fa: --ff-header, $fo-we: --fw-semi-bold, $fo-si: size(16), $li-he: size(15), $co: --c-header-text, $te-tr: uppercase);
   }
 
   // меняем иконки на светлые при наведении
@@ -91,35 +75,4 @@
     height: 29em;
     background-position: -220em -5em;
   }
-}
-
-// ----------------------------------------- grid -----------------------------------------
-
-.b-vendor-btns__btn {
-  & .b-vendor-btns__icon {
-    grid-area: i;
-  }
-  & .b-vendor-btns__text {
-    grid-area: t;
-  }
-  & .b-vendor-btns__vendor {
-    grid-area: v;
-  }
-
-  & .b-vendor-btns__text {
-    justify-self: start;
-    align-self: end;
-  }
-  & .b-vendor-btns__vendor {
-    justify-self: start;
-    align-self: start;
-  }
-
-  display: grid;
-  grid-template:
-    ". . . . ." size(13)
-    ". i . t ." max-content
-    ". i . v ." max-content
-    ". . . . ." size(13)
-    / 1fr max-content size(9) max-content 1fr;
 }

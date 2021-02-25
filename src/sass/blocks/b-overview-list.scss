@@ -1,11 +1,18 @@
 @use '../utilities/block-modules' as *;
 
 .b-overview-list {
-  @include flex($fl-wr: wrap);
-  @include align($ju-co: center, $al-it: flex-start);
+  @include flex($fl-wr: wrap, $ju-co: center, $al-it: flex-start);
 
   &__item {
     @include box($wi: size(270), $ma-le: size(15), $ma-ri: size(15));
+    @include grid(
+      $gr-te: "c" max-content
+              "." size(40)
+              "h" max-content
+              "." size(20)
+              "t" max-content
+              / 1fr
+    );
 
     &:nth-child(1) .b-overview-list__icon-circle { @include style($ba: --c-active); }
     &:nth-child(2) .b-overview-list__icon-circle { @include style($ba: --c-accent); }
@@ -14,22 +21,21 @@
   }
 
   &__outer-circle {
-    @include flex($fl-wr: nowrap);
-    @include align($ju-co: center, $al-it: center);
+    @include grid($gr-ar: c, $ju-se: center, $al-se: center);
+
+    @include flex($fl-wr: nowrap, $ju-co: center, $al-it: center);
     @include box($wi: size(145), $he: size(145));
     @include style($ba: --c-header-text, $bo-ra: 100%, $bo-sh: 0px 0px 5px 0px rgba(0, 0, 0, 0.15));
   }
 
   &__inner-circle {
-    @include flex($fl-wr: nowrap);
-    @include align($ju-co: center, $al-it: center);
+    @include flex($fl-wr: nowrap, $ju-co: center, $al-it: center);
     @include box($wi: size(115), $he: size(115));
     @include style($ba: --c-header-text, $bo-ra: 100%, $bo-sh: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.15));
   }
 
   &__icon-circle {
-    @include flex($fl-wr: nowrap);
-    @include align($ju-co: center, $al-it: center);
+    @include flex($fl-wr: nowrap, $ju-co: center, $al-it: center);
     @include box($wi: size(85), $he: size(85));
     @include style($bo-ra: 100%);
   }
@@ -37,37 +43,11 @@
   &__header {
     @include grid($gr-ar: h);
 
-    @include text($fo-fa: --ff-header, $fo-we: --fw-bold, $fo-si: size(18), $li-he: size(18), $co: --c-h3);
-    @include align($te-al: center);
+    @include text($fo-fa: --ff-header, $fo-we: --fw-bold, $fo-si: size(18), $li-he: size(18), $co: --c-h3, $te-al: center);
   }
   &__text {
     @include grid($gr-ar: t);
 
-    @include text($fo-fa: --ff-header, $fo-we: --fw-regular, $fo-si: size(15), $li-he: size(24), $co: --c-text);
-    @include align($te-al: center);
+    @include text($fo-fa: --ff-header, $fo-we: --fw-regular, $fo-si: size(15), $li-he: size(24), $co: --c-text, $te-al: center);
   }
-}
-
-// ----------------------------------------- grid -----------------------------------------
-
-.b-overview-list__item {
-  display: grid;
-
-  & .b-overview-list__outer-circle {
-    @include cell(c, center, center);
-  }
-  & .b-overview-list__header {
-    @include cell(h);
-  }
-  & .b-overview-list__text {
-    @include cell(t);
-  }
-
-  grid-template:
-    "c" max-content
-    "." size(40)
-    "h" max-content
-    "." size(20)
-    "t" max-content
-    / 1fr;
 }

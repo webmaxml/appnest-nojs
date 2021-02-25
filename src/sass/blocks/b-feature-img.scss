@@ -1,8 +1,7 @@
 @use '../utilities/block-modules' as *;
 
 .b-feature-img {
-  @include flex($fl-wr: nowrap);
-  @include align($ju-co: center, $al-it: flex-end);
+  @include flex($fl-wr: nowrap, $ju-co: center, $al-it: flex-end);
 
   &__front {
     @include box($wi: size(304), $ma-le: size(-98));

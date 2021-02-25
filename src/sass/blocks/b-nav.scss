@@ -2,8 +2,7 @@
 
 .b-nav {
   &__list {
-    @include flex($fl-wr: wrap);
-    @include align($ju-co: center, $al-it: stretch);
+    @include flex($fl-wr: wrap, $ju-co: center, $al-it: stretch);
   }
 
   &__item {
