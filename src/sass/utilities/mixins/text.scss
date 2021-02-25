@@ -10,7 +10,13 @@
   $fo-st: null, 
   $te-tr: null, 
   $te-de: null, 
-  $te-sh: null
+  $te-sh: null,
+
+  $wh-sp: null, 
+  $te-ov: null,
+
+  $te-al: null, 
+  $ve-al: null
 ) {
   @include prop(font-family, $fo-fa);
   @include prop(font-weight, $fo-we);
@@ -22,4 +28,10 @@
   @include prop(text-transform, $te-tr);
   @include prop(text-decoration, $te-de);
   @include prop(text-shadow, $te-sh);
+
+  @include prop(white-space, $wh-sp);
+  @include prop(text-overflow, $te-ov);
+
+  @include prop(text-align, $te-al);
+  @include prop(vertical-align, $ve-al);
 }

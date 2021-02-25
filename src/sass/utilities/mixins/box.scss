@@ -20,6 +20,8 @@
   $ma-ri: null,
   $ma-bo: null,
   $ma-le: null,
+
+  $bo-si: null
 ) {
   @include prop(width, $wi);
   @include prop(min-width, $mi-wi);
@@ -40,4 +42,6 @@
   @include prop(margin-right, $ma-ri);
   @include prop(margin-bottom, $ma-bo);
   @include prop(margin-left, $ma-le);
+
+  @include prop(box-sizing, $bo-si);
 }

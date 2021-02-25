@@ -1,36 +1,22 @@
-@use '../utilities/functions/size' as *;
-@use '../utilities/mixins/flex' as *;
-@use '../utilities/mixins/text' as *;
+@use '../utilities/block-modules' as *;
 
 .b-feature-list {
-  @include flex(wrap, center, flex-start);
+  @include flex($fl-wr: wrap);
+  @include align($ju-co: center, $al-it: flex-start);
 
   &__item {
-    width: size(270);
-    margin: size(35) size(15);
+    @include box($wi: size(270), $ma: size(35) size(15));
   }
   &__icon {
-    display: block;
+    @include display($di: block);
   }
 
   &__header {
-    margin-top: size(40);
-    @include text(
-      $ff: --ff_header, 
-      $fw: --fw_bold, 
-      $fz: size(18), 
-      $lh: size(18), 
-      $c: --c_h3
-    );
+    @include text($fo-fa: --ff-header, $fo-we: --fw-bold, $fo-si: size(18), $li-he: size(18), $co: --c-h3);
+    @include box($ma-to: size(40));
   }
   &__text {
-    margin-top: size(20);
-    @include text(
-      $ff: --ff_text, 
-      $fw: --fw_regular, 
-      $fz: size(15), 
-      $lh: size(24), 
-      $c: --c_text
-    );
+    @include text($fo-fa: --ff-text, $fo-we: --fw-regular, $fo-si: size(15), $li-he: size(24), $co: --c-text);
+    @include box($ma-to: size(20));
   }
 }

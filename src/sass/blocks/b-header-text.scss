@@ -1,55 +1,25 @@
-@use '../utilities/functions/size' as *;
-@use '../utilities/mixins/text' as *;
+@use '../utilities/block-modules' as *;
 
 .b-header-text {
   &__header {
-    @include text(
-      $ff: --ff_header, 
-      $fw: --fw_bold, 
-      $fz: size(48), 
-      $lh: size(52), 
-      $c: --c_header_text, 
-      $tt: uppercase
-    );
+    @include text($fo-fa: --ff-header, $fo-we: --fw-bold, $fo-si: size(48), $li-he: size(52), $co: --c-header-text, $te-tr: uppercase);
   }
 
   &__accent {
-    @include text(
-      $ff: --ff_header, 
-      $fw: --fw_light, 
-      $fz: size(48), 
-      $lh: size(52), 
-      $c: --c_accent, 
-      $tt: uppercase
-    );
+    @include text($fo-fa: --ff-header, $fo-we: --fw-light, $fo-si: size(48), $li-he: size(52), $co: --c-accent, $te-tr: uppercase);
 
     & > b {
-      font-weight: var(--fw_bold);
+      @include text($fo-we: --fw-bold);
     }
   }
 
   &__secondary-header {
-    display: block;
-
-    @include text(
-      $ff: --ff_header, 
-      $fw: --fw_light, 
-      $fz: size(36), 
-      $lh: size(52), 
-      $c: --c_header_text, 
-      $tt: uppercase
-    );
+    @include display($di: block);
+    @include text($fo-fa: --ff-header, $fo-we: --fw-light, $fo-si: size(36), $li-he: size(52), $co: --c-header-text, $te-tr: uppercase);
   }
 
   &__text {
-    margin-top: size(20);
-
-    @include text(
-      $ff: --ff_header, 
-      $fw: --fw_regular, 
-      $fz: size(18), 
-      $lh: size(30), 
-      $c: --c_header_text
-    );
+    @include box($ma-to: size(20));
+    @include text($fo-fa: --ff-header, $fo-we: --fw-regular, $fo-si: size(18), $li-he: size(30), $co: --c-header-text);
   }
 }

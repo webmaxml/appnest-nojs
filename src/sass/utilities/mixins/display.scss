@@ -2,18 +2,16 @@
 
 @mixin display(
   $di: null, 
-  $ob-fi: null, 
   $co: null, 
+
   $ov: null, 
-  $wh-sp: null, 
-  $te-ov: null, 
-  $bo-si: null
+  $ov-x: null, 
+  $ov-y: null 
 ) {
   @include prop(display, $di);
-  @include prop(object-fit, $ob-fi);
   @include prop(content, $co);
+
   @include prop(overflow, $ov);
-  @include prop(white-space, $wh-sp);
-  @include prop(text-overflow, $te-ov);
-  @include prop(box-sizing, $bo-si);
+  @include prop(overflow-x, $ov);
+  @include prop(overflow-y, $ov);
 }

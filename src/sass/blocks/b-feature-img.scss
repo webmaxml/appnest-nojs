@@ -1,15 +1,14 @@
-@use '../utilities/functions/size' as *;
-@use '../utilities/mixins/flex' as *;
+@use '../utilities/block-modules' as *;
 
 .b-feature-img {
-  @include flex(nowrap, center, flex-end);
+  @include flex($fl-wr: nowrap);
+  @include align($ju-co: center, $al-it: flex-end);
 
   &__front {
-    margin-left: size(-98);
-    width: size(304);
+    @include box($wi: size(304), $ma-le: size(-98));
   }
 
   &__back {
-    width: size(265);
+    @include box($wi: size(265));
   }
 }

@@ -1,26 +1,15 @@
-@use '../utilities/functions/size' as *;
-@use '../utilities/mixins/text' as *;
+@use '../utilities/block-modules' as *;
 
 .b-get-btn {
-  padding: size(20) size(34);
-  border: size(1) solid var(--c_header_text);
-  border-radius: size(32);
-
-  transition: 0.3s;
+  @include box($pa: size(20) size(34));
+  @include style($bo: size(1) solid --c-header-text, $bo-ra: size(32));
+  @include animation($tr: 0.3s);
 
   &:hover {
-    background: var(--c_active);
-    border-color: var(--c_active);
+    @include style($ba: --c-active, $bo-co: --c-active);
   }
 
   &__link {
-    @include text(
-      $ff: --ff_header, 
-      $fw: --fw_semi_bold, 
-      $fz: size(16), 
-      $lh: size(16), 
-      $c: --c_header_text, 
-      $tt: uppercase
-    );
+    @include text($fo-fa: --ff-header, $fo-we: --fw-semi-bold, $fo-si: size(16), $li-he: size(16), $co: --c-header-text, $te-tr: uppercase);
   }
 }

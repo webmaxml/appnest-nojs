@@ -17,6 +17,7 @@
   $bo-co: null,
   $bo-ra: null,
 
+  $ob-fi: null,
   $bo-sh: null,
   $cu: null,
   $fi: null,
@@ -38,6 +39,7 @@
   @include prop(border-color, $bo-co);
   @include prop(border-radius, $bo-ra);
 
+  @include prop(object-fit, $ob-fi);
   @include prop(box-shadow, $bo-sh);
   @include prop(cursor, $cu);
   @include prop(filter, $fi);

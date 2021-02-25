@@ -1,74 +1,50 @@
-@use '../utilities/functions/size' as *;
-@use '../utilities/mixins/flex' as *;
-@use '../utilities/mixins/text' as *;
-@use '../utilities/mixins/cell' as *;
-@use '../utilities/mixins/block' as *;
+@use '../utilities/block-modules' as *;
 
 .b-overview-list {
-  @include flex(wrap, center, flex-start);
+  @include flex($fl-wr: wrap);
+  @include align($ju-co: center, $al-it: flex-start);
 
   &__item {
-    @include block(
-      $w: size(270),
-      $m-left: size(15),
-      $m-right: size(15),
-    );
+    @include box($wi: size(270), $ma-le: size(15), $ma-ri: size(15));
 
-    &:nth-child(1) .b-overview-list__icon-circle {
-      background: var(--c_active);
-    }
-    &:nth-child(2) .b-overview-list__icon-circle {
-      background: var(--c_accent);
-    }
-    &:nth-child(3) .b-overview-list__icon-circle {
-      background: var(--c_overview1);
-    }
-    &:nth-child(4) .b-overview-list__icon-circle {
-      background: var(--c_overview2);
-    }
+    &:nth-child(1) .b-overview-list__icon-circle { @include style($ba: --c-active); }
+    &:nth-child(2) .b-overview-list__icon-circle { @include style($ba: --c-accent); }
+    &:nth-child(3) .b-overview-list__icon-circle { @include style($ba: --c-overview1); }
+    &:nth-child(4) .b-overview-list__icon-circle { @include style($ba: --c-overview2); }
   }
 
   &__outer-circle {
-    @include flex(nowrap, center, center);
-
-    @include block(
-      $w: size(145),
-      $h: size(145),
-      $b-radius: 100%
-    );
-
-    background: var(--c_header_text);
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
+    @include flex($fl-wr: nowrap);
+    @include align($ju-co: center, $al-it: center);
+    @include box($wi: size(145), $he: size(145));
+    @include style($ba: --c-header-text, $bo-ra: 100%, $bo-sh: 0px 0px 5px 0px rgba(0, 0, 0, 0.15));
   }
 
   &__inner-circle {
-    @include flex(nowrap, center, center);
-
-    @include block(
-      $w: size(115),
-      $h: size(115),
-      $b-radius: 100%
-    );
-
-    background: var(--c_header_text);
-    box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
+    @include flex($fl-wr: nowrap);
+    @include align($ju-co: center, $al-it: center);
+    @include box($wi: size(115), $he: size(115));
+    @include style($ba: --c-header-text, $bo-ra: 100%, $bo-sh: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.15));
   }
 
   &__icon-circle {
-    @include flex(nowrap, center, center);
-
-    @include block(
-      $w: size(85),
-      $h: size(85),
-      $b-radius: 100%
-    );
+    @include flex($fl-wr: nowrap);
+    @include align($ju-co: center, $al-it: center);
+    @include box($wi: size(85), $he: size(85));
+    @include style($bo-ra: 100%);
   }
 
   &__header {
-    @include text(--ff_header, --fw_bold, size(18), size(18), --c_h3, $ta: center);
+    @include grid($gr-ar: h);
+
+    @include text($fo-fa: --ff-header, $fo-we: --fw-bold, $fo-si: size(18), $li-he: size(18), $co: --c-h3);
+    @include align($te-al: center);
   }
   &__text {
-    @include text(--ff_text, --fw_regular, size(15), size(24), --c_text, $ta: center);
+    @include grid($gr-ar: t);
+
+    @include text($fo-fa: --ff-header, $fo-we: --fw-regular, $fo-si: size(15), $li-he: size(24), $co: --c-text);
+    @include align($te-al: center);
   }
 }
 

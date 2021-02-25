@@ -1,10 +1,10 @@
-@use '../utilities/functions/size' as *;
-@use '../utilities/mixins/flex' as *;
+@use '../utilities/block-modules' as *;
 
 .b-header-img {
-  @include flex(nowrap, center, flex-start);
+  @include flex($fl-wr: nowrap);
+  @include align($ju-co: center, $al-it: flex-start);
 
   &__picture {
-    width: size(540px);
+    @include box($wi: size(540));
   }
 }

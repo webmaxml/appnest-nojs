@@ -2,6 +2,9 @@
 
 @mixin grid(
   $gr-ar: null,
+  $ju-se: null,
+  $al-se: null,
+
   $gr-te: null,
   $gr-te-ar: null,
 
@@ -22,9 +25,19 @@
 
   $gr-ro: null,
   $gr-ro-st: null,
-  $gr-ro-en: null
+  $gr-ro-en: null,
+
+  $ju-co: null,
+  $ju-it: null,
+  $al-co: null,
+  $al-it: null,
+
+  $di: grid
 ) {
   @include prop(grid-area, $gr-ar);
+  @include prop(justify-self, $ju-se);
+  @include prop(align-self, $al-se);
+
   @include prop(grid-template, $gr-te);
   @include prop(grid-template-areas, $gr-te-ar);
 
@@ -46,4 +59,14 @@
   @include prop(grid-row, $gr-ro);
   @include prop(grid-row-start, $gr-ro-st);
   @include prop(grid-row-end, $gr-ro-en);
+
+  @include prop(justify-content, $ju-co);
+  @include prop(justify-items, $ju-it); 
+  @include prop(align-content, $al-co);
+  @include prop(align-items, $al-it);
+
+  // include display: grid only for templates, not for areas
+  @if not $gr-ar {
+    @include prop(display, $di);
+  }
 }

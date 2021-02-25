@@ -1,49 +1,30 @@
-@use '../utilities/functions/size' as *;
-@use '../utilities/mixins/flex' as *;
-@use '../utilities/mixins/text' as *;
+@use '../utilities/block-modules' as *;
 
 .b-nav {
   &__list {
-    @include flex(wrap, center, stretch);
+    @include flex($fl-wr: wrap);
+    @include align($ju-co: center, $al-it: stretch);
   }
 
   &__item {
-    padding: 0 size(15);
-
-    @include text(
-      $ff: --ff_header, 
-      $fw: --fw_regular, 
-      $fz: size(16), 
-      $lh: size(34), 
-      $c: --c_header_text, 
-      $tt: uppercase
-    );
+    @include box($pa: 0 size(15));
+    @include text($fo-fa: --ff-header, $fo-we: --fw-regular, $fo-si: size(16), $li-he: size(34), $co: --c-header-text, $te-tr: uppercase);
   }
 
   &__link {
-    position: relative;
+    @include position($po: relative);
 
     &::after {
-      position: absolute;
-      left: 50%;
-      bottom: size(-10);
-
-      display: block;
-      content: "";
-
-      width: 0%;
-      height: 0;
-
-      background: var(--c_header_text);
-
-      transition: 0.3s;
+      @include position($po: absolute, $bo: size(-10), $le: 50%);
+      @include display($di: block, $co: "");
+      @include box($wi: 0%, $he: 0);
+      @include style($ba: --c-header-text);
+      @include animation($tr: 0.3s);
     }
 
     &:hover::after {
-      left: 0;
-
-      width: 100%;
-      height: size(1);
+      @include position($le: 0);
+      @include box($wi: 100%, $he: size(1));
     }
   }
 }
