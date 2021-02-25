@@ -1,6 +1,9 @@
 @use 'prop' as *;
 
-@mixin float($f: null, $c: null) {
-  @include prop(float, $f);
-  @include prop(clear, $c);
+@mixin float(
+  $fl: null, 
+  $cl: null
+) {
+  @include prop(float, $fl);
+  @include prop(clear, $cl);
 }

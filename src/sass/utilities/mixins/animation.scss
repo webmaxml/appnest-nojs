@@ -1,33 +1,35 @@
 @use 'prop' as *;
 
 @mixin animation(
-  $a: null,
   $an: null,
-  $adu: null,
-  $atf: null,
-  $ade: null,
-  $aic: null,
-  $adi: null,
-  $afm: null,
-  $aps: null,
-  $t: null,
-  $tp: null,
-  $tdu: null,
-  $ttf: null,
-  $tde: null
+  $an-na: null,
+  $an-du: null,
+  $an-ti-fu: null,
+  $an-de: null,
+  $an-it-co: null,
+  $an-di: null,
+  $an-fi-mo: null,
+  $an-pl-st: null,
+
+  $tr: null,
+  $tr-pr: null,
+  $tr-du: null,
+  $tr-ti-fu: null,
+  $tr-de: null
 ) {
-  @include prop(animation, $a);
-  @include prop(animation-name, $an);
-  @include prop(animation-duration, $adu);
-  @include prop(animation-timing-function, $atf);
-  @include prop(animation-delay, $ade);
-  @include prop(animation-iteration-count, $aic);
-  @include prop(animation-direction, $adi);
-  @include prop(animation-fill-mode, $afm);
-  @include prop(animation-play-state, $aps);
-  @include prop(transition, $t);
-  @include prop(transition-property, $tp);
-  @include prop(transition-duration, $tdu);
-  @include prop(transition-timing-function, $ttf);
-  @include prop(transition-delay, $tde);
+  @include prop(animation, $an);
+  @include prop(animation-name, $an-na);
+  @include prop(animation-duration, $an-du);
+  @include prop(animation-timing-function, $an-ti-fu);
+  @include prop(animation-delay, $an-de);
+  @include prop(animation-iteration-count, $an-it-co);
+  @include prop(animation-direction, $an-di);
+  @include prop(animation-fill-mode, $an-fi-mo);
+  @include prop(animation-play-state, $an-pl-st);
+
+  @include prop(transition, $tr);
+  @include prop(transition-property, $tr-pr);
+  @include prop(transition-duration, $tr-du);
+  @include prop(transition-timing-function, $tr-ti-fu);
+  @include prop(transition-delay, $tr-de);
 }

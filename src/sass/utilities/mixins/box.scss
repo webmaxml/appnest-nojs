@@ -1,47 +1,43 @@
 @use 'prop' as *;
 
 @mixin box(
-  $w: null,
-  $min-w: null,
-  $max-w: null,
-  $h: null,
-  $min-h: null,
-  $max-h: null,
-  $p: null,
-  $pt: null,
-  $pr: null,
-  $pb: null,
-  $pl: null,
-  $b: null,
-  $bw: null,
-  $bs: null,
-  $bc: null,
-  $br: null,
-  $m: null,
-  $mt: null,
-  $mr: null,
-  $mb: null,
-  $ml: null,
+  $wi: null,
+  $mi-wi: null,
+  $ma-wi: null,
+
+  $he: null,
+  $mi-he: null,
+  $ma-he: null,
+
+  $pa: null,
+  $pa-to: null,
+  $pa-ri: null,
+  $pa-bo: null,
+  $pa-le: null,
+  
+  $ma: null,
+  $ma-to: null,
+  $ma-ri: null,
+  $ma-bo: null,
+  $ma-le: null,
 ) {
-  @include prop(width, $w);
-  @include prop(min-width, $min-w);
-  @include prop(max-width, $max-w);
-  @include prop(height, $h);
-  @include prop(min-height, $min-h);
-  @include prop(max-height, $max-h);
-  @include prop(padding, $p);
-  @include prop(padding-top, $pt);
-  @include prop(padding-right, $pr);
-  @include prop(padding-bottom, $pb);
-  @include prop(padding-left, $pl);
-  @include prop(border, $b);
-  @include prop(border-width, $bw);
-  @include prop(border-style, $bs);
-  @include prop(border-color, $bc);
-  @include prop(border-radius, $br);
-  @include prop(margin, $m);
-  @include prop(margin-top, $mt);
-  @include prop(margin-right, $mr);
-  @include prop(margin-bottom, $mb);
-  @include prop(margin-left, $ml);
+  @include prop(width, $wi);
+  @include prop(min-width, $mi-wi);
+  @include prop(max-width, $ma-wi);
+
+  @include prop(height, $he);
+  @include prop(min-height, $mi-he);
+  @include prop(max-height, $ma-he);
+
+  @include prop(padding, $pa);
+  @include prop(padding-top, $pa-to);
+  @include prop(padding-right, $pa-ri);
+  @include prop(padding-bottom, $pa-bo);
+  @include prop(padding-left, $pa-le);
+
+  @include prop(margin, $ma);
+  @include prop(margin-top, $ma-to);
+  @include prop(margin-right, $ma-ri);
+  @include prop(margin-bottom, $ma-bo);
+  @include prop(margin-left, $ma-le);
 }

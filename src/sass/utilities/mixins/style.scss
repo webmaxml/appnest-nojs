@@ -1,31 +1,45 @@
 @use 'prop' as *;
 
 @mixin style(
-  $b: null,
-  $bi: null,
-  $bp: null,
-  $bs: null,
-  $br: null,
   $ba: null,
+  $ba-im: null,
+  $ba-po: null,
+  $ba-si: null,
+  $ba-re: null,
+  $ba-at: null,
+  $ba-or: null,
+  $ba-cl: null,
+  $ba-co: null,
+
   $bo: null,
-  $bcl: null,
-  $bco: null,
-  $bsh: null,
-  $c: null,
-  $f: null,
-  $o: null
+  $bo-wi: null,
+  $bo-st: null,
+  $bo-co: null,
+  $bo-ra: null,
+
+  $bo-sh: null,
+  $cu: null,
+  $fi: null,
+  $op: null
 ) {
-  @include prop(background, $b);
-  @include prop(background-image, $bi);
-  @include prop(background-position, $bp);
-  @include prop(background-size, $bs);
-  @include prop(background-repeat, $br);
-  @include prop(background-attachment, $ba);
-  @include prop(background-origin, $bo);
-  @include prop(background-clip, $bcl);
-  @include prop(background-color, $bco);
-  @include prop(box-shadow, $bsh);
-  @include prop(cursor, $c);
-  @include prop(filter, $f);
-  @include prop(opacity, $o);
+  @include prop(background, $ba);
+  @include prop(background-image, $ba-im);
+  @include prop(background-position, $ba-po);
+  @include prop(background-size, $ba-si);
+  @include prop(background-repeat, $ba-re);
+  @include prop(background-attachment, $ba-at);
+  @include prop(background-origin, $ba-or);
+  @include prop(background-clip, $ba-cl);
+  @include prop(background-color, $ba-co);
+
+  @include prop(border, $bo);
+  @include prop(border-width, $bo-wi);
+  @include prop(border-style, $bo-st);
+  @include prop(border-color, $bo-co);
+  @include prop(border-radius, $bo-ra);
+
+  @include prop(box-shadow, $bo-sh);
+  @include prop(cursor, $cu);
+  @include prop(filter, $fi);
+  @include prop(opacity, $op);
 }

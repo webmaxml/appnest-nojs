@@ -1,9 +1,15 @@
 @use 'prop' as *;
 
-@mixin flex($d: null, $w: null, $g: null, $s: null, $b: null) {
-  @include prop(flex-direction, $d);
-  @include prop(flex-wrap, $w);
-  @include prop(flex-grow, $g);
-  @include prop(flex-shrink, $s);
-  @include prop(flex-basis, $b);
+@mixin flex(
+  $fl-di: null, 
+  $fl-wr: null, 
+  $fl-gr: null, 
+  $fl-sh: null, 
+  $fl-ba: null
+) {
+  @include prop(flex-direction, $fl-di);
+  @include prop(flex-wrap, $fl-wr);
+  @include prop(flex-grow, $fl-gr);
+  @include prop(flex-shrink, $fl-sh);
+  @include prop(flex-basis, $fl-ba);
 }

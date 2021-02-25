@@ -1,9 +1,15 @@
 @use 'prop' as *;
 
-@mixin table($cs: null, $bc: null, $bs: null, $ec: null, $tl: null) {
-  @include prop(caption-side, $cs);
-  @include prop(border-collapse, $bc);
-  @include prop(border-spacing, $bs);
-  @include prop(empty-cells, $ec);
-  @include prop(table-layout, $tl);
+@mixin table(
+  $ca-si: null, 
+  $bo-co: null, 
+  $bo-sp: null, 
+  $em-ce: null, 
+  $ta-la: null
+) {
+  @include prop(caption-side, $ca-si);
+  @include prop(border-collapse, $bo-co);
+  @include prop(border-spacing, $bo-sp);
+  @include prop(empty-cells, $em-ce);
+  @include prop(table-layout, $ta-la);
 }

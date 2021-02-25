@@ -1,11 +1,19 @@
 @use 'prop' as *;
 
-@mixin display($d: null, $of: null, $c: null, $o: null, $ws: null, $to: null, $bs: null) {
-  @include prop(display, $d);
-  @include prop(object-fit, $of);
-  @include prop(content, $c);
-  @include prop(overflow, $o);
-  @include prop(white-space, $ws);
-  @include prop(text-overflow, $to);
-  @include prop(box-sizing, $bs);
+@mixin display(
+  $di: null, 
+  $ob-fi: null, 
+  $co: null, 
+  $ov: null, 
+  $wh-sp: null, 
+  $te-ov: null, 
+  $bo-si: null
+) {
+  @include prop(display, $di);
+  @include prop(object-fit, $ob-fi);
+  @include prop(content, $co);
+  @include prop(overflow, $ov);
+  @include prop(white-space, $wh-sp);
+  @include prop(text-overflow, $te-ov);
+  @include prop(box-sizing, $bo-si);
 }

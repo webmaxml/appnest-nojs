@@ -4,7 +4,7 @@
   @include box($p: size(10), $b: size(1) solid var(--c_header_text), $br: size(6));
   @include style($co: --c_header_text);
   @include animation($t: 0.3s);
-
+  
   &:hover {
     @include style($co: --c_active);
     @include box($bc: --c_active);

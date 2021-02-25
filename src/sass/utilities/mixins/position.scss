@@ -1,10 +1,17 @@
 @use 'prop' as *;
 
-@mixin position($p: null, $t: null, $r: null, $b: null, $l: null, $z: null) {
-  @include prop(position, $p);
-  @include prop(top, $t);
-  @include prop(right, $r);
-  @include prop(bottom, $b);
-  @include prop(left, $l);
-  @include prop(z-index, $z);
+@mixin position(
+  $po: null, 
+  $to: null, 
+  $ri: null, 
+  $bo: null, 
+  $le: null, 
+  $z-in: null
+) {
+  @include prop(position, $po);
+  @include prop(top, $to);
+  @include prop(right, $ri);
+  @include prop(bottom, $bo);
+  @include prop(left, $le);
+  @include prop(z-index, $z-in);
 }

@@ -1,9 +1,15 @@
 @use 'prop' as *;
 
-@mixin transform($t: null, $to: null, $p: null, $po: null, $bv: null) {
-  @include prop(transform, $t);
-  @include prop(transform-origin, $to);
-  @include prop(perspective, $p);
-  @include prop(perspective-origin, $po);
-  @include prop(backface-visibility, $bv);
+@mixin transform(
+  $tr: null, 
+  $tr-or: null, 
+  $pe: null, 
+  $pe-or: null, 
+  $ba-vi: null
+) {
+  @include prop(transform, $tr);
+  @include prop(transform-origin, $tr-or);
+  @include prop(perspective, $pe);
+  @include prop(perspective-origin, $pe-or);
+  @include prop(backface-visibility, $ba-vi);
 }

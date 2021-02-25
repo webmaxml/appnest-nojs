@@ -1,13 +1,25 @@
 @use 'prop' as *;
 
-@mixin text($ff: null, $fw: null, $fz: null, $lh: null, $c: null, $fs: null, $tt: null, $td: null, $ts: null) {
-  @include prop(font-family, $ff);
-  @include prop(font-weight, $fw);
-  @include prop(font-size, $fz);
-  @include prop(line-height, $lh);
-  @include prop(color, $c);
-  @include prop(font-style, $fs);
-  @include prop(text-transform, $tt);
-  @include prop(text-decoration, $td);
-  @include prop(text-shadow, $ts);
+@mixin text(
+  $fo-fa: null, 
+  $fo-we: null, 
+  $fo-si: null, 
+  $li-he: null, 
+  $co: null, 
+
+  $fo-st: null, 
+  $te-tr: null, 
+  $te-de: null, 
+  $te-sh: null
+) {
+  @include prop(font-family, $fo-fa);
+  @include prop(font-weight, $fo-we);
+  @include prop(font-size, $fo-si);
+  @include prop(line-height, $li-he);
+  @include prop(color, $co);
+
+  @include prop(font-style, $fo-st);
+  @include prop(text-transform, $te-tr);
+  @include prop(text-decoration, $te-de);
+  @include prop(text-shadow, $te-sh);
 }
