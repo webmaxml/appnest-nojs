@@ -1,7 +1,7 @@
 @use '../utilities/block-modules' as *;
 
 .b-video-overview-text {
-  @include box($pa: 0 size(15), $ma-le: auto);
+  @include box($pa: 0 size(15));
 
   &__header {
     @include text($fo-fa: --ff-header, $fo-we: --fw-bold, $fo-si: size(36), $li-he: size(48), $co: --c-h2);

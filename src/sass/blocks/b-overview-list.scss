@@ -48,6 +48,6 @@
   &__text {
     @include grid($gr-ar: t);
 
-    @include text($fo-fa: --ff-header, $fo-we: --fw-regular, $fo-si: size(15), $li-he: size(24), $co: --c-text, $te-al: center);
+    @include text($fo-fa: --ff-text, $fo-we: --fw-regular, $fo-si: size(15), $li-he: size(24), $co: --c-text, $te-al: center);
   }
 }

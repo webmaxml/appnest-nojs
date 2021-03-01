@@ -4,40 +4,44 @@
   @include style($ba: --c-bg1);
 
   &__container {
+    @include vars((
+      --t-padding: fluid (320: 45px, 1200: 122px),
+      --b-padding: fluid (320: 45px, 1200: 126px)
+    ));
     @include grid($gr-te:
-      "." --v_padding
+      "." --t-padding
       "t" max-content
-      "." --v_padding
+      "." --t-padding
       "v" max-content
-      "." --v_padding
+      "." --t-padding
       "b" max-content
-      "." --v_padding
+      "." --b-padding
       / 1fr
       (
-        1200: ". v" 122px
+        1200: ". v" --t-padding
               "t v" max-content
-              ". v" 48px
+              ". v" 52px
               "b v" max-content
-              ". v" 126px
-              / #{1fr} 1fr
+              ". v" --b-padding
+              / 1fr 1fr
       )
     );
 
     & .b-video-overview-text {
       @include vars((--size: fluid $text-breakpoints));
-      @include grid($gr-ar: t, $ju-se: center (1280: start), $al-se: start);
-      @include box($wi: (1200: 600px));
-      @include text($te-al: center (1280: left));
+      @include grid($gr-ar: t, $ju-se: center (1200: start), $al-se: start);
+      @include box($wi: 300px (600: 500px, 1200: 600px), $ma-le: (1200: auto));
+      @include text($te-al: center (1200: left));
     }
     & .b-vendor-btns {
       @include vars((--size: fluid $text-breakpoints));
-      @include grid($gr-ar: b, $ju-se: center (1280: start), $al-se: start);
-      @include box($wi: (1200: 600px), $pa: 0 15px, $ma-le: auto);
+      @include grid($gr-ar: b, $ju-se: center (1200: start), $al-se: start);
+      @include box($wi: (1200: 600px), $pa: 0 15px, $ma-le: (1200: auto));
     }
     & .b-video {
       @include vars((--size: 100px));
-      @include grid($gr-ar: v, $ju-se: center (1280: start), $al-se: start);
-      @include box($ma-le: (1280: 17px));
+      @include grid($gr-ar: v, $ju-se: center (1200: start), $al-se: center);
+      @include box($pa-le: (1200: 17px));
     }
   }
 }
