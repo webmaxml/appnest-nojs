@@ -1,0 +1,16 @@
+@use '../utilities/section-modules' as *;
+
+.s-stats {
+  @include position($po: relative, $z-in: 0);
+
+  &::before {
+    @include position($po: absolute, $to: 0, $le: 0, $z-in: -1);
+    @include display($co: "");
+    @include box($wi: 100%, $he: 100%);
+    @include style($ba: set-opacity(active, 0.9));
+  }
+
+  &__container {
+    @extend %container
+  }
+}
