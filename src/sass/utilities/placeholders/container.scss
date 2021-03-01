@@ -1,15 +1,19 @@
-@use '../mixins/prop' as *;
+@use '../mixins/box' as *;
 
 %container {
-  max-width: 1200px;
-  @include prop(padding-left, fluid (320: 15px, 768: 45px, 1280: 15px));
-  @include prop(padding-right, fluid (320: 15px, 768: 45px, 1280: 15px));
-  margin-left: auto;
-  margin-right: auto;
+  @include box(
+    $ma-wi: 1200px, 
+    $pa-le: fluid (320: 15px, 768: 45px, 1280: 15px),
+    $pa-ri: fluid (320: 15px, 768: 45px, 1280: 15px), 
+    $ma-le: auto,
+    $ma-ri: auto
+  );
 }
 
 %container-no-padding {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
+  @include box(
+    $ma-wi: 1200px, 
+    $ma-le: auto,
+    $ma-ri: auto
+  );
 }

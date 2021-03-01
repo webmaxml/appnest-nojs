@@ -1,0 +1,32 @@
+@use 'sass:meta';
+@use 'sass:list';
+@use 'sass:string';
+@use 'is-string' as *;
+@use 'is-list' as *;
+
+// turns strings with '/' into list - (sub-string1, /, sub-string2)
+@function normalize-value($value) {
+  @if is-list($value) {
+    $result: ();
+    @each $elem in $value {
+      $normalized: normalize-value($elem);
+      $result: if(is-list($normalized), list.join($result, $normalized), list.append($result, $normalized));
+    }
+
+    @return $result;
+  } @else if is-string($value) and string.length($value) > 1 and string.index($value, '/') {
+    $result: ();
+
+    $slash-i: string.index($value, '/');
+    $sub1: string.slice($value, 1, $slash-i - 1);
+    $sub2: string.slice($value, $slash-i + 1);
+
+    $result: list.append($result, $sub1);
+    $result: list.append($result, string.unquote('/'));
+    $result: list.append($result, $sub2);
+
+    @return $result;
+  } @else {
+    @return $value;
+  }
+}

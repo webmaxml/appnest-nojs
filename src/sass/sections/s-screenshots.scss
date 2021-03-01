@@ -1,44 +1,31 @@
-@use '../utilities/vars/breakpoints' as *;
-@use '../utilities/placeholders/container' as *;
-@use '../utilities/functions/size' as *;
-@use '../utilities/mixins/cell' as *;
-@use '../utilities/mixins/prop' as *;
-@use '../utilities/mixins/media' as *;
+@use '../utilities/section-modules' as *;
 
 .s-screenshots {
-  background: var(--c_bg2);
+  @include style($ba: --c-bg2);
 
   &__container {
     @extend %container;
-  }
-}
+    @include grid($gr-te: 
+      "." var(--v_padding)
+      "t" max-content
+      "." var(--v_padding)
+      "l" max-content
+      "." var(--v_padding)
+      "p" max-content
+      "." var(--v_padding)
+      / 1fr
+    );
 
-// grid
-
-.s-screenshots__container {
-  display: grid;
-
-  & .b-screenshots-text {
-    @include cell(t, center, start);
+    & .b-screenshots-text {
+      @include vars((--size: fluid $text-breakpoints));
+      @include grid($gr-ar: t, $ju-se: center, $al-se: start);
+      @include text($te-al: center);
+    }
+    & .b-screenshots-list {
+      @include grid($gr-ar: l, $ju-se: center, $al-se: start);
+    }
+    & .b-screenshots-pagination {
+      @include grid($gr-ar: p, $ju-se: center, $al-se: start);
+    }
   }
-  & .b-screenshots-list {
-    @include cell(l, center, start);
-  }
-  & .b-screenshots-pagination {
-    @include cell(p, center, start);
-  }
-  
-  & .b-screenshots-text {
-    text-align: center;
-  }
-
-  grid-template:
-    "." var(--v_padding)
-    "t" max-content
-    "." var(--v_padding)
-    "l" max-content
-    "." var(--v_padding)
-    "p" max-content
-    "." var(--v_padding)
-    / 1fr;
 }

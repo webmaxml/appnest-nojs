@@ -1,8 +1,12 @@
 @use 'sass:string';
+@use 'sass:list';
 @use 'is-string' as *;
 @use 'is-list' as *;
+@use 'normalize-value' as *;
 
 @function process-var($value) {
+  $value: normalize-value($value);
+  
   @if is-list($value) {
     $result: ();
     @each $elem in $value {

@@ -1,7 +1,7 @@
 @use '../utilities/block-modules' as *;
 
 .b-vendor-btns {
-
+  @include display($di: flex);
   @include text($te-al: center);
 
   &__link {
@@ -18,12 +18,12 @@
     @include style($bo-wi: size(1), $bo-st: solid, $bo-ra: size(7));
     @include animation($tr: 0.3s);
 
-    @include grid(
-      $gr-te: ". . . . ." size(13)
-              ". i . t ." max-content
-              ". i . v ." max-content
-              ". . . . ." size(13)
-              / 1fr max-content size(9) max-content 1fr
+    @include grid($gr-te: 
+      ". . . . ." size(13)
+      ". i . t ." max-content
+      ". i . v ." max-content
+      ". . . . ." size(13)
+      / 1fr max-content size(9) max-content 1fr
     );
 
     &--light {

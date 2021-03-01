@@ -1,8 +1,6 @@
 @use '../utilities/block-modules' as *;
 
 .b-screenshots-text {
-  @include vars((--size: fluid $test-breakpoints));
-
   &__header {
     @include text($fo-fa: --ff-header, $fo-we: --fw-bold, $fo-si: size(36), $li-he: size(48), $co: --c-h2);
 
@@ -12,7 +10,7 @@
   }
 
   &__text {
-    @include box($ma-top: size(10));
+    @include box($ma-to: size(10));
     @include text($fo-fa: --ff-text, $fo-we: --fw-regular, $fo-si: size(15), $li-he: size(24), $co: --c-text);
   }
 }
