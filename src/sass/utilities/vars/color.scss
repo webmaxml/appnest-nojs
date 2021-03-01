@@ -1,23 +1,29 @@
-:root {
-  --c-accent: #00cff1;
-  --c-active: #24c657;
-  --c-overlay: rgba(53, 32, 59, 0.9);
+$colors: (
+  accent: #00cff1,
+  active: #24c657,
+  overlay: #35203b,
 
-  --c-overview1: #ff45c4;
-  --c-overview2: #ff9d46;
+  overview1: #ff45c4,
+  overview2: #ff9d46,
 
-  --c-header-text: #ffffff;
-  --c-text: #565656;
+  header-text: #ffffff,
+  text: #565656,
 
-  --c-h2: #282828;
-  --c-h3: #414040;
-  --c-pagination: #ebe9ff;
+  h2: #282828,
+  h3: #414040,
+  pagination: #ebe9ff,
 
-  --c-bg1: #fbfbfb;
-  --c-bg2: #ffffff;
+  bg1: #fbfbfb,
+  bg2: #ffffff,
   
-  --c-facebook: #3b5998;
-  --c-twitter: #55acee;
-  --c-instagram: #6a453b;
-  --c-linked: #007ab9;
+  facebook: #3b5998,
+  twitter: #55acee,
+  instagram: #6a453b,
+  linked: #007ab9
+);
+
+:root {
+  @each $name, $color in $colors {
+    --c-#{$name}: #{$color};
+  }
 }

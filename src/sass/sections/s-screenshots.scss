@@ -4,15 +4,18 @@
   @include style($ba: --c-bg2);
 
   &__container {
+    @include vars((
+      --t-padding: fluid (320: 45px, 1200: 140px),
+    ));
     @extend %container;
     @include grid($gr-te: 
-      "." var(--v_padding)
+      "." --t-padding
       "t" max-content
-      "." var(--v_padding)
+      "." 77px
       "l" max-content
-      "." var(--v_padding)
-      "p" max-content
-      "." var(--v_padding)
+      "." --t-padding
+      "p" 58px
+      "." --t-padding
       / 1fr
     );
 
@@ -22,9 +25,11 @@
       @include text($te-al: center);
     }
     & .b-screenshots-list {
+      @include vars((--size: 100px));
       @include grid($gr-ar: l, $ju-se: center, $al-se: start);
     }
     & .b-screenshots-pagination {
+      @include vars((--size: 100px));
       @include grid($gr-ar: p, $ju-se: center, $al-se: start);
     }
   }
