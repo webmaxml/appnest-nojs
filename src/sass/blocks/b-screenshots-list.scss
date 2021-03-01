@@ -2,23 +2,30 @@
 
 .b-screenshots-list {
   @include flex($fl-wr: nowrap, $ju-co: flex-start, $al-it: flex-start);
+  @include display($ov: hidden);
 
   &__item {
     @include position($po: relative);
-    @include animation($tr: 0.3s);
+    @include box($ma-ri: size(30));
+    @include animation($tr: 0.5s);
 
     &:hover {
       @include style($bo-sh: 0px 0px 30px 0px rgba(0, 0, 0, 0.15));
 
       & .b-screenshots-list__overlay {
         @include position($to: 0, $le: 0);
-        // @include box($wi: 100%, $he: 100%);
-        // @include style($op: 1);
+        @include box($wi: 100%, $he: 100%);
+        @include style($op: 1);
       }
 
       & .b-screenshots-list__overlay-icon {
-        // @include transform($tr: rotate(360deg));
+        @include box($ma-to: 0);
+        @include style($op: 1);
       }
+    }
+
+    &:last-child {
+      @include box($ma-ri: 0);
     }
   }
 
@@ -33,12 +40,14 @@
   &__overlay {
     @include position($po: absolute, $to: 50%, $le: 50%, $z-in: 1);
     @include flex($fl-wr: nowrap, $ju-co: center, $al-it: center);
-    @include box($wi: 100%, $he: 100%);
-    @include style($ba: rgba(var(--c-accent), 0.9));
+    @include box($wi: 0%, $he: 0%);
+    @include style($ba: set-opacity(accent, 0.9), $op: 0);
     @include animation($tr: 0.3s);
   }
 
   &__overlay-icon {
+    @include box($ma-to: size(-100));
+    @include style($op: 0);
     @include animation($tr: 0.5s);
   }
 }

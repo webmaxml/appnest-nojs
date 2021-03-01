@@ -5,16 +5,16 @@
 
   &__container {
     @include vars((
-      --t-padding: fluid (320: 45px, 1200: 140px),
+      --t-padding: fluid (320: 45px, 1200: 138px),
     ));
-    @extend %container;
+    @extend %container-no-padding;
     @include grid($gr-te: 
       "." --t-padding
       "t" max-content
-      "." 77px
+      "." 75px
       "l" max-content
-      "." --t-padding
-      "p" 58px
+      "." 56px
+      "p" max-content
       "." --t-padding
       / 1fr
     );
@@ -22,14 +22,16 @@
     & .b-screenshots-text {
       @include vars((--size: fluid $text-breakpoints));
       @include grid($gr-ar: t, $ju-se: center, $al-se: start);
+      @include box($wi: 300px (600: 500px));
       @include text($te-al: center);
     }
     & .b-screenshots-list {
-      @include vars((--size: 100px));
+      @include vars((--size: fluid $text-breakpoints));
       @include grid($gr-ar: l, $ju-se: center, $al-se: start);
+      @include box($wi: size(374) (800: size(778), 1200: size(1182)));
     }
     & .b-screenshots-pagination {
-      @include vars((--size: 100px));
+      @include vars((--size: fluid $text-breakpoints));
       @include grid($gr-ar: p, $ju-se: center, $al-se: start);
     }
   }

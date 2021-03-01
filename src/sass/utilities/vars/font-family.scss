@@ -1,4 +1,10 @@
+$fonts: (
+  'header': ("Poppins", sans-serif),
+  'text': ("Raleway", sans-serif)
+);
+
 :root {
-  --ff-header: "Poppins", sans-serif;
-  --ff-text: "Raleway", sans-serif;
+  @each $name, $font in $fonts {
+    --ff-#{$name}: #{$font};
+  }
 }

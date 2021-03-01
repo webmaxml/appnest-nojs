@@ -1,7 +1,6 @@
 @use '../utilities/block-modules' as *;
 
 .b-screenshots-pagination {
-  @include vars((--size: 100px));
   @include flex($fl-wr: nowrap, $ju-co: flex-start, $al-it: flex-start);
 
   &__item {
