@@ -1,3 +1,20 @@
+$weights: (
+  'thin': 100,
+  'extra-light': 200,
+  'light': 300,
+  'regular': 400,
+  'medium': 500,
+  'semi-bold': 600,
+  'bold': 700,
+  'extra-bold': 800,
+  'black': 900
+);
+
+$fonts: (
+  'header': ("Poppins", sans-serif),
+  'text': ("Raleway", sans-serif)
+);
+
 $colors: (
   'accent': #00cff1,
   'active': #24c657,
@@ -22,8 +39,4 @@ $colors: (
   'linked': #007ab9
 );
 
-:root {
-  @each $name, $color in $colors {
-    --c-#{$name}: #{$color};
-  }
-}
+$text-breakpoints: (320: 60px, 1280: 100px);

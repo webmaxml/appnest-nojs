@@ -1,5 +1,5 @@
 @use 'sass:map';
-@use '../vars/color' as *;
+@use '../vars/sass-vars' as *;
 
 @function set-opacity($color-name, $opacity) {
   @if not map.has-key($colors, $color-name) {

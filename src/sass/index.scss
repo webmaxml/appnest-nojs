@@ -1,10 +1,6 @@
 @use 'reset';
 @use 'assets';
-
-@use 'utilities/vars/font-weight';
-@use 'utilities/vars/font-family';
-@use 'utilities/vars/color';
-
+@use 'utilities/vars/css-vars';
 @use 'common';
 @use 'blocks';
 @use 'sections';

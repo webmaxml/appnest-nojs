@@ -11,6 +11,18 @@
   }
 
   &__container {
-    @extend %container
+    // @extend %container;
+    @include vars((--t-padding: fluid (320: 45px, 1200: 85px)));
+    @include grid($gr-te:
+      ". . . . ." --t-padding
+      ". . s . ." max-content
+      ". . . . ." --t-padding
+      / 1fr 15px minmax(300px, 1170px) 15px 1fr
+    );
+
+    & .b-stats {
+      @include vars((--size: 100px));
+      @include grid($gr-ar: s, $ju-se: stretch, $al-se: stretch);
+    }
   }
 }

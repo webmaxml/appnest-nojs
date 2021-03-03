@@ -1,0 +1,13 @@
+@use 'sass-vars' as *;
+
+:root {
+  @each $name, $weight in $weights {
+    --fw-#{$name}: #{$weight};
+  }
+  @each $name, $font in $fonts {
+    --ff-#{$name}: #{$font};
+  }
+  @each $name, $color in $colors {
+    --c-#{$name}: #{$color};
+  }
+}
