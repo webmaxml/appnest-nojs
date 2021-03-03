@@ -1,24 +1,24 @@
 @use '../utilities/block-modules' as *;
 
 .b-stats { 
-  @include flex($fl-wr: wrap, $ju-co: space-evenly, $al-it: flex-start);
+  @include flex($fl-wr: wrap, $ju-co: space-between, $al-it: flex-start);
 
   &__item {
-
+    @include box($wi: size(270), $ma: size(15) 0);
   }
 
   &__icon {
-
+    @include box($ma: auto);
   }
 
   &__value {
     @include display($di: block);
-    @include text($fo-fa: --ff-header, $fo-we: --fw-bold, $fo-si: size(48), $li-he: size(48), $co: --c-header-text);
+    @include text($fo-fa: --ff-header, $fo-we: --fw-bold, $fo-si: size(48), $li-he: size(48), $co: --c-header-text, $te-al: center);
   }
 
   &__desc {
     @include display($di: block);
-    @include text($fo-fa: --ff-header, $fo-we: --fw-regular, $fo-si: size(24), $li-he: size(48), $co: --c-header-text);
+    @include text($fo-fa: --ff-header, $fo-we: --fw-regular, $fo-si: size(24), $li-he: size(48), $co: --c-header-text, $te-al: center);
   }
 
 }

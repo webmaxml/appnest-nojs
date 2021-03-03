@@ -7,17 +7,20 @@
     @include position($po: absolute, $to: 0, $le: 0, $z-in: -1);
     @include display($co: "");
     @include box($wi: 100%, $he: 100%);
-    @include style($ba: set-opacity(active, 0.9));
+    @include style($ba: set-opacity(--c-active, 0.9));
   }
 
   &__container {
-    // @extend %container;
-    @include vars((--t-padding: fluid (320: 45px, 1200: 85px)));
+    @extend %container;
+    @include vars((
+      --t-padding: fluid (320: 30px, 1200: 70px),
+      --content: 270px (600: 570px, 1200: 1170px)
+    ));
     @include grid($gr-te:
-      ". . . . ." --t-padding
-      ". . s . ." max-content
-      ". . . . ." --t-padding
-      / 1fr 15px minmax(300px, 1170px) 15px 1fr
+      ". . ." --t-padding
+      ". s ." max-content
+      ". . ." --t-padding
+      / 1fr --content 1fr
     );
 
     & .b-stats {

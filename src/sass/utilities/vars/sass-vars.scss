@@ -1,42 +1,46 @@
-$weights: (
-  'thin': 100,
-  'extra-light': 200,
-  'light': 300,
-  'regular': 400,
-  'medium': 500,
-  'semi-bold': 600,
-  'bold': 700,
-  'extra-bold': 800,
-  'black': 900
-);
+@use 'sass:string';
 
-$fonts: (
-  'header': ("Poppins", sans-serif),
-  'text': ("Raleway", sans-serif)
-);
+$css: (
+  // font-weight
+  '--fw-thin': 100,
+  '--fw-extra-light': 200,
+  '--fw-light': 300,
+  '--fw-regular': 400,
+  '--fw-medium': 500,
+  '--fw-semi-bold': 600,
+  '--fw-bold': 700,
+  '--fw-extra-bold': 800,
+  '--fw-black': 900,
 
-$colors: (
-  'accent': #00cff1,
-  'active': #24c657,
-  'overlay': #35203b,
+  // font-family
+  '--ff-header': string.unquote("Poppins, sans-serif"),
+  '--ff-text': string.unquote("Raleway, sans-serif"),
 
-  'overview1': #ff45c4,
-  'overview2': #ff9d46,
+  // color
+  '--c-accent': #00cff1,
+  '--c-active': #24c657,
+  '--c-overlay': #35203b,
 
-  'header-text': #ffffff,
-  'text': #565656,
+  '--c-overview1': #ff45c4,
+  '--c-overview2': #ff9d46,
 
-  'h2': #282828,
-  'h3': #414040,
-  'pagination': #ebe9ff,
+  '--c-header-text': #ffffff,
+  '--c-text': #565656,
 
-  'bg1': #fbfbfb,
-  'bg2': #ffffff,
+  '--c-h2': #282828,
+  '--c-h3': #414040,
+  '--c-pagination': #ebe9ff,
+
+  '--c-bg1': #fbfbfb,
+  '--c-bg2': #ffffff,
   
-  'facebook': #3b5998,
-  'twitter': #55acee,
-  'instagram': #6a453b,
-  'linked': #007ab9
+  '--c-facebook': #3b5998,
+  '--c-twitter': #55acee,
+  '--c-instagram': #6a453b,
+  '--c-linked': #007ab9,
+
+  // sizes
+  '--h-padding': fluid (320: 15px, 768: 45px, 1280: 15px)
 );
 
 $text-breakpoints: (320: 60px, 1280: 100px);

@@ -2,9 +2,9 @@
 
 %container {
   @include box(
-    $ma-wi: 1200px, 
-    $pa-le: fluid (320: 15px, 768: 45px, 1280: 15px),
-    $pa-ri: fluid (320: 15px, 768: 45px, 1280: 15px), 
+    $ma-wi: 1200px,
+    $pa-le: 15px,
+    $pa-ri: 15px, 
     $ma-le: auto,
     $ma-ri: auto
   );

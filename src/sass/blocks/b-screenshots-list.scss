@@ -41,7 +41,7 @@
     @include position($po: absolute, $to: 50%, $le: 50%, $z-in: 1);
     @include flex($fl-wr: nowrap, $ju-co: center, $al-it: center);
     @include box($wi: 0%, $he: 0%);
-    @include style($ba: set-opacity(accent, 0.9), $op: 0);
+    @include style($ba: set-opacity(--c-accent, 0.9), $op: 0);
     @include animation($tr: 0.3s);
   }
 

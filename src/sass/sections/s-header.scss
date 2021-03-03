@@ -25,7 +25,7 @@
     @include position($po: absolute, $to: 0, $le: 0, $z-in: -1);
     @include display($co: "");
     @include box($wi: 100%, $he: 100%);
-    @include style($ba: set-opacity(overlay, 0.9));
+    @include style($ba: set-opacity(--c-overlay, 0.9));
   }
 
   &__top-grid {
