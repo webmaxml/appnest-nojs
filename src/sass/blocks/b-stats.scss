@@ -2,6 +2,7 @@
 
 .b-stats { 
   @include flex($fl-wr: wrap, $ju-co: space-between, $al-it: flex-start);
+  @include box($wi: step-width(270px, 570px, 1170px));
 
   &__item {
     @include box($wi: size(270), $ma: size(15) 0);

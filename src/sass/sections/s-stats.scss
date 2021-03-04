@@ -14,18 +14,17 @@
     @extend %container;
     @include vars((
       --t-padding: fluid (320: 30px, 1200: 70px),
-      --content: 270px (600: 570px, 1200: 1170px)
     ));
     @include grid($gr-te:
-      ". . ." --t-padding
-      ". s ." max-content
-      ". . ." --t-padding
-      / 1fr --content 1fr
+      "." --t-padding
+      "s" max-content
+      "." --t-padding
+      / 1fr
     );
 
     & .b-stats {
       @include vars((--size: 100px));
-      @include grid($gr-ar: s, $ju-se: stretch, $al-se: stretch);
+      @include grid($gr-ar: s, $ju-se: center, $al-se: start);
     }
   }
 }

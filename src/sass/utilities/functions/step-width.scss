@@ -1,0 +1,44 @@
+@use 'sass:list';
+@use 'sass:string';
+@use 'is-number' as *;
+@use 'strip-unit' as *;
+
+// formula example
+// calc(700px + (clamp(0px, 700px - 100%, 0.1px) * (500 - 700) * 10) + (clamp(0px, 500px - 100%, 0.1px) * (300 - 500) * 10));
+
+@function step-width($widths...) {
+  @if list.length($widths) > 1 {
+    $formula: "calc(";
+    $parts: ();
+
+    @each $width in $widths {
+      @if not is-number($width) {
+        @error "step-width() expects 'number', '#{meta.type-of($width)}' - provided";
+      }
+
+      // if is last element - add to the formula as biggest width
+      @if list.nth($widths, -1) == $width {
+        $formula: $formula + $width;
+
+        // form formula part
+      } @else {
+        $next-width: list.nth($widths, list.index($widths, $width) + 1);
+        $parts: list.append($parts, "(clamp(0px, #{$next-width} - 100%, 0.1px) * #{strip-unit($width - $next-width)} * 10)");
+      }
+    }
+
+    // traverse parts list form the end and add to formula
+    $index: -1;
+    @each $part in $parts {
+      $part: list.nth($parts, $index);
+      $formula: $formula + " + " + $part;
+      $index: $index - 1;
+    }
+
+    @return string.unquote($formula + ")");
+
+    // if 1 argument - just return it
+  } @else {
+    @return list.nth($widths, 1);
+  }
+}
