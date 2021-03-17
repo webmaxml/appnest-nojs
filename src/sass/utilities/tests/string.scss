@@ -1,0 +1,59 @@
+@use '../modules/assert';
+@use '../modules/string';
+
+// is-string
+
+@function string1() {
+  @return assert.equal(string.is-string(()), false, 'empty list is not a string');
+}
+
+@function string2() {
+  @return assert.equal(string.is-string((1, 'a')), false, 'not empty list is not a string');
+}
+
+@function string3() {
+  @return assert.equal(string.is-string(1), false, 'number is not a string');
+}
+
+@function string4() {
+  @return assert.equal(string.is-string('some'), true, 'string is a string');
+}
+
+@function string5() {
+  @return assert.equal(string.is-string(#000), false, 'color is not a string');
+}
+
+@function string6() {
+  @return assert.equal(string.is-string(true), false, 'bool is not a string');
+}
+
+@function string7() {
+  @return assert.equal(string.is-string(null), false, 'null is not a string');
+}
+
+@function string8() {
+  @return assert.equal(string.is-string((a: 23)), false, 'map is not a string');
+}
+
+// normalize-value
+
+@function string9() {
+  $test: 'some';
+  $expected: 'some';
+
+  @return assert.equal(string.normalize-value($test), $expected, 'normalize string without /');
+}
+
+@function string9() {
+  $test: 'some/1px';
+  $expected: 'some' '/' '1px';
+
+  @return assert.equal(string.normalize-value($test), $expected, 'normalize string with /');
+}
+
+// @function string9() {
+//   $test: 'some/1px/1/yes';
+//   $expected: 'some' '/' '1px' '1' 'yes';
+
+//   @return assert.equal(string.normalize-value($test), $expected, 'normalize big string with /');
+// }

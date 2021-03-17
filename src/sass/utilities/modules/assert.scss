@@ -1,11 +1,144 @@
 @use 'sass:meta';
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:string';
+
+
+@function map($list, $cb) {
+  $list-type: meta.type-of($list);
+  $cb-type: meta.type-of($cb);
+
+  @if $cb-type != function {
+    @error "callback in for-each() must be function, #{$cb-type} - provided";
+  }
+
+  @if $list-type == list {
+    $sep: list.separator($list);
+    $result: ();
+    @each $item in $list {
+      $item-type: meta.type-of($item);
+      
+      @if $item-type == list or $item-type == map {
+        $item: map($item, $cb);
+      } @else {
+        $i: list.index($list, $item);
+        $item: meta.call($cb, $item, $i, $list);
+      }
+
+      $result: list.append($result, $item, $sep);
+    }
+
+    @return $result;
+  } @else if $list-type == map {
+      $result: ();
+      @each $key, $value in $list {
+        $value-type: meta.type-of($value);
+
+        @if $value-type == list or $value-type == map {
+          $value: map($value, $cb);
+        } @else {
+          $value: meta.call($cb, $value, $key, $list);
+        }
+
+        $result: map.set($result, $key, $value);
+      }
+      
+      @return $result;
+  } @else {
+    @return meta.call($cb, $list);
+  }
+}
+
+@function map-keys($map, $cb) {
+  $map-type: meta.type-of($map);
+  $cb-type: meta.type-of($cb);
+
+  @if $map-type != map {
+    @error "map in map-keys() must be map, #{$map-type} - provided";
+  }
+  @if $cb-type != function {
+    @error "callback in for-each() must be function, #{$cb-type} - provided";
+  }
+
+  $result: ();
+  @each $key, $value in $map {
+    $key-type: meta.type-of($key);
+
+    @if $key-type == list or $key-type == map {
+      $key: map-keys($key, $cb);
+    } @else {
+      $key: meta.call($cb, $key, $value, $map);
+    }
+
+    $result: map.set($result, $key, $value);
+  }
+  
+  @return $result;
+}
+
+
+@function normalize($elem, $args...) {
+  $type: meta.type-of($elem);
+  @return string.unquote("#{$elem}(#{$type})");
+}
+
+@function normalize-output($value) {
+  $cb: meta.get-function('normalize');
+  $type: meta.type-of($value);
+  @if $type == list {
+    @return map($value, $cb);
+  } @else if $type == map {
+    $value: map-keys($value, $cb);
+    @return map($value, $cb);
+  } @else {
+    @return meta.call($cb, $value);
+  }
+}
+
+@debug normalize-output(1px);
+@debug normalize-output('1px');
+@debug normalize-output(true);
+@debug normalize-output('false');
+@debug normalize-output('ass');
+@debug normalize-output(ass);
+@debug normalize-output(1px 2px 1px);
+@debug normalize-output((1px, 2px, 1px));
+@debug normalize-output((1px 1, 2px 2, 1px 1));
+@debug normalize-output((some: 1px, ass: 2px 3px 6px));
+
+
+
+@function error-constructor($actual, $expected, $message, $chunk) {
+  $actual-type: meta.type-of($actual);
+  $expected-type: meta.type-of($expected);
+
+  @if $actual-type == list {
+    $actual-type: ();
+    @each $item in $actual {
+      $actual-type: list.append($actual-type, meta.type-of($item), list.separator($actual));
+    }
+  }
+  @if $expected-type == list {
+    $expected-type: ();
+    @each $item in $expected {
+      $expected-type: list.append($expected-type, meta.type-of($item), list.separator($expected));
+    }
+  }
+
+  @if $actual-type == map {
+    $actual: 'map';
+  }
+  @if $expected-type == map {
+    $expected: 'map';
+  }
+
+  @return "'#{$actual}'(#{$actual-type}) #{$chunk} '#{$expected}'(#{$expected-type}) in '#{$message}'";
+}
 
 @function equal($actual, $expected, $message) {
   @if $actual == $expected {
     @return $message;
   } @else {
-    $actual: if(meta.type-of($actual) == map, 'actual map', $actual);
-    $expected: if(meta.type-of($expected) == map, 'expected map', $expected);
-    @error "'#{$actual}' is not equals '#{$expected}' in '#{$message}'";
+    @error error-constructor($actual, $expected, $message, 'is not equals');
   }
 }

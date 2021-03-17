@@ -12,7 +12,7 @@
 @function compatible($number1, $number2) { @return math.compatible($number1, $number2); }
 @function is-unitless($number) { @return math.is-unitless($number); }
 @function unit($number) { @return math.unit($number); }
-@function random($limit: null) { @return math.random($limit: null); }
+@function random($limit: null) { @return math.random($limit); }
 
 
 

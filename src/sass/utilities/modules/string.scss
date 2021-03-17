@@ -1,14 +1,16 @@
 @use 'sass:meta';
 @use 'sass:string';
-
-
+@use 'list';
 
 @function unquote($string) { @return string.unquote($string); }
-
-
-
-
-
+@function quote($string) { @return string.quote($string); }
+@function index($string, $substring) { @return string.index($string, $substring); }
+@function insert($string, $insert, $index) { @return string.insert($string, $insert, $index); }
+@function length($string) { @return string.length($string); }
+@function slice($string, $start-at, $end-at: -1) { @return string.slice($string, $start-at, $end-at); }
+@function to-upper-case($string) { @return string.to-upper-case($string); }
+@function to-lower-case($string) { @return string.to-lower-case($string); }
+@function unique-id() { @return string.unique-id(); }
 
 @function is-string($value) {
   @return meta.type-of($value) == string;
@@ -16,33 +18,30 @@
 
 // turns strings with '/' into list - (sub-string1, /, sub-string2)
 @function normalize-value($value) {
-  @if is-list($value) {
-    $result: ();
-    @each $elem in $value {
-      $normalized: normalize-value($elem);
-      $result: if(is-list($normalized), list.join($result, $normalized), list.append($result, $normalized));
-    }
+  @if list.is-list($value) {
+    // $result: ();
+    // @each $elem in $value {
+    //   $normalized: normalize-value($elem);
+    //   $result: if(list.is-list($normalized), list.join($result, $normalized), list.append($result, $normalized));
+    // }
 
-    @return $result;
-  } @else if is-string($value) and string.length($value) > 1 and string.index($value, '/') {
+    // @return $result;
+  } @else if is-string($value) and length($value) > 1 and index($value, '/') {
     $result: ();
 
-    $slash-i: string.index($value, '/');
-    $sub1: string.slice($value, 1, $slash-i - 1);
-    $sub2: string.slice($value, $slash-i + 1);
+    $slash-i: index($value, '/');
+    $sub1: slice($value, 1, $slash-i - 1);
+    $sub2: slice($value, $slash-i + 1);
 
     $result: list.append($result, $sub1);
-    $result: list.append($result, string.unquote('/'));
+    $result: list.append($result, unquote('/'));
     $result: list.append($result, $sub2);
 
     @return $result;
   } @else {
-    @return $value;
+    // @return $value;
   }
 }
-
-
-
 
 @function process-var($value) {
   $value: normalize-value($value);
