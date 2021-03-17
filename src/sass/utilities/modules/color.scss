@@ -1,7 +1,7 @@
 @use 'sass:map';
-@use '../vars/sass-vars' as *;
+@use '../vars';
 
-@function set-opacity($color-name, $opacity) {
+@function set-opacity($color-name, $opacity, $css: vars.$css) {
   @if not map.has-key($css, $color-name) {
     @error "no such color '#{$color-name}'!";
   }

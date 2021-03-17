@@ -1,0 +1,82 @@
+@use 'sass:meta';
+@use 'sass:list';
+@use 'sass:string';
+@use 'is-string' as *;
+@use 'is-list' as *;
+
+// turns strings with '/' into list - (sub-string1, /, sub-string2)
+@function normalize-value($value) {
+  @if is-list($value) {
+    $result: ();
+    @each $elem in $value {
+      $normalized: normalize-value($elem);
+      $result: if(is-list($normalized), list.join($result, $normalized), list.append($result, $normalized));
+    }
+
+    @return $result;
+  } @else if is-string($value) and string.length($value) > 1 and string.index($value, '/') {
+    $result: ();
+
+    $slash-i: string.index($value, '/');
+    $sub1: string.slice($value, 1, $slash-i - 1);
+    $sub2: string.slice($value, $slash-i + 1);
+
+    $result: list.append($result, $sub1);
+    $result: list.append($result, string.unquote('/'));
+    $result: list.append($result, $sub2);
+
+    @return $result;
+  } @else {
+    @return $value;
+  }
+}
+
+
+@function strip-unit($value) {
+  @if not is-number($value) {
+    @error "strip-unit() expects 'number', '#{meta.type-of($value)}' - provided";
+  }
+  @return $value / ($value * 0 + 1);
+}
+
+
+@function process-var($value) {
+  $value: normalize-value($value);
+  
+  @if is-list($value) {
+    $result: ();
+    @each $elem in $value {
+      $result: list.append($result, process-var($elem));
+    }
+    
+    @return $result;
+  } @else if is-string($value) and string.index($value, "--") == 1 {
+    @return var($value);
+  } @else {
+    @return $value;
+  }
+}
+
+@function to-px($value) {
+  @if is-number($value) {
+    @return strip-unit($value) * 1px;
+  } @else if is-list($value) {
+
+    $result: ();
+    @each $elem in $value {
+      $result: list.append($result, to-px($elem));
+    }
+
+    @return $result;
+  } @else if is-map($value) {
+
+    $result: ();
+    @each $key, $val in $value {
+      $result: map.set($result, to-px($key), to-px($val));
+    }
+
+    @return $result;
+  } @else {
+    @error "to-px() expects 'number' or 'list'/'map' of numbers, '#{meta.type-of($value)}' - provided";
+  }
+}

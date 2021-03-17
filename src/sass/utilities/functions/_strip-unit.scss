@@ -1,9 +1,0 @@
-@use 'sass:meta';
-@use 'is-number' as *;
-
-@function strip-unit($value) {
-  @if not is-number($value) {
-    @error "strip-unit() expects 'number', '#{meta.type-of($value)}' - provided";
-  }
-  @return $value / ($value * 0 + 1);
-}

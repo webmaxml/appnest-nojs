@@ -1,8 +1,30 @@
 @use 'sass:meta';
 @use 'sass:list';
 @use 'sass:map';
-@use 'is-list' as *;
-@use 'is-map' as *;
+
+@function is-list($value) {
+  @return meta.type-of($value) == list;
+}
+
+@function is-map($value) {
+  @return meta.type-of($value) == map;
+}
+
+@function is-empty-list($value) {
+  @if is-list($value) and list.length($value) == 0 {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@function is-last-elem($list, $elem) {
+  @if is-list($list) {
+    @return list.nth($list, -1) == $elem;
+  } @else {
+    @error "$list in is-last-elem() must be 'list', '#{meta.type-of($list)}' - provided";
+  }
+}
 
 @function remove-elem($list, $elem) {
   @if is-list($list) {

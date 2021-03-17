@@ -1,5 +1,10 @@
 @use 'sass:meta';
+@use 'sass:string';
 
 @function is-string($value) {
   @return meta.type-of($value) == string;
+}
+
+@function unquote($string) {
+  @return string.unquote($string);
 }

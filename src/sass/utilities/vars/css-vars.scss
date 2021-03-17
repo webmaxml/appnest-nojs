@@ -1,6 +1,0 @@
-@use '../mixins/vars' as *;
-@use 'sass-vars' as *;
-
-:root {
-  @include vars($css);
-}

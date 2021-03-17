@@ -1,6 +1,11 @@
 @use 'reset';
 @use 'assets';
-@use 'utilities/vars/css-vars';
+
+@use '../mixins/vars' as *;
+@use 'utilities/vars' as *;
+
+:root { @include vars($css); }
+
 @use 'common';
 @use 'blocks';
 @use 'sections';

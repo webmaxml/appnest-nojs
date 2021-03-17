@@ -1,4 +1,4 @@
-@function equals($actual, $expected, $message) {
+@function equal($actual, $expected, $message) {
   @if $actual == $expected {
     @return $message;
   } @else {

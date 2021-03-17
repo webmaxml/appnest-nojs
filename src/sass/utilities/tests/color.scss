@@ -1,0 +1,21 @@
+@use '../modules/assert';
+@use '../modules/color';
+
+$css: (
+  '--some1': #00cff1,
+  '--some2': #24c657,
+);
+
+@function color1() {
+  $actual: color.set-opacity(--some1, 0.9, $css);
+  $expected: rgba(0, 207, 241, 0.9);
+
+  @return assert.equal($actual, $expected, 'setting opacity for blue color');
+}
+
+@function color2() {
+  $actual: color.set-opacity(--some2, 0.6, $css);
+  $expected: rgba(36, 198, 87, 0.6);
+
+  @return assert.equal($actual, $expected, 'setting opacity for green color');
+}
