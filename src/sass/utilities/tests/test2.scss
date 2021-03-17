@@ -1,0 +1,8 @@
+@use '../functions/test-functions' as *;
+@use '../functions/is-list' as *;
+
+@function map-is-not-a-list() {
+  $map: (a: 23);
+
+  @return equals(is-list($map), false, 'map is not a list');
+}

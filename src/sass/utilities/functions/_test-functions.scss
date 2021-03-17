@@ -1,0 +1,7 @@
+@function equals($actual, $expected, $message) {
+  @if $actual == $expected {
+    @return $message;
+  } @else {
+    @error "'#{$actual}' is not equals '#{$expected}' in '#{$message}'";
+  }
+}

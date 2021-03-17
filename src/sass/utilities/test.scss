@@ -1,0 +1,20 @@
+@use 'sass:meta';
+@use 'sass:list';
+@use 'tests';
+
+$tests: meta.module-functions('tests');
+$passed-count: 0;
+$output: ();
+
+@each $name, $test in $tests {
+  $message: meta.call($test);
+  $output: list.append($output, $message + " - ✓");
+  $passed-count: $passed-count + 1;
+}
+
+@debug '-----------------------------';
+@each $message in $output {
+  @debug $message;
+}
+@debug '-----------------------------';
+@debug "#{$passed-count} tests passed";

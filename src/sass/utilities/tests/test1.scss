@@ -1,0 +1,7 @@
+@use '../functions/test-functions' as *;
+@use '../functions/is-list' as *;
+
+@function empty-list-is-a-list() {
+  @return equals(is-list(()), true, 'empty list is a list');
+}
+
