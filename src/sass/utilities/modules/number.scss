@@ -1,5 +1,55 @@
 @use 'sass:meta';
+@use 'sass:math';
+@use 'list';
+
+
+@function ceil($number) { @return math.ceil($number); }
+@function floor($number) { @return math.floor($number); }
+@function round($number) { @return math.round($number); }
+@function max($number...) { @return math.max($number...); }
+@function min($number...) { @return math.min($number...); }
+@function abs($number) { @return math.abs($number); }
+@function compatible($number1, $number2) { @return math.compatible($number1, $number2); }
+@function is-unitless($number) { @return math.is-unitless($number); }
+@function unit($number) { @return math.unit($number); }
+@function random($limit: null) { @return math.random($limit: null); }
+
+
 
 @function is-number($value) {
   @return meta.type-of($value) == number;
+}
+
+
+@function strip-unit($value) {
+  @if not is-number($value) {
+    @error "strip-unit() expects 'number', '#{meta.type-of($value)}' - provided";
+  }
+
+  @return $value / ($value * 0 + 1);
+}
+
+
+@function to-px($value) {
+  @if is-number($value) {
+    @return strip-unit($value) * 1px;
+  } @else if list.is-list($value) {
+
+    $result: ();
+    @each $elem in $value {
+      $result: list.append($result, to-px($elem));
+    }
+
+    @return $result;
+  } @else if list.is-map($value) {
+
+    $result: ();
+    @each $key, $val in $value {
+      $result: list.set($result, to-px($key), to-px($val));
+    }
+
+    @return $result;
+  } @else {
+    @error "to-px() expects 'number' or 'list'/'map' of numbers, '#{meta.type-of($value)}' - provided";
+  }
 }

@@ -1,0 +1,96 @@
+@use '../modules/assert';
+@use '../modules/number';
+
+// is-number
+
+@function number1() {
+  @return assert.equal(number.is-number(()), false, 'empty list is not a number');
+}
+
+@function number2() {
+  @return assert.equal(number.is-number((1, 'a')), false, 'not empty list is not a number');
+}
+
+@function number3() {
+  @return assert.equal(number.is-number(1), true, 'number is a number');
+}
+
+@function number4() {
+  @return assert.equal(number.is-number('some'), false, 'string is not a number');
+}
+
+@function number5() {
+  @return assert.equal(number.is-number(#000), false, 'color is not a number');
+}
+
+@function number6() {
+  @return assert.equal(number.is-number(true), false, 'bool is not a number');
+}
+
+@function number7() {
+  @return assert.equal(number.is-number(null), false, 'null is not a number');
+}
+
+@function number8() {
+  @return assert.equal(number.is-number((a: 23)), false, 'map is not a number');
+}
+
+// strip-unit
+
+@function number9() {
+  @return assert.equal(number.strip-unit(23), 23, 'stripping unitless number');
+}
+
+@function number10() {
+  @return assert.equal(number.strip-unit(23px), 23, 'stripping px number');
+}
+
+@function number11() {
+  @return assert.equal(number.strip-unit(23em), 23, 'stripping em number');
+}
+
+@function number12() {
+  @return assert.equal(number.strip-unit(23%), 23, 'stripping % number');
+}
+
+// to-px
+
+@function number13() {
+  @return assert.equal(number.to-px(23), 23px, 'unitless number to px');
+}
+
+@function number14() {
+  @return assert.equal(number.to-px(23px), 23px, 'px number to px');
+}
+
+@function number15() {
+  @return assert.equal(number.to-px(23%), 23px, '% number to px');
+}
+
+@function number16() {
+  $list: 1 5 2 8;
+  $expected: 1px 5px 2px 8px;
+  
+  @return assert.equal(number.to-px($list), $expected, 'list of unitless numbers to px');
+}
+
+@function number17() {
+  $list: 1px 5 2rem 8%;
+  $expected: 1px 5px 2px 8px;
+  
+  @return assert.equal(number.to-px($list), $expected, 'list of mix numbers to px');
+}
+
+@function number18() {
+  $list: (1: 5, 2: 8);
+  $expected: (1px: 5px, 2px: 8px);
+  
+  @return assert.equal(number.to-px($list), $expected, 'map of unitless numbers to px');
+}
+
+@function number18() {
+  $list: (1px: 5%, 2%: 8rem);
+  $expected: (1px: 5px, 2px: 8px);
+  
+  @return assert.equal(number.to-px($list), $expected, 'map of mix numbers to px');
+}
