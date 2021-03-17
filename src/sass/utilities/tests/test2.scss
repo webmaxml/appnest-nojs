@@ -1,8 +1,0 @@
-@use '../modules/assert';
-@use '../functions/is-list' as *;
-
-@function map-is-not-a-list() {
-  $map: (a: 23);
-
-  @return assert.equal(is-list($map), false, 'map is not a list');
-}

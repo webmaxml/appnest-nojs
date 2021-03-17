@@ -2,6 +2,25 @@
 @use 'sass:list';
 @use 'sass:map';
 
+@function append($list, $val, $separator: auto) { @return list.append($list, $val, $separator: auto); }
+@function index($list, $value) { @return list.index($list, $value); }
+@function is-bracketed($list) { @return list.is-bracketed($list); }
+@function join($list1, $list2, $separator: auto, $bracketed: auto) { @return list.join($list1, $list2, $separator: auto, $bracketed: auto); }
+@function length($list) { @return list.length($list); }
+@function separator($list) { @return list.separator($list); }
+@function nth($list, $n) { @return list.nth($list, $n); }
+@function set-nth($list, $n, $value) { @return list.set-nth($list, $n, $value); }
+@function zip($lists...) { @return list.zip($lists...); }
+
+@function deep-merge($map1, $map2) { @return map.deep-merge($map1, $map2); }
+@function get($map, $key, $keys...) { @return map.get($map, $key, $keys...); }
+@function has-key($map, $key, $keys...) { @return map.has-key($map, $key, $keys...); }
+@function keys($map) { @return map.keys($map); }
+@function merge($map1, $map2) { @return map.merge($map1, $map2); }
+@function set($map, $key, $value) { @return map.set($map, $key, $value); }
+@function values($map) { @return map.values($map); }
+
+
 @function is-list($value) {
   @return meta.type-of($value) == list;
 }
@@ -11,7 +30,7 @@
 }
 
 @function is-empty-list($value) {
-  @if is-list($value) and list.length($value) == 0 {
+  @if is-list($value) and length($value) == 0 {
     @return true;
   } @else {
     @return false;
@@ -20,19 +39,19 @@
 
 @function is-last-elem($list, $elem) {
   @if is-list($list) {
-    @return list.nth($list, -1) == $elem;
+    @return nth($list, -1) == $elem;
   } @else {
     @error "$list in is-last-elem() must be 'list', '#{meta.type-of($list)}' - provided";
   }
 }
 
-@function remove-elem($list, $elem) {
+@function remove($list, $elem, $keys...) {
   @if is-list($list) {
-    @if list.index($list, $elem) {
+    @if index($list, $elem) {
       $result: ();
       @each $item in $list {
         @if $item != $elem {
-          $result: list.append($result, $item);
+          $result: append($result, $item);
         }
       }
 
@@ -41,8 +60,8 @@
       @return list;
     }
   } @else if is-map($list) {
-    @return map.remove($list, $elem);
+    @return map.deep-remove($list, $elem, $keys...);
   } @else {
-    @error "$list in remove-elem() must be 'list' of 'map', '#{meta.type-of($list)}' - provided"
+    @error "$list in remove() must be 'list' of 'map', '#{meta.type-of($list)}' - provided"
   }
 }

@@ -1,7 +1,11 @@
+@use 'sass:meta';
+
 @function equal($actual, $expected, $message) {
   @if $actual == $expected {
     @return $message;
   } @else {
+    $actual: if(meta.type-of($actual) == map, 'actual map', $actual);
+    $expected: if(meta.type-of($expected) == map, 'expected map', $expected);
     @error "'#{$actual}' is not equals '#{$expected}' in '#{$message}'";
   }
 }

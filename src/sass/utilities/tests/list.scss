@@ -1,0 +1,144 @@
+@use '../modules/assert';
+@use '../modules/list';
+
+// is-list
+
+@function list1() {
+  @return assert.equal(list.is-list(()), true, 'empty list is a list');
+}
+
+@function list2() {
+  @return assert.equal(list.is-list((1, 'a')), true, 'not empty list is a list');
+}
+
+@function list3() {
+  @return assert.equal(list.is-list(1), false, 'number is not a list');
+}
+
+@function list4() {
+  @return assert.equal(list.is-list('some'), false, 'string is not a list');
+}
+
+@function list5() {
+  @return assert.equal(list.is-list(#000), false, 'color is not a list');
+}
+
+@function list6() {
+  @return assert.equal(list.is-list(true), false, 'bool is not a list');
+}
+
+@function list7() {
+  @return assert.equal(list.is-list(null), false, 'null is not a list');
+}
+
+@function list8() {
+  @return assert.equal(list.is-list((a: 23)), false, 'map is not a list');
+}
+
+// is-map
+
+@function list9() {
+  @return assert.equal(list.is-map(()), false, 'empty list is not a map');
+}
+
+@function list10() {
+  @return assert.equal(list.is-map((1, 'a')), false, 'not empty list is not a map');
+}
+
+@function list11() {
+  @return assert.equal(list.is-map(1), false, 'number is not a map');
+}
+
+@function list12() {
+  @return assert.equal(list.is-map('some'), false, 'string is not a map');
+}
+
+@function list13() {
+  @return assert.equal(list.is-map(#000), false, 'color is not a map');
+}
+
+@function list14() {
+  @return assert.equal(list.is-map(true), false, 'bool is not a map');
+}
+
+@function list15() {
+  @return assert.equal(list.is-map(null), false, 'null is not a map');
+}
+
+@function list16() {
+  @return assert.equal(list.is-map((a: 23)), true, 'map is a map');
+}
+
+// is-empty-list
+
+@function list17() {
+  @return assert.equal(list.is-empty-list(()), true, 'empty list is a empty list');
+}
+
+@function list18() {
+  @return assert.equal(list.is-empty-list((1)), false, 'non empty list is not an empty list');
+}
+
+// is-last-elem
+
+@function list19() {
+  $last: 4;
+  $list: (4);
+
+  @return assert.equal(list.is-last-elem($list, $last), true, 'only element is last element');
+}
+
+@function list19() {
+  $last: 4;
+  $list: (1, 2, 4);
+
+  @return assert.equal(list.is-last-elem($list, $last), true, 'last element is last element');
+}
+
+@function list19() {
+  $last: 4;
+  $list: (1, 2, 4, 6);
+
+  @return assert.equal(list.is-last-elem($list, $last), false, 'not last element is not last element');
+}
+
+// remove
+
+@function list20() {
+  $list: 1 2 4 6;
+  $to-remove: 6;
+  $expected: 1 2 4;
+
+  @return assert.equal(list.remove($list, $to-remove), $expected, 'removing last list element');
+}
+
+@function list21() {
+  $list: 1 2 4 6;
+  $to-remove: 1;
+  $expected: 2 4 6;
+
+  @return assert.equal(list.remove($list, $to-remove), $expected, 'removing first list element');
+}
+
+@function list22() {
+  $list: 1 2 4 6;
+  $to-remove: 4;
+  $expected: 1 2 6;
+
+  @return assert.equal(list.remove($list, $to-remove), $expected, 'removing middle list element');
+}
+
+@function list23() {
+  $list: (some1: 2, some2: 'test');
+  $to-remove: some2;
+  $expected: (some1: 2);
+
+  @return assert.equal(list.remove($list, $to-remove), $expected, 'removing map element');
+}
+
+@function list24() {
+  $list: (some1: 2, some2: (some3: 2, some4: 'test'));
+  $expected: (some1: 2, some2: (some4: 'test'));
+
+  @return assert.equal(list.remove($list, some2, some3), $expected, 'removing nested map element');
+}
