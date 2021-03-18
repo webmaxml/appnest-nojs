@@ -35,28 +35,35 @@
   @return assert.equal(string.is-string((a: 23)), false, 'map is not a string');
 }
 
-// normalize-value
+// normalize-slash
 
 @function string9() {
   $test: 'some';
   $expected: 'some';
 
-  @return assert.equal(string.normalize-value($test), $expected, 'normalize string without /');
+  @return assert.equal(string.normalize-slash($test), $expected, 'normalize string without /');
 }
 
 @function string10() {
   $test: 'some/1px';
   $expected: 'some' '/' '1px';
 
-  @return assert.equal(string.normalize-value($test), $expected, 'normalize string with /');
+  @return assert.equal(string.normalize-slash($test), $expected, 'normalize string with /');
 }
 
-// @function string11() {
-//   $test: 'some/1px/1/yes';
-//   $expected: 'some' '/' '1px' '1' 'yes';
+@function string11() {
+  $test: 'some/1px/1/yes';
+  $expected: 'some' '/' '1px' '/' '1' '/' 'yes';
 
-//   @return assert.equal(string.normalize-value($test), $expected, 'normalize big string with /');
-// }
+  @return assert.equal(string.normalize-slash($test), $expected, 'normalize big string with /');
+}
+
+@function string11a() {
+  $test: 122px --some/1px 1fr;
+  $expected: 122px '--some' '/' '1px' 1fr;
+
+  @return assert.equal(string.normalize-slash($test), $expected, 'normalize list with /');
+}
 
 // to-string
 

@@ -17,25 +17,33 @@
 }
 
 // turns strings with '/' into list - (sub-string1, /, sub-string2)
-@function normalize-value($value) {
-  @if list.is-list($value) {
-    $result: ();
-    @each $elem in $value {
-      $normalized: normalize-value($elem);
-      $result: if(list.is-list($normalized), list.join($result, $normalized), list.append($result, $normalized));
-    }
-
-    @return $result;
-  } @else if is-string($value) and length($value) > 1 and index($value, '/') {
+@function normalize-slash($value) {
+  @if is-string($value) and length($value) > 1 and index($value, '/') {
     $result: ();
 
     $slash-i: index($value, '/');
     $sub1: slice($value, 1, $slash-i - 1);
     $sub2: slice($value, $slash-i + 1);
 
+    @if index($sub2, '/') {
+      $sub2: normalize-slash($sub2);
+    }
+
     $result: list.append($result, $sub1);
     $result: list.append($result, unquote('/'));
-    $result: list.append($result, $sub2);
+    $result: list.join($result, $sub2);
+
+    @return $result;
+  } @else if list.is-list($value) {
+    $result: ();
+    @each $elem in $value {
+      $elem: normalize-slash($elem);
+      @if list.is-list($elem) {
+        $result: list.join($result, $elem);
+      } @else {
+        $result: list.append($result, $elem);
+      }
+    }
 
     @return $result;
   } @else {
@@ -65,22 +73,11 @@
   @if list.is-map($value) {
     $output: '(';
     @each $key, $val in $value {
-      $key-type: meta.type-of($key);
-      $val-type: meta.type-of($val);
+      $end: if(not list.is-last-elem($value, $key), ', ', '');
+      $key: to-string($key);
+      $val: to-string($val);
 
-      @if $key-type == map {
-        $key: to-string($key);
-      }
-
-      @if $val-type == map {
-        $val: to-string($val);
-      }
-
-      $output: $output + '#{$key}: #{$val}';
-
-      @if not list.is-last-elem($value, $key) {
-        $output: $output + ', ';
-      }
+      $output: $output + $key + ': ' + $val + $end;
     }
 
     @return $output + ')';
