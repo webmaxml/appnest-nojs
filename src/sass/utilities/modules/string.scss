@@ -52,7 +52,7 @@
 }
 
 @function process-var($value) {
-  $value: normalize-value($value);
+  $value: normalize-slash($value);
   
   @if is-list($value) {
     $result: ();

@@ -59,11 +59,18 @@
 }
 
 @function string11a() {
-  $test: 122px --some/1px 1fr;
-  $expected: 122px '--some' '/' '1px' 1fr;
+  $test: 122px #{126px}/1fr 1fr;
+  $expected: 122px '126px' '/' '1fr' 1fr;
 
   @return assert.equal(string.normalize-slash($test), $expected, 'normalize list with /');
 }
+
+// process-var
+
+// @function string-1() {
+
+// }
+
 
 // to-string
 
@@ -82,8 +89,8 @@
 }
 
 @function string14() {
-  $value: 1 2 3 4;
-  $expected: '1 2 3 4';
+  $value: 1 2 126px/1fr 4;
+  $expected: '1 2 126px/1fr 4';
 
   @return assert.equal(string.to-string($value), $expected, 'list to string');
 }
