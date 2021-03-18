@@ -19,13 +19,13 @@
 // turns strings with '/' into list - (sub-string1, /, sub-string2)
 @function normalize-value($value) {
   @if list.is-list($value) {
-    // $result: ();
-    // @each $elem in $value {
-    //   $normalized: normalize-value($elem);
-    //   $result: if(list.is-list($normalized), list.join($result, $normalized), list.append($result, $normalized));
-    // }
+    $result: ();
+    @each $elem in $value {
+      $normalized: normalize-value($elem);
+      $result: if(list.is-list($normalized), list.join($result, $normalized), list.append($result, $normalized));
+    }
 
-    // @return $result;
+    @return $result;
   } @else if is-string($value) and length($value) > 1 and index($value, '/') {
     $result: ();
 
@@ -39,7 +39,7 @@
 
     @return $result;
   } @else {
-    // @return $value;
+    @return $value;
   }
 }
 
@@ -57,5 +57,34 @@
     @return var($value);
   } @else {
     @return $value;
+  }
+}
+
+@function to-string($value) {
+  $output: '';
+  @if list.is-map($value) {
+    $output: '(';
+    @each $key, $val in $value {
+      $key-type: meta.type-of($key);
+      $val-type: meta.type-of($val);
+
+      @if $key-type == map {
+        $key: to-string($key);
+      }
+
+      @if $val-type == map {
+        $val: to-string($val);
+      }
+
+      $output: $output + '#{$key}: #{$val}';
+
+      @if not list.is-last-elem($value, $key) {
+        $output: $output + ', ';
+      }
+    }
+
+    @return $output + ')';
+  } @else {
+    @return $output + $value;
   }
 }

@@ -88,7 +88,7 @@
   @return assert.equal(number.to-px($list), $expected, 'map of unitless numbers to px');
 }
 
-@function number18() {
+@function number19() {
   $list: (1px: 5%, 2%: 8rem);
   $expected: (1px: 5px, 2px: 8px);
   

@@ -1,3 +1,4 @@
+@use 'sass:meta';
 @use '../modules/assert';
 @use '../modules/list';
 
@@ -83,28 +84,35 @@
 
 @function list19() {
   $last: 4;
-  $list: (4);
-
-  @return assert.equal(list.is-last-elem($list, $last), true, 'only element is last element');
-}
-
-@function list19() {
-  $last: 4;
   $list: (1, 2, 4);
 
   @return assert.equal(list.is-last-elem($list, $last), true, 'last element is last element');
 }
 
-@function list19() {
+@function list20() {
   $last: 4;
   $list: (1, 2, 4, 6);
 
   @return assert.equal(list.is-last-elem($list, $last), false, 'not last element is not last element');
 }
 
+@function list21() {
+  $last: 4;
+  $list: (1: 2, 4: 6);
+
+  @return assert.equal(list.is-last-elem($list, $last), true, 'last element in map');
+}
+
+@function list22() {
+  $last: 1;
+  $list: (1: 2, 4: 6);
+
+  @return assert.equal(list.is-last-elem($list, $last), false, 'not last element in map');
+}
+
 // remove
 
-@function list20() {
+@function list23() {
   $list: 1 2 4 6;
   $to-remove: 6;
   $expected: 1 2 4;
@@ -112,7 +120,7 @@
   @return assert.equal(list.remove($list, $to-remove), $expected, 'removing last list element');
 }
 
-@function list21() {
+@function list24() {
   $list: 1 2 4 6;
   $to-remove: 1;
   $expected: 2 4 6;
@@ -120,7 +128,7 @@
   @return assert.equal(list.remove($list, $to-remove), $expected, 'removing first list element');
 }
 
-@function list22() {
+@function list25() {
   $list: 1 2 4 6;
   $to-remove: 4;
   $expected: 1 2 6;
@@ -128,7 +136,7 @@
   @return assert.equal(list.remove($list, $to-remove), $expected, 'removing middle list element');
 }
 
-@function list23() {
+@function list26() {
   $list: (some1: 2, some2: 'test');
   $to-remove: some2;
   $expected: (some1: 2);
@@ -136,9 +144,73 @@
   @return assert.equal(list.remove($list, $to-remove), $expected, 'removing map element');
 }
 
-@function list24() {
+@function list27() {
   $list: (some1: 2, some2: (some3: 2, some4: 'test'));
   $expected: (some1: 2, some2: (some4: 'test'));
 
   @return assert.equal(list.remove($list, some2, some3), $expected, 'removing nested map element');
+}
+
+// map
+
+@function _test($elem, $args...) {
+  @return $elem + 1;
+}
+
+@function list28() {
+  $cb: meta.get-function('_test');
+  $list: 1 1 1 1 1;
+  $expected: 2 2 2 2 2;
+
+  @return assert.equal(list.map($list, $cb), $expected, 'calling callback on simple list');
+}
+
+@function list29() {
+  $cb: meta.get-function('_test');
+  $list: 1 1 1, 1 1;
+  $expected: 2 2 2, 2 2;
+
+  @return assert.equal(list.map($list, $cb), $expected, 'calling callback on nested list');
+}
+
+@function list30() {
+  $cb: meta.get-function('_test');
+  $list: (some1: 1, some2: 2);
+  $expected: (some1: 2, some2: 3);
+
+  @return assert.equal(list.map($list, $cb), $expected, 'calling callback on simple map');
+}
+
+@function list31() {
+  $cb: meta.get-function('_test');
+  $list: (some1: 1, some2: (some3: 2, some4: 5));
+  $expected: (some1: 2, some2: (some3: 3, some4: 6));
+
+  @return assert.equal(list.map($list, $cb), $expected, 'calling callback on nested map');
+}
+
+@function list32() {
+  $cb: meta.get-function('_test');
+  $list: (some1: 1, some2: (some3: 2, some4: 1 2 3 4 5));
+  $expected: (some1: 2, some2: (some3: 3, some4: 2 3 4 5 6));
+
+  @return assert.equal(list.map($list, $cb), $expected, 'calling callback on mixed list');
+}
+
+// map-keys
+
+@function list33() {
+  $cb: meta.get-function('_test');
+  $list: (100: 1, 200: 'some');
+  $expected: (101: 1, 201: 'some');
+
+  @return assert.equal(list.map-keys($list, $cb), $expected, 'calling callback on map keys');
+}
+
+@function list34() {
+  $cb: meta.get-function('_test');
+  $list: (100: 1, 200: (300: 2, 400: 1 2 3 4 5));
+  $expected: (101: 1, 201: (301: 2, 401: 1 2 3 4 5));
+
+  @return assert.equal(list.map-keys($list, $cb), $expected, 'calling callback on nested map keys');
 }

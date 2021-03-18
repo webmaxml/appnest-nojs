@@ -2,12 +2,12 @@
 @use 'sass:list';
 @use 'tests';
 
-$tests: meta.module-functions('tests');
+$functions: meta.module-functions('tests');
 $passed-count: 0;
 $output: ();
 
-@each $name, $test in $tests {
-  $message: meta.call($test);
+@each $fn-name, $fn in $functions {
+  $message: meta.call($fn);
   $output: list.append($output, $message + " - ✓");
   $passed-count: $passed-count + 1;
 }

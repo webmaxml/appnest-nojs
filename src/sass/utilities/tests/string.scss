@@ -44,16 +44,54 @@
   @return assert.equal(string.normalize-value($test), $expected, 'normalize string without /');
 }
 
-@function string9() {
+@function string10() {
   $test: 'some/1px';
   $expected: 'some' '/' '1px';
 
   @return assert.equal(string.normalize-value($test), $expected, 'normalize string with /');
 }
 
-// @function string9() {
+// @function string11() {
 //   $test: 'some/1px/1/yes';
 //   $expected: 'some' '/' '1px' '1' 'yes';
 
 //   @return assert.equal(string.normalize-value($test), $expected, 'normalize big string with /');
 // }
+
+// to-string
+
+@function string12() {
+  $value: 100px;
+  $expected: '100px';
+
+  @return assert.equal(string.to-string($value), $expected, 'number to string');
+}
+
+@function string13() {
+  $value: true;
+  $expected: 'true';
+
+  @return assert.equal(string.to-string($value), $expected, 'bool to string');
+}
+
+@function string14() {
+  $value: 1 2 3 4;
+  $expected: '1 2 3 4';
+
+  @return assert.equal(string.to-string($value), $expected, 'list to string');
+}
+
+
+@function string15() {
+  $value: (some1: 1, some2: 2);
+  $expected: '(some1: 1, some2: 2)';
+
+  @return assert.equal(string.to-string($value), $expected, 'map to string');
+}
+
+@function string16() {
+  $value: (some1: 1, some2: 1 2 3 4, some3: (some4: 4, some5: 5));
+  $expected: '(some1: 1, some2: 1 2 3 4, some3: (some4: 4, some5: 5))';
+
+  @return assert.equal(string.to-string($value), $expected, 'complex map to string');
+}
