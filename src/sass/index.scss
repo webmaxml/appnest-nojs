@@ -1,12 +1,116 @@
-@use 'reset';
-@use 'assets';
+// @use 'reset';
+// @use 'assets';
 
-@use '../mixins/vars' as *;
-@use 'utilities/vars' as *;
+// @use '../mixins/vars' as *;
+// @use 'utilities/vars' as *;
 
-:root { @include vars($css); }
+// :root { @include vars($css); }
 
-@use 'common';
-@use 'blocks';
-@use 'sections';
-@use 'pages';
+// @use 'common';
+// @use 'blocks';
+// @use 'sections';
+// @use 'pages';
+
+@use 'sass:meta';
+@use 'utilities/modules/list';
+@use 'utilities/modules/string';
+@use 'utilities/modules/number';
+
+
+
+@mixin output-prop($prop, $value) {
+  @if not string.is-string($prop) {
+    @error "prop in output-prop must be string, '#{meta.type-of($prop)}' - provided";
+  }
+
+  @if $value {
+    #{$prop}: $value;
+  }
+}
+
+@mixin output-breakpoints($prop, $breakpoints) {
+  @if not list.is-map($breakpoints) {
+    @error "breakpoints in output-breakpoints() must be map, '#{meta.type-of($breakpoints)}' - provided";
+  }
+
+  @each $width, $value in $breakpoints {
+    @if not number.is-number($width){
+      @error "width in output-breakpoints() must be number, '#{meta.type-of($width)}' - provided";
+    }
+    @if number.unit($width) != 'px' {
+      @error "width in output-breakpoints() must be in px, '#{number.unit($width)}' - provided";
+    }
+
+    @media screen and (min-width: $width) {
+      @include output-prop($prop, $value);
+    }
+  }
+}
+
+@mixin output($data) {
+  $prop: list.get($data, 'prop');
+  $value: list.get($data, 'value');
+  $breakpoints: list.get($data, 'breakpoints');
+
+  @include output-prop($prop, $value);
+
+  @if $breakpoints {
+    @include output-breakpoints($prop, $breakpoints);
+  }
+}
+
+@function has-breakpoints($value) {
+  @return list.is-list($value) and list.is-map(list.nth($value, -1));
+}
+
+@function has-value($value) {
+  @return if(list.is-list($value), 
+    list.nth($value, 1) != fluid and not list.is-map(list.nth($value, 1)), 
+    not list.is-map($value)
+  );
+}
+
+
+@function keys-to-px($map) {
+  @return list.map-keys($map, meta.get-function('to-px', $module: 'number'));
+}
+
+@function parse-data($value, $prop, $map) {
+  @return if(has-breakpoints($value), 
+    (
+      'prop': $prop,
+      'value': if(has-value($value), list.remove($value, list.nth($value, -1)), null),
+      'breakpoints': keys-to-px(list.nth($value, -1)),
+      'fluid': if(list.nth($value, 1) == fluid, true, false)
+    ), 
+    (
+      'prop': $prop,
+      'value': $value,
+      'breakpoints': null,
+      'fluid': false
+    ) 
+  );
+}
+
+@mixin css($styles) {
+  $cb: meta.get-function('parse-data');
+  $data: list.values(list.map($styles, $cb));
+
+  @each $item in $data {
+    @include output($item);
+  }
+}
+
+
+// 1. 16px
+// 2. 1px solid black (768: 20px)
+// 2. (768: 16px, 1024: 22px)
+// 3. fluid (320: 16px, 1024: 22px)
+
+body {
+  @include css((
+    font-size: 16px (768: 20px),
+    color: red,
+    // --size: fluid (320: 60px, 1024: 100px)
+  ));
+}

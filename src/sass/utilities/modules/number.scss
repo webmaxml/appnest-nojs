@@ -30,7 +30,7 @@
 }
 
 
-@function to-px($value) {
+@function to-px($value, $args...) {
   @if is-number($value) {
     @return strip-unit($value) * 1px;
   } @else if list.is-list($value) {

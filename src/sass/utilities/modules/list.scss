@@ -68,7 +68,7 @@
   }
 }
 
-@function map($list, $cb) {
+@function map($list, $cb, $deep: false) {
   $list-type: meta.type-of($list);
   $cb-type: meta.type-of($cb);
 
@@ -82,7 +82,7 @@
     @each $item in $list {
       $item-type: meta.type-of($item);
       
-      @if $item-type == list or $item-type == map {
+      @if $deep and $item-type == list or $item-type == map {
         $item: map($item, $cb);
       } @else {
         $i: list.index($list, $item);
@@ -98,7 +98,7 @@
       @each $key, $value in $list {
         $value-type: meta.type-of($value);
 
-        @if $value-type == list or $value-type == map {
+        @if $deep and $value-type == list or $value-type == map {
           $value: map($value, $cb);
         } @else {
           $value: meta.call($cb, $value, $key, $list);
