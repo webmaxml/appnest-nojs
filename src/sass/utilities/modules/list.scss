@@ -59,7 +59,7 @@
 
       @return $result;
     } @else {
-      @return list;
+      @return $list;
     }
   } @else if is-map($list) {
     @return map.deep-remove($list, $elem, $keys...);

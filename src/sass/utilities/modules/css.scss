@@ -1,0 +1,65 @@
+@use 'meta';
+@use 'list';
+@use 'string';
+@use 'number';
+@use 'output';
+
+@function has-breakpoints($value) {
+  @return list.is-list($value) and list.is-map(list.nth($value, -1));
+}
+
+@function has-value($value) {
+  @return if(
+    list.is-list($value), 
+    list.nth($value, 1) != fluid and not list.is-map(list.nth($value, 1)), 
+    not list.is-map($value)
+  );
+}
+
+
+@function keys-to-px($map) {
+  @return list.map-keys($map, meta.get-function('to-px', $module: 'number'));
+}
+
+@function get-value-from-list($value) {
+  @return if(
+    has-breakpoints($value),
+
+  );
+}
+
+@function parse-map-value($value) {
+
+}
+
+@function parse-data($prop, $value) {
+  @return if(
+    list.is-list($value), 
+    (
+      'prop': $prop,
+      'value': if(
+        has-value($value), 
+        list.remove($value, 
+        list.nth($value, -1)), null
+      ),
+      'breakpoints': keys-to-px(list.nth($value, -1)),
+      'fluid': if(
+        list.nth($value, 1) == fluid, 
+        true, 
+        false
+      )
+    ), 
+    (
+      'prop': $prop,
+      'value': $value,
+      'breakpoints': null,
+      'fluid': false
+    ) 
+  );
+}
+
+@mixin css($styles) {
+  @each $prop, $value in $styles {
+    @include output.output(parse-data($prop, $value));
+  }
+}

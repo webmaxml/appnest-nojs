@@ -1,0 +1,112 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:list';
+@use 'sass:map';
+
+@function pipe($list) {
+  @if type-of($list) != 'list' { @error 'pipe() expects list, #{type-of($list)} - provided'; }
+
+  $result: null;
+  @each $item in $list {
+    @if type-of($item) == 'list' {
+      $fn: list.nth($item, 1);
+      @if type-of($fn) != 'function' { @error 'list element in pipe() must start with function, #{type-of($fn)} - provided'; }
+
+      $args: ();
+      @each $arg in $item {
+        @if $arg != $fn {
+          $args: list.append($args, $arg);
+        }
+      }
+
+      $placeholder: list.index($args, '<>');
+      @if $placeholder {
+        $args: list.set-nth($args, $placeholder, $result);
+      }
+
+      $result: call($fn, $args...);
+    } @else if type-of($item) == 'function' {
+      $result: call($fn, $args...);
+    } @else {
+      @error 'list element in pipe() must be list or function, #{type-of($item)} - provided';
+    }
+  }
+
+  @return $result;
+}
+
+@function split($str, $sep: null) {
+  $result: ();
+  @if $sep {
+    $sep-i: string.index($str, $sep);
+    @if $sep-i {
+      $sub: string.slice($str, 1, $sep-i - 1);
+      $rest: string.slice($str, $sep-i + 1);
+
+      $result: list.append($result, $sub);
+      $result: list.join($result, split($rest, $sep));
+    } @else {
+      $result: list.append($result, $str);
+    }
+  } @else {
+    @return list.append($result, $str);
+  }
+
+  @return $result;
+}
+
+@debug split('fuck you', ' ');
+
+@function check-type($value, $expected, $message) {
+  @if type-of($expected) != 'string' { @error 'type must be string in check-type(), #{type-of($expected)} - provided'; }
+  @if type-of($message) != 'string' { @error 'message must be string in check-type(), #{type-of($message)} - provided'; }
+
+  // $expected: pipe(
+  //   get-function('index', $module: 'string') $expected '|',
+  //   get-function('if') '<>' 
+  // );
+
+  $actual: type-of($value);
+  $separator: string.index($expected, '|');
+  $type-placeholder: string.index($message, '%t');
+
+  @if $type-placeholder {
+    $message: string.slice($message, 1, $type-placeholder - 1) + 
+              $actual + 
+              string.slice($message, $type-placeholder + 2);
+  }
+
+  @if $separator {
+    $expected1: string.slice($expected, 1, $separator - 1);
+    $expected2: string.slice($expected, $separator + 1);
+
+    @if $actual != $expected1 and $actual != $expected2 { @error $message; }
+  } @else {
+    @if $actual != $expected { @error $message; }
+  }
+
+  @return $value;
+}
+
+
+@function switch($cond, $cases) {
+  @if type-of($cases) != 'map' {
+    @error 'cases must be map in switch(), #{type-of($cases)} - provided';
+  }
+
+  $default: map.get($cases, 'default');
+  @if not $default {
+    @error 'cases must have default prop in switch()';
+  }
+
+  @each $case, $value in $cases {
+    @if $cond == $case {
+      @return if(type-of($value) == 'function', call($value), $value);
+    }
+  }
+
+  @return if(type-of($default) == 'function', call($default), $default);
+}
+
+
+

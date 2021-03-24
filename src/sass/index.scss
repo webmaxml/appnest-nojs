@@ -11,61 +11,41 @@
 // @use 'sections';
 // @use 'pages';
 
-@use 'sass:meta';
-@use 'utilities/modules/list';
-@use 'utilities/modules/string';
-@use 'utilities/modules/number';
-@use 'utilities/modules/output';
 
-@function has-breakpoints($value) {
-  @return list.is-list($value) and list.is-map(list.nth($value, -1));
+
+@use 'utilities/modules/helpers' as *;
+
+// body {
+//   @include css((
+//     font-size: 16px (768: 20px),
+//     color: red,
+//     // --size: fluid (320: 60px, 1024: 100px)
+//   ));
+// }
+
+
+
+
+@function some1($a, $b) {
+  @return $a + $b;
 }
 
-@function has-value($value) {
-  @return if(list.is-list($value), 
-    list.nth($value, 1) != fluid and not list.is-map(list.nth($value, 1)), 
-    not list.is-map($value)
-  );
+@function some2($a, $b) {
+  @return $a + $b;
 }
 
-
-@function keys-to-px($map) {
-  @return list.map-keys($map, meta.get-function('to-px', $module: 'number'));
+@function some3($a, $b) {
+  @return $a + $b;
 }
 
-@function parse-data($prop, $value) {
-  @return if(has-breakpoints($value), 
-    (
-      'prop': $prop,
-      'value': if(has-value($value), list.remove($value, list.nth($value, -1)), null),
-      'breakpoints': keys-to-px(list.nth($value, -1)),
-      'fluid': if(list.nth($value, 1) == fluid, true, false)
-    ), 
-    (
-      'prop': $prop,
-      'value': $value,
-      'breakpoints': null,
-      'fluid': false
-    ) 
-  );
-}
-
-@mixin css($styles) {
-  @each $prop, $value in $styles {
-    @include output.output(parse-data($prop, $value));
-  }
-}
-
-
-// 1. 16px
-// 2. 1px solid black (768: 20px)
-// 2. (768: 16px, 1024: 22px)
-// 3. fluid (320: 16px, 1024: 22px)
-
-body {
-  @include css((
-    font-size: 16px (768: 20px),
-    color: red,
-    // --size: fluid (320: 60px, 1024: 100px)
-  ));
-}
+@debug pipe((
+  get-function('switch') 'ass' (
+    'ass': 66,
+    'default': 32
+  ),
+  get-function('if') true '<>' 4,
+  get-function('check-type') '<>' 'number' 'value must number, %t - provided',
+  get-function('some1') '<>' 4,
+  get-function('some2') '<>' 5,
+  get-function('some3') 5 '<>',
+));
