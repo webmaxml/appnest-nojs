@@ -20,6 +20,9 @@
   @return meta.type-of($value) == number;
 }
 
+@function is-px($value) {
+  @return is-number($value) and unit($value) == 'px';
+}
 
 @function strip-unit($value) {
   @if not is-number($value) {

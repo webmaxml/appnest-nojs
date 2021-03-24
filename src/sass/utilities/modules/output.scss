@@ -1,0 +1,46 @@
+@use 'sass:meta';
+@use 'list';
+@use 'string';
+@use 'number';
+
+@mixin _prop($prop, $value) {
+  @if not string.is-string($prop) {
+    @error "prop in output-prop must be string, '#{meta.type-of($prop)}' - provided";
+  }
+
+  #{$prop}: $value;
+}
+
+@mixin _breakpoints($prop, $breakpoints) {
+  @if not list.is-map($breakpoints) {
+    @error "breakpoints in output-breakpoints() must be map, '#{meta.type-of($breakpoints)}' - provided";
+  }
+
+  @each $width, $value in $breakpoints {
+    @if not number.is-px($width){
+      @error "width in output-breakpoints() must be px number, '#{$width}' - provided";
+    }
+
+    @media screen and (min-width: $width) {
+      @include _prop($prop, $value);
+    }
+  }
+}
+
+/**
+ * Outputs result to css
+ *
+ * @param {map} data
+ * @param {string} data.prop - prop name
+ * @param {any} data.value - prop value
+ * @param {map} data.breakpoints - media breakpoints
+ */
+
+@mixin output($data) {
+  $prop: list.get($data, 'prop');
+  $value: list.get($data, 'value');
+  $breakpoints: list.get($data, 'breakpoints');
+
+  @if $value { @include _prop($prop, $value); }
+  @if $breakpoints { @include _breakpoints($prop, $breakpoints); }
+}
