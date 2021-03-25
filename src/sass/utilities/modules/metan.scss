@@ -1,7 +1,7 @@
 @use 'sass:meta';
 
 @function load-css($url, $with: null) { @return meta.load-css($url, $with); }
-@function call($function, $args...) { @return meta.call($function, $args...); }
+// @function call-my($function, $args...) { @return meta.call($function, $args...); }
 @function content-exists() { @return meta.content-exists(); }
 @function feature-exists($feature) { @return meta.feature-exists($feature); }
 @function function-exists($name) { @return meta.function-exists($name); }
