@@ -1,0 +1,48 @@
+@use 'sass:meta';
+@use 'assert';
+@use 'color';
+@use 'css';
+@use 'helpers';
+@use 'list';
+@use 'metan';
+@use 'number';
+@use 'output';
+@use 'string';
+
+$module-names: (
+  'assert',
+  'color',
+  'css',
+  'helpers',
+  'list',
+  'metan',
+  'number',
+  'output',
+  'string',
+);
+
+$modules: ();
+@each $module-name in $module-names {
+  $modules: list.set($modules, $module-name, meta.module-functions($module-name));
+}
+
+@function _find($name) {
+  $module-name: string.slice($name, 1, string.index($name, '.') - 1);
+  $func-name: string.slice($name, string.index($name, '.') + 1);
+
+  $module-functions: list.get($modules, $module-name);
+  @if not $module-functions {
+    @error "no such module '#{$module-name}'";
+  }
+
+  $func: list.get($module-functions, $func-name);
+  @if not $func {
+    @error "no such function '#{$func-name}' in #{$module-name}";
+  }
+
+  @return $func;
+}
+
+@function f($name, $args...) { 
+  @return list.join(_find($name), $args); 
+}

@@ -3,6 +3,9 @@
 @use 'sass:list';
 @use 'sass:map';
 
+@function f($name, $args...) { @return list.join(get-function($name), $args); }
+
+
 @function throw($message) {
   @error $message;
 }
@@ -23,19 +26,19 @@
   );
 }
 
-@function pipe($list) {
-  @if type-of($list) != 'list' { @error 'pipe() expects list, #{type-of($list)} - provided'; }
-
+@function pipe($args...) {
   $result: null;
-  @each $item in $list {
-    @if type-of($item) == 'list' {
-      $placeholder: list.index($item, '<>');
-      @if $placeholder {
-        $item: list.set-nth($item, $placeholder, $result);
+  @each $item in $args {
+    @if $item {
+      @if type-of($item) == 'list' {
+        $placeholder: list.index($item, '<>');
+        @if $placeholder {
+          $item: list.set-nth($item, $placeholder, $result);
+        }
       }
-    }
 
-    $result: invoke($item);
+      $result: invoke($item);
+    }
   }
 
   @return $result;
@@ -51,6 +54,11 @@
 }
 
 
+@function debug($value) {
+  @debug $value;
+  @return $value;
+}
+
 
 @function join($a, $b) {
   @return list.join($a, $b);
@@ -64,49 +72,73 @@
 }
 
 @function has($str, $sep) {
-  @return if(
-    $sep == '' and $str == '',
-    null,
-    string.index($str, $sep)
-  );
+  @return string.index($str, $sep);
 }
 
-@function first-half($str, $sep) {
-  @return string.slice(
-    $str, 
-    1, 
-    if($sep == '', string.index($str, $sep), string.index($str, $sep) - 1)
-  );
+@function decrement($num) {
+  @return $num - 1;
 }
 
-@function second-half($str, $sep) {
-  @return string.slice($str, string.index($str, $sep) + 1);
+@function increment($num) {
+  @return $num + 1;
 }
 
+// @function first-half($str, $sep) {
+//   @return string.slice($str, 1, string.index($str, $sep) - 1);
+// }
 
-@function _split-with-sep($str, $sep) {
+// @function second-half($str, $sep) {
+//   @return string.slice($str, string.index($str, $sep) + 1);
+// }
+
+
+// pipe() returns funciton-list instead of calling it
+// функция с() которая вызывает функцию, function-list
+// проверять в с() аргументы, если они являются function-list - исполнять их сперва
+// если в с() попадает функция if() - выполнить ее и выполнить вернувшийся function-list
+
+
+@function split-with-sep($str, $sep) {
   @return if(
     has($str, $sep),
     join(
-      to-list(first-half($str, $sep)),
-      _split-with-sep(second-half($str, $sep), $sep)
+      pipe(
+        f('str-index', $str, $sep), 
+        if($sep == '', null, f('decrement', '<>')),
+        f('str-slice', $str, 1, '<>'),
+        f('to-list', '<>'),
+      ),
+      pipe(
+        f('str-index', $str, $sep),
+        f('increment', '<>'),
+        f('str-slice', $str, '<>'),
+        f('split-with-sep', '<>', $sep)
+      )
     ),
     to-list($str)
   );
 }
 
 @function split($str, $sep: null) {
-  @return if(
-    exists($sep),
-    _split-with-sep($str, $sep),
-    to-list($str)
+  // @return if(
+  //   exists($sep),
+  //   split-with-sep($str, $sep),
+  //   to-list($str)
+  // );
+
+  @return if-else(
+    f('exists', $sep), 
+    f('split-with-sep', $str, $sep), 
+    f('to-list', $str)
   );
 }
 
-@debug split('fuck you', '');
+@function add($a, $b) {
+  @return $a + $b;
+}
 
 
-
+@debug split('fuck you', ' ');
 
 
 @function check-type($value, $expected, $message) {

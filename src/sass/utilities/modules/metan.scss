@@ -1,27 +1,32 @@
 @use 'sass:meta';
 
-@function load-css($url, $with: null) { @return meta.load-css($url, $with); }
+// @function load-css($url, $with: null) { @return meta.load-css($url, $with); }
 // @function call-my($function, $args...) { @return meta.call($function, $args...); }
-@function content-exists() { @return meta.content-exists(); }
-@function feature-exists($feature) { @return meta.feature-exists($feature); }
-@function function-exists($name) { @return meta.function-exists($name); }
-@function get-function($name, $css: false, $module: null) { @return meta.get-function($name, $css, $module); }
-@function global-variable-exists($name, $module: null) { @return meta.global-variable-exists($name, $module); }
-@function inspect($value) { @return meta.inspect($value); }
-@function keywords($args) { @return meta.keywords($args); }
-@function mixin-exists($name, $module: null) { @return meta.mixin-exists($name, $module); }
-@function module-functions($module) { @return meta.module-functions($module); }
-@function module-variables($module) { @return meta.module-variables($module); }
-@function type-of($value) { @return meta.type-of($value); }
-@function variable-exists($name) { @return meta.variable-exists($name); }
+// @function content-exists() { @return meta.content-exists(); }
+// @function feature-exists($feature) { @return meta.feature-exists($feature); }
+// @function function-exists($name) { @return meta.function-exists($name); }
+// @function get-function($name, $css: false, $module: null) { @return meta.get-function($name, $css, $module); }
+// @function global-variable-exists($name, $module: null) { @return meta.global-variable-exists($name, $module); }
+// @function inspect($value) { @return meta.inspect($value); }
+// @function keywords($args) { @return meta.keywords($args); }
+// @function mixin-exists($name, $module: null) { @return meta.mixin-exists($name, $module); }
+// @function module-functions($module) { @return meta.module-functions($module); }
+// @function module-variables($module) { @return meta.module-variables($module); }
+// @function type-of($value) { @return meta.type-of($value); }
+// @function variable-exists($name) { @return meta.variable-exists($name); }
 
 
-@function switch($cond, $cases) {
-  @each $case, $fn in $cases {
-    @if type-of($fn) != 'function' {
-      @error 'cases must have functions as values in switch, #{type-of($fn)} - provided';
-    }
+@function f($name, $css: false, $module: null) {
+  @return call(get-function('get-function', $module: 'meta'), $name, $css, $module);
+} 
+
+
+// @function switch($cond, $cases) {
+//   @each $case, $fn in $cases {
+//     @if type-of($fn) != 'function' {
+//       @error 'cases must have functions as values in switch, #{type-of($fn)} - provided';
+//     }
 
     
-  }
-}
+//   }
+// }

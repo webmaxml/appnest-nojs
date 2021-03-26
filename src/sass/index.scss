@@ -24,28 +24,26 @@
 // }
 
 
+// @function some1($a, $b) {
+//   @return $a + $b;
+// }
 
+// @function some2($a, $b) {
+//   @return $a + $b;
+// }
 
-@function some1($a, $b) {
-  @return $a + $b;
-}
+// @function some3($a, $b) {
+//   @return $a + $b;
+// }
 
-@function some2($a, $b) {
-  @return $a + $b;
-}
-
-@function some3($a, $b) {
-  @return $a + $b;
-}
-
-@debug pipe((
-  get-function('switch') 'ass' (
-    'ass': 66,
-    'default': 32
-  ),
-  get-function('if') true '<>' 4,
-  get-function('check-type') '<>' 'number' 'value must number, %t - provided',
-  get-function('some1') '<>' 4,
-  get-function('some2') '<>' 5,
-  get-function('some3') 5 '<>',
-));
+// @debug pipe((
+//   get-function('switch') 'ass' (
+//     'ass': 66,
+//     'default': 32
+//   ),
+//   get-function('if') true '<>' 4,
+//   get-function('check-type') '<>' 'number' 'value must number, %t - provided',
+//   get-function('some1') '<>' 4,
+//   get-function('some2') '<>' 5,
+//   get-function('some3') 5 '<>',
+// ));
