@@ -18,31 +18,81 @@
   @return type-of($value) == 'list' and type-of(list.nth($value, 1)) == 'function';
 }
 
-@function invoke($item) {
-  @return if(
-    is-function-list($item) or is-function($item), 
-    call($item...), 
-    throw('invoke() expects function-list or function, #{type-of($item)} - provided')
-  );
+@function is-list-of-function-lists($value) {
+  @return type-of($value) == 'list' and is-function-list(list.nth($value, 1));
 }
 
-@function pipe($args...) {
-  $result: null;
-  @each $item in $args {
-    @if $item {
-      @if type-of($item) == 'list' {
-        $placeholder: list.index($item, '<>');
-        @if $placeholder {
-          $item: list.set-nth($item, $placeholder, $result);
-        }
-      }
-
-      $result: invoke($item);
+@function replace-placeholder($list, $value) {
+  $processed: ();
+  @each $item in $list {
+    @if type-of($item) == list {
+      $item: replace-placeholder($item, $value);
     }
+
+    $processed: list.append($processed, if($item == '<>', $value, $item)); 
   }
 
-  @return $result;
+  @return $processed;
 }
+
+
+@function invoke($list, $replacer: null) {
+  @if is-function-list($list) {
+    $fn: list.nth($list, 1);
+
+    $processed: ();
+    @if $fn == get-function('if') {
+      $cond: list.nth($list, 2);
+      $processed: if(
+        is-function-list($cond) or is-list-of-function-lists($cond),
+        list.set-nth($list, 2, invoke($cond)),
+        $list
+      );
+    } @else {
+      @each $arg in $list {
+        $arg: if(
+          is-function-list($arg) or is-list-of-function-lists($arg),
+          invoke($arg),
+          $arg
+        );
+
+        $processed: list.append($processed, $arg);
+      }
+    }
+
+    @debug $processed;
+
+    $result: call($processed...);
+    @return if(
+      is-function-list($result) or is-list-of-function-lists($result),
+      invoke($result),
+      $result
+    );
+
+  } @else if is-list-of-function-lists($list) {
+    $result: 113;
+    @each $item in $list {
+      @if $item {
+        $result: invoke(replace-placeholder($item, $result));
+      }   
+    }
+
+    @return $result;
+  } @else {
+    @error 'invoke() expects function-list or list of function-lists, #{type-of($list)} - provided';
+  }
+}
+
+
+@function pipe($args...) {
+  $list: ();
+  @each $arg in $args {
+    $list: list.append($list, $arg);
+  }
+
+  @return $list;
+}
+
 
 @function return-or-invoke($value) {
   @return if(is-function-list($value) or is-function($value), invoke($value), $value);
@@ -71,8 +121,8 @@
   @return list.append((), $str);
 }
 
-@function has($str, $sep) {
-  @return string.index($str, $sep);
+@function has($str, $sub) {
+  @return string.index($str, $sub);
 }
 
 @function decrement($num) {
@@ -83,60 +133,66 @@
   @return $num + 1;
 }
 
-// @function first-half($str, $sep) {
-//   @return string.slice($str, 1, string.index($str, $sep) - 1);
-// }
-
-// @function second-half($str, $sep) {
-//   @return string.slice($str, string.index($str, $sep) + 1);
-// }
-
-
-// pipe() returns funciton-list instead of calling it
-// функция с() которая вызывает функцию, function-list
-// проверять в с() аргументы, если они являются function-list - исполнять их сперва
-// если в с() попадает функция if() - выполнить ее и выполнить вернувшийся function-list
+@function is-empty-string($value) {
+  @return $value == '';
+}
 
 
 @function split-with-sep($str, $sep) {
-  @return if(
-    has($str, $sep),
-    join(
-      pipe(
-        f('str-index', $str, $sep), 
-        if($sep == '', null, f('decrement', '<>')),
-        f('str-slice', $str, 1, '<>'),
-        f('to-list', '<>'),
-      ),
-      pipe(
-        f('str-index', $str, $sep),
-        f('increment', '<>'),
-        f('str-slice', $str, '<>'),
-        f('split-with-sep', '<>', $sep)
-      )
-    ),
-    to-list($str)
-  );
-}
-
-@function split($str, $sep: null) {
   // @return if(
-  //   exists($sep),
-  //   split-with-sep($str, $sep),
+  //   has($str, $sep),
+  //   join(
+  //     pipe(
+  //       f('str-index', $str, $sep), 
+  //       f('if', f('is-empty-string', $sep), null, f('decrement', '<>')),
+  //       f('str-slice', $str, 1, '<>'),
+  //       f('to-list', '<>'),
+  //     ),
+  //     pipe(
+  //       f('str-index', $str, $sep),
+  //       f('increment', '<>'),
+  //       f('str-slice', $str, '<>'),
+  //       f('split-with-sep', '<>', $sep)
+  //     )
+  //   ),
   //   to-list($str)
   // );
 
-  @return if-else(
-    f('exists', $sep), 
-    f('split-with-sep', $str, $sep), 
-    f('to-list', $str)
-  );
+  @return invoke(pipe(
+    f('if',
+      f('has', $str, $sep),
+      f('join', 
+        pipe(
+          f('str-index', $str, $sep), 
+          f('if', f('is-empty-string', $sep), null, f('decrement', '<>')),
+          f('str-slice', $str, 1, '<>'),
+          f('to-list', '<>'),
+        ),
+        pipe(
+          f('str-index', $str, $sep),
+          f('increment', '<>'),
+          f('str-slice', $str, '<>'),
+          f('split-with-sep', '<>', $sep)
+        )
+      ),
+      f('to-list', $str)
+    )
+  ));
+}
+
+@function split($str, $sep: null) {
+  @return invoke(pipe(
+    f('if', 
+      f('exists', $sep), 
+      f('split-with-sep', $str, $sep), 
+      f('to-list', $str)
+    )
+  ));
 }
 
 @function add($a, $b) {
   @return $a + $b;
 }
-
 
 @debug split('fuck you', ' ');
 
