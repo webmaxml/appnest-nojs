@@ -10,6 +10,24 @@
   @error $message;
 }
 
+@function for-each($list, $cb) {
+  $result: null;
+  @each $item in $list {
+    $result: call($cb, $item, list.index($list, $item), $list);
+  }
+
+  @return $result;
+}
+
+@function args-to-list($args) {
+  $result: ();
+  @each $arg in $args {
+    $result: list.append($result, $arg);
+  }
+
+  @return $result;
+}
+
 @function is-function($value) {
   @return type-of($value) == 'function';
 }
@@ -22,13 +40,22 @@
   @return type-of($value) == 'list' and is-function-list(list.nth($value, 1));
 }
 
-@function replace-placeholder($list, $value) {
-  $processed: ();
-  @each $item in $list {
-    @if type-of($item) == list {
-      $item: replace-placeholder($item, $value);
-    }
+// @function replace-placeholder($list, $value) {
+//   $processed: ();
+//   @each $item in $list {
+//     @if type-of($item) == list {
+//       $item: replace-placeholder($item, $value);
+//     }
 
+//     $processed: list.append($processed, if($item == '<>', $value, $item)); 
+//   }
+
+//   @return $processed;
+// }
+
+@function replace-placeholder($fn-list, $value) {
+  $processed: ();
+  @each $item in $fn-list {
     $processed: list.append($processed, if($item == '<>', $value, $item)); 
   }
 
@@ -36,56 +63,127 @@
 }
 
 
-@function invoke($list, $replacer: null) {
-  @if is-function-list($list) {
-    $fn: list.nth($list, 1);
 
-    $processed: ();
-    @if $fn == get-function('if') {
-      $cond: list.nth($list, 2);
-      $processed: if(
-        is-function-list($cond) or is-list-of-function-lists($cond),
-        list.set-nth($list, 2, invoke($cond)),
-        $list
-      );
-    } @else {
-      @each $arg in $list {
-        $arg: if(
-          is-function-list($arg) or is-list-of-function-lists($arg),
-          invoke($arg),
-          $arg
-        );
 
-        $processed: list.append($processed, $arg);
-      }
-    }
+@function call-or-return($value, $cb) {
+  @return if(
+    is-function-list($value) or is-list-of-function-lists($value),
+    call($cb, $value),
+    $value
+  );
+}
 
-    @debug $processed;
+@function process-if-args($fn-list, $cb) {
+  @return list.set-nth(
+    $fn-list, 
+    2, 
+    call-or-return(list.nth($fn-list, 2), $cb)
+  );
+}
 
-    $result: call($processed...);
-    @return if(
-      is-function-list($result) or is-list-of-function-lists($result),
-      invoke($result),
-      $result
-    );
-
-  } @else if is-list-of-function-lists($list) {
-    $result: 113;
-    @each $item in $list {
-      @if $item {
-        $result: invoke(replace-placeholder($item, $result));
-      }   
-    }
-
-    @return $result;
-  } @else {
-    @error 'invoke() expects function-list or list of function-lists, #{type-of($list)} - provided';
+@function process-args($fn-list, $cb) {
+  $processed: ();
+  @each $arg in $fn-list {
+    $processed: list.append($processed, call-or-return($arg, $cb));
   }
+
+  @return $processed;
+}
+
+
+$fn-state: null;
+@function set-fn-state($value) {
+  $fn-state: $value !global;
+  @return $fn-state;
+}
+
+@function get-fn-state() {
+  @return $fn-state;
+}
+
+@function reset-fn-state() {
+  $fn-state: null !global;
+  @return true;
+}
+
+
+
+@function invoke-fn-list($fn-list, $cb) {
+  $fn-list: replace-placeholder($fn-list, get-fn-state());
+
+  $result: if(
+    list.nth($fn-list, 1) == get-function('if'),
+    call-or-return(call(process-if-args($fn-list, $cb)...), $cb),
+    call-or-return(call(process-args($fn-list, $cb)...), $cb)
+  );
+
+  @return set-fn-state($result);
+}
+
+@function invoke-list-of-fn-lists($list, $cb) {
+  $result: null;
+  @each $item in $list {
+    $result: call($cb, $item);
+  }
+
+  @return $result;
+}
+
+
+
+
+
+// (f, 34, '<>')
+
+// (
+//  (f, 24, 36)
+//  (f, '<>', 36)
+//  (f, 353, '<>')
+// )
+
+// (f, 34, '<2>')
+// (if, (
+//   (f, 2, '<1>')
+//   (f, 2, '<1>')
+// ), (
+//   (f, '<2>')
+//   (f, '<2>')
+// ),(
+//   (f, '<2>') 
+//   (f, '<2>') 
+// ))
+// (f, 34, '<>')
+
+// @function invoker($list) {
+//   @each $item in $list { 
+
+//   }
+
+
+// }
+
+@function invoke($args...) {
+  $cb: get-function('invoke');
+
+  $result: null;
+  @each $item in args-to-list($args) { 
+    $result: if(
+      is-function-list($item),
+      invoke-fn-list($item, $cb),
+      if(
+        is-list-of-function-lists($item),
+        invoke-list-of-fn-lists($item, $cb),
+        throw('invoke() expects function-list or list of function-lists, #{type-of($item)} - provided')
+      )
+    );
+  }
+
+  @return $result;
 }
 
 
 @function pipe($args...) {
-  $list: ();
+  $result: null;
   @each $arg in $args {
     $list: list.append($list, $arg);
   }
@@ -158,17 +256,20 @@
   //   to-list($str)
   // );
 
-  @return invoke(pipe(
+  // channels
+  // call-or-return - убрать
+
+  @return invoke(
     f('if',
       f('has', $str, $sep),
       f('join', 
-        pipe(
+        (
           f('str-index', $str, $sep), 
           f('if', f('is-empty-string', $sep), null, f('decrement', '<>')),
           f('str-slice', $str, 1, '<>'),
           f('to-list', '<>'),
         ),
-        pipe(
+        (
           f('str-index', $str, $sep),
           f('increment', '<>'),
           f('str-slice', $str, '<>'),
@@ -177,17 +278,17 @@
       ),
       f('to-list', $str)
     )
-  ));
+  );
 }
 
 @function split($str, $sep: null) {
-  @return invoke(pipe(
+  @return invoke(
     f('if', 
       f('exists', $sep), 
       f('split-with-sep', $str, $sep), 
       f('to-list', $str)
     )
-  ));
+  );
 }
 
 @function add($a, $b) {
