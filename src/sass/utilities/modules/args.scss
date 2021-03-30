@@ -1,0 +1,59 @@
+@use 'sass:map';
+@use 'obj';
+
+@function _process-args($args) {
+  $processed: null;
+  @if length($args) == 1 {
+    $processed: if(
+      nth($args, 1) == list,
+      nth($args, 1),
+      join((), nth($args, 1))
+    );
+  } @else {
+    $processed:join((), $args);
+  }
+
+  @return $processed;
+}
+
+@function _get-args($this) { @return obj.get($this, 'args'); }
+@function _set-args($this, $args) { @return obj.set($this, 'args', _process-args($args)); }
+
+// @function _is-placeholder($value) {
+//   @return 
+//     type-of($value) == 'string' and 
+//     string.slice($value, 1, 1) == '<' and
+//     string.slice($value, -1) == '>';
+// }
+
+// @function _get-port-from-placeholder($placeholder) {
+//   @if not _is-placeholder($placeholder) { @error '_get-port-from-placeholder() expects placeholder, #{$placeholder} - provided'; }
+
+//   $port: string.slice($placeholder, 2, -2);
+//   @return if($port == '', 'default', $port);
+// }
+
+// @function _replace-placeholder($this, $ports) {
+//   @if not obj.instance-of($ports, 'Ports') { @error 'replace-placeholder() expects Ports instance, #{type-of($ports)} - provided'; }
+
+//   $processed: ();
+//   @each $arg in _get-args($this) {
+//     $arg: if(
+//       _is-placeholder($arg),
+//       _get-port-value($port-map, _get-port-from-placeholder($arg)),
+//       $arg
+//     );
+
+//     $processed: list.append($processed, $arg); 
+//   }
+
+//   @return _set-args($fn-map, $processed);
+// }
+
+@function create($args...) {
+  @return obj.create-class('Args', (
+    'args': _process-args($args),
+    'get-args': get-function('_get-args'),
+    'set-args': get-function('_set-args'),
+  ));
+}

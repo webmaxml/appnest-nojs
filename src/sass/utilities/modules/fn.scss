@@ -1,0 +1,61 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:list';
+@use 'sass:map';
+@use 'obj';
+
+$_separator: ':';
+
+@function _sep-index($string) {
+  @return string.index($string, $_separator);
+}
+
+@function _get-fn($this) { @return obj.get($this, 'fn'); }
+@function _get-port($this) { @return obj.get($this, 'port'); }
+@function _get-args($this) { 
+  $args-obj: obj.get($this, 'args');
+  @return obj.call($args-obj, 'get-args'); 
+}
+
+@function _set-args($this, $args) {
+  $args-obj: obj.get($this, 'args');
+  $changed: obj.call($args-obj, 'set-args', $args);
+  @return obj.set($this, 'args', $changed);
+}
+
+@function get-function-name($name) {
+  @if type-of($name) != 'string' { @error 'get-function-name() expects string, #{type-of($name)} - provided'; }
+  
+  @return if(
+    _sep-index($name),
+    string.slice($name, 1, _sep-index($name) - 1),
+    $name
+  );
+}
+
+@function get-port-name($name) {
+  @if type-of($name) != 'string' { @error 'get-port-name() expects string, #{type-of($name)} - provided'; }
+
+  @return if(
+    _sep-index($name),
+    string.slice($name, _sep-index($name) + 1),
+    'default'
+  );
+}
+
+@function create($fn, $port, $args) {
+  @if type-of($fn) != 'function' { @error "Fn expects function, #{type-of($fn)} - provided"; }
+  @if type-of($port) != 'string' { @error "Fn expects port as string, #{type-of($port)} - provided"; }
+  @if not obj.instance-of($args, 'Args') { @error "Fn expects args as Args instance, #{type-of($args)} - provided"; }
+
+  @return obj.create-class('Fn', (
+    'fn': $fn,
+    'port': $port,
+    'args': $args,
+    'get-fn': get-function('_get-fn'),
+    'get-port': get-function('_get-port'),
+    'get-args': get-function('_get-args'),
+    'set-args': get-function('_set-args'),
+  ));
+}
+

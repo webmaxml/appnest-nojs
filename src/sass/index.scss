@@ -11,8 +11,4 @@
 // @use 'sections';
 // @use 'pages';
 
-@use 'utilities/modules/obj';
-@use 'utilities/modules/port';
-
-$port: port.create(('some': 42));
-@debug obj.call($port, 'set-port', 'ass', 100);
+@use 'utilities/modules/core';
