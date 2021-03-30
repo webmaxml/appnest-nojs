@@ -2,36 +2,28 @@
 @use 'sass:string';
 @use 'sass:list';
 @use 'sass:map';
+@use 'obj';
 
-@function _create-port-map() {
-  @return ('default': null);
+@function has-port($this, $port) {
+  @return map.has-key(obj.get($this, 'ports'), $port);
 }
 
-@function _is-port-map($value) {
-  @return type-of($value) == 'map' and map.has-key($value, 'default');
+@function get-port($this, $port) {
+  @if not has-port($this, $port) { @error "no such port '#{$port}'"; }
+
+  @return map.get(obj.get($this, 'ports'), $port);
 }
 
-@function _get-port-value($port-map, $port) {
-  @if not _is-port-map($port-map) { @error 'get-port-value() expects port-map, #{type-of($port-map)} - provided'; }
-  @if not map.has-key($port-map, $port) { @error 'no such port: "#{$port}"'; }
-
-  @return map.get($port-map, $port);
-}
-
-@function _set-port-value($port-map, $port, $value) {
-  @if not _is-port-map($port-map) { @error 'set-port-value() expects port-map, #{type-of($port-map)} - provided'; }
-
-  @return map.set($port-map, $port, $value);
-}
-
-@function has-port($this, $a) {
-  @return inspect($a);
+@function set-port($this, $port, $value) {
+  $ports: map.set(obj.get($this, 'ports'), $port, $value);
+  @return obj.set($this, 'ports', $ports);
 }
 
 @function create($ports: ()) {
-  @return (
-    constructor: 'port',
-    ports: map.deep-merge(('default': null), $ports),
-    has-port: get-function('has-port')
-  );
+  @return obj.create-class('port', (
+    'ports': map.deep-merge(('default': null), $ports),
+    'has-port': get-function('has-port'),
+    'get-port': get-function('get-port'),
+    'set-port': get-function('set-port'),
+  ));
 }

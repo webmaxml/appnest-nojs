@@ -1,6 +1,13 @@
 @use 'sass:meta';
 @use 'sass:map';
 
+@function create-class($name, $props) {
+  @if type-of($name) != 'string' { @error 'class name must be string, #{type-of($name)} - provided'; }
+  @if type-of($props) != 'map' { @error 'props must be map, #{type-of($props)} - provided'; }
+  
+  @return map.deep-merge(('constructor': $name), $props);
+}
+
 @function is-obj($value) {
   @return type-of($value) == 'map' and  map.has-key($value, 'constructor');
 }
