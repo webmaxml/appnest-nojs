@@ -3,23 +3,13 @@
 @use 'sass:list';
 @use 'sass:map';
 
-@function f($name, $args...) { @return list.join(get-function($name), $args); }
-
-
 @function throw($message) {
   @error $message;
 }
 
-@function for-each($list, $cb) {
-  $result: null;
-  @each $item in $list {
-    $result: call($cb, $item, list.index($list, $item), $list);
-  }
-
-  @return $result;
-}
-
 @function args-to-list($args) {
+  @if type-of($args) != 'arglist' { @error 'args-to-list() expects arglist, #{type-of($args)} - provided'; }
+
   $result: ();
   @each $arg in $args {
     $result: list.append($result, $arg);
@@ -27,42 +17,6 @@
 
   @return $result;
 }
-
-@function is-function($value) {
-  @return type-of($value) == 'function';
-}
-
-@function is-function-list($value) {
-  @return type-of($value) == 'list' and type-of(list.nth($value, 1)) == 'function';
-}
-
-@function is-list-of-function-lists($value) {
-  @return type-of($value) == 'list' and is-function-list(list.nth($value, 1));
-}
-
-// @function replace-placeholder($list, $value) {
-//   $processed: ();
-//   @each $item in $list {
-//     @if type-of($item) == list {
-//       $item: replace-placeholder($item, $value);
-//     }
-
-//     $processed: list.append($processed, if($item == '<>', $value, $item)); 
-//   }
-
-//   @return $processed;
-// }
-
-@function replace-placeholder($fn-list, $value) {
-  $processed: ();
-  @each $item in $fn-list {
-    $processed: list.append($processed, if($item == '<>', $value, $item)); 
-  }
-
-  @return $processed;
-}
-
-
 
 
 @function call-or-return($value, $cb) {
@@ -108,8 +62,8 @@ $fn-state: null;
 
 
 
-@function invoke-fn-list($fn-list, $cb) {
-  $fn-list: replace-placeholder($fn-list, get-fn-state());
+@function invoke-fn-list($fn-list, $channels, $cb) {
+  $fn-list: replace-placeholder($fn-list, $channels);
 
   $result: if(
     list.nth($fn-list, 1) == get-function('if'),
@@ -120,7 +74,7 @@ $fn-state: null;
   @return set-fn-state($result);
 }
 
-@function invoke-list-of-fn-lists($list, $cb) {
+@function invoke-list-of-fn-lists($list, $channels, $cb) {
   $result: null;
   @each $item in $list {
     $result: call($cb, $item);
@@ -162,23 +116,28 @@ $fn-state: null;
 
 // }
 
-@function invoke($args...) {
-  $cb: get-function('invoke');
+@function c($list, $channels) {
+  $cb: get-function('c');
 
   $result: null;
-  @each $item in args-to-list($args) { 
+  @each $item in $list {
     $result: if(
       is-function-list($item),
-      invoke-fn-list($item, $cb),
+      invoke-fn-list($item, $channels, $cb),
       if(
         is-list-of-function-lists($item),
-        invoke-list-of-fn-lists($item, $cb),
+        invoke-list-of-fn-lists($item, $channels, $cb),
         throw('invoke() expects function-list or list of function-lists, #{type-of($item)} - provided')
       )
     );
   }
 
   @return $result;
+}
+
+@function invoke($args...) {
+  $channels: ('default': null);
+  @return c(args-to-list($args), $channels);
 }
 
 
@@ -237,35 +196,13 @@ $fn-state: null;
 
 
 @function split-with-sep($str, $sep) {
-  // @return if(
-  //   has($str, $sep),
-  //   join(
-  //     pipe(
-  //       f('str-index', $str, $sep), 
-  //       f('if', f('is-empty-string', $sep), null, f('decrement', '<>')),
-  //       f('str-slice', $str, 1, '<>'),
-  //       f('to-list', '<>'),
-  //     ),
-  //     pipe(
-  //       f('str-index', $str, $sep),
-  //       f('increment', '<>'),
-  //       f('str-slice', $str, '<>'),
-  //       f('split-with-sep', '<>', $sep)
-  //     )
-  //   ),
-  //   to-list($str)
-  // );
-
-  // channels
-  // call-or-return - убрать
-
   @return invoke(
     f('if',
       f('has', $str, $sep),
       f('join', 
         (
           f('str-index', $str, $sep), 
-          f('if', f('is-empty-string', $sep), null, f('decrement', '<>')),
+          f('if', f('is-empty-string|1', $sep), null, f('decrement', '<>')),
           f('str-slice', $str, 1, '<>'),
           f('to-list', '<>'),
         ),
@@ -295,7 +232,7 @@ $fn-state: null;
   @return $a + $b;
 }
 
-@debug split('fuck you', ' ');
+// @debug split('fuck you', ' ');
 
 
 @function check-type($value, $expected, $message) {
