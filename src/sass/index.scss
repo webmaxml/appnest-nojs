@@ -13,37 +13,10 @@
 
 
 
-@use 'utilities/modules/core' as *;
 
-// body {
-//   @include css((
-//     font-size: 16px (768: 20px),
-//     color: red,
-//     // --size: fluid (320: 60px, 1024: 100px)
-//   ));
-// }
+@use 'utilities/modules/object' as *;
+@use 'utilities/modules/port';
 
 
-// @function some1($a, $b) {
-//   @return $a + $b;
-// }
-
-// @function some2($a, $b) {
-//   @return $a + $b;
-// }
-
-// @function some3($a, $b) {
-//   @return $a + $b;
-// }
-
-// @debug pipe((
-//   get-function('switch') 'ass' (
-//     'ass': 66,
-//     'default': 32
-//   ),
-//   get-function('if') true '<>' 4,
-//   get-function('check-type') '<>' 'number' 'value must number, %t - provided',
-//   get-function('some1') '<>' 4,
-//   get-function('some2') '<>' 5,
-//   get-function('some3') 5 '<>',
-// ));
+$port: port.create(('some': false));
+@debug call($port, 'has-port', 42);

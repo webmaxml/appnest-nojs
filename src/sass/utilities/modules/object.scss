@@ -1,0 +1,46 @@
+@use 'sass:meta';
+@use 'sass:map';
+
+@function is-obj($value) {
+  @return type-of($value) == 'map' and  map.has-key($value, 'constructor');
+}
+
+@function get-class($obj) {
+  @if not is-obj($obj) { @error '#{type-of($obj)} is not an object'; }
+  @return map.get($obj, 'constructor');
+}
+
+@function has($obj, $prop) {
+  @if not is-obj($obj) { @error '#{type-of($obj)} is not an object'; }
+  @return map.has-key($obj, $prop);
+}
+
+@function get($obj, $prop) {
+  @if not is-obj($obj) { @error '#{type-of($obj)} is not an object'; }
+  @if not has($obj, $prop) { @error "No such prop '#{$prop}' in #{get-class($obj)}"; }
+
+  @return map.get($obj, $prop);
+}
+
+@function set($obj, $prop, $value) {
+  @if not is-obj($obj) { @error '#{type-of($obj)} is not an object'; }
+  @if $prop == 'constructor' { @error "you can not change constructor property"; }
+
+  @return map.set($obj, $prop, $value);
+}
+
+@function instance-of($obj, $class) {
+  @if not is-obj($obj) { @error '#{type-of($obj)} is not an object'; }
+  @if type-of($class) != 'string' { @error 'instance-of() expects class as string, #{type-of($class)} - provided'; }
+
+  @return get-class($obj) == $class;
+}
+
+@function call($obj, $method, $args...) {
+  @if not is-obj($obj) { @error '#{type-of($obj)} is not an object'; }
+  @if not has($obj, $method) { @error "No such method '#{$method}'"; }
+  $fn: get($obj, $method);
+  @if type-of($fn) != 'function' { @error "'#{$method}' is not a function"; }
+
+  @return meta.call($fn, $obj, $args...);
+} 
