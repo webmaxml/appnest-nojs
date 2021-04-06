@@ -1,0 +1,9 @@
+@use 'obj';
+
+@function create($name: 'default') {
+  @if type-of($name) != 'string' { @error "Placeholder expects name as string, #{type-of($name)} - provided"; }
+
+  @return obj.create-class('Placeholder', (
+    'name': $name,
+  ));
+}

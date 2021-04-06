@@ -1,0 +1,7 @@
+@use 'obj';
+
+@function create($args...) {
+  @return obj.create-class('Return', (
+    'args': _process-args($args),
+  ));
+}

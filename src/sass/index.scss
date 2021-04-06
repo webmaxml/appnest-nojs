@@ -11,4 +11,32 @@
 // @use 'sections';
 // @use 'pages';
 
-@use 'utilities/modules/core';
+@use 'utilities/modules/obj';
+@use 'utilities/modules/fn';
+@use 'utilities/modules/placeholder';
+@use 'sass:string';
+@use 'sass:meta';
+
+@function pl($name: 'default') {
+  @return placeholder.create($name);
+}
+
+@function f($str, $args...) {
+  $module: fn.get-module-name($str);
+  $fn: fn.get-function-name($str);
+  $port: fn.get-port-name($str);
+  $args: fn.arglist-to-list($args);
+
+  $fn-exists: if(
+    $module,
+    map-has-key(meta.module-functions($module), $fn),
+    function-exists($fn)
+  );
+
+  @if not $fn-exists { @error 'No such function: "#{$fn}"'; }
+  
+  @return fn.create(get-function($fn, $module: $module), $port, $args);
+}
+
+$s: f('string.slice', 'fuck', 1, pl());
+@debug $s;
