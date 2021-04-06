@@ -1,9 +1,15 @@
 @use 'obj';
 
+@function _get-value($this, $return) {
+  @if obj.instance-of($return) != 'Return' { @error 'replace() expects instance of Return, #{type-of($return)} - provided'; }
+  @return obj.call($return, 'get', obj.get($this, 'name'));
+}
+
 @function create($name: 'default') {
   @if type-of($name) != 'string' { @error "Placeholder expects name as string, #{type-of($name)} - provided"; }
 
   @return obj.create-class('Placeholder', (
     'name': $name,
+    'get-value': get-function('_get-value'),
   ));
 }

@@ -36,11 +36,9 @@
   @return map.set($obj, $prop, $value);
 }
 
-@function instance-of($obj, $class) {
+@function instance-of($obj) {
   @if not is-obj($obj) { @error '#{type-of($obj)} is not an object'; }
-  @if type-of($class) != 'string' { @error 'instance-of() expects class as string, #{type-of($class)} - provided'; }
-
-  @return get-class($obj) == $class;
+  @return get-class($obj);
 }
 
 @function call($obj, $method, $args...) {

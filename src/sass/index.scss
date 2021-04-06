@@ -14,6 +14,7 @@
 @use 'utilities/modules/obj';
 @use 'utilities/modules/fn';
 @use 'utilities/modules/placeholder';
+@use 'utilities/modules/return';
 @use 'sass:string';
 @use 'sass:meta';
 
@@ -38,5 +39,24 @@
   @return fn.create(get-function($fn, $module: $module), $port, $args);
 }
 
-$s: f('string.slice', 'fuck', 1, pl());
-@debug $s;
+@function invoke($fns...) {
+  $return: return.create(); 
+  @each $fn in $fns {
+    $return: obj.call($fn, 'invoke', $return);
+  }
+
+  @return obj.call($return, 'get-last');
+}
+
+
+@function add($a, $b) {
+  @return $a + $b;
+}
+
+
+@debug invoke(
+  f('add', 1, 1),
+  f('add:some', 3, 3),
+  f('add:ass', 10, 10),
+  f('add', pl(), 10)
+);

@@ -44,16 +44,35 @@
   @return $list;
 }
 
-@function _invoke($this) {
-  @return call(
-    obj.call($this, 'get-fn'),
-    obj.call($this, 'get-args')...
-  );
+@function _replace-placeholders($args, $return) {
+  @if type-of($args) != 'list' { @error 'replace-placeholders() expects args as list, #{type-of($args)} - provided'; }
+  @if obj.instance-of($return) != 'Return' { @error 'replace-placeholders() expects instance of Return, #{type-of($return)} - provided'; }
+
+  $replaced: ();
+  @each $arg in $args {
+    $replaced: append($replaced, 
+      if(
+        obj.is-obj($arg) and obj.instance-of($arg) == 'Placeholder',
+        obj.call($arg, 'get-value', $return),
+        $arg
+      )
+    );
+  }
+
+  @return $replaced;
 }
 
-@function _get-fn($this) { @return obj.get($this, 'fn'); }
-@function _get-port($this) { @return obj.get($this, 'port'); }
-@function _get-args($this) { @return obj.get($this, 'args'); }
+@function _invoke($this, $return) {
+  @if obj.instance-of($return) != 'Return' { @error 'invoke() expects instance of Return, #{type-of($return)} - provided'; }
+
+  $result: call(
+    obj.get($this, 'fn'),
+    _replace-placeholders(obj.get($this, 'args'), $return)...
+  );
+
+  @return obj.call($return, 'set', obj.get($this, 'port'), $result);
+}
+
 
 @function create($fn, $port, $args) {
   @if type-of($fn) != 'function' { @error "Fn expects function, #{type-of($fn)} - provided"; }
@@ -64,9 +83,6 @@
     'fn': $fn,
     'port': $port,
     'args': $args,
-    'get-fn': get-function('_get-fn'),
-    'get-port': get-function('_get-port'),
-    'get-args': get-function('_get-args'),
     'invoke': get-function('_invoke'),
   ));
 }
