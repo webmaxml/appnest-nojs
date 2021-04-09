@@ -5,53 +5,56 @@
 
 // ----------------------------------------- static -----------------------------------------
 
+@function _invoke-cb($fn, $args...) { @return obj.call($fn, 'invoke'); }
+
 @function invoke-fn-list($list) {
   @if not _is-fn-list($list) { @error "invoke-fn-list() expects list of Fn, #{type-of($list)} - provided"; }
 
-  $result: null;
-  @each $fn in $list {
-    $result: obj.call($fn, 'invoke');
-  }
+  // $result: null;
+  // @each $fn in $list {
+  //   $result: obj.call($fn, 'invoke');
+  // }
 
-  @return $result;
+  // @return $result;
+
+  @return for-each($list, get-function('_invoke-cb'));
 }
 
 // ----------------------------------------- instance -----------------------------------------
 
 @function _is-fn-list($value) {
   @if type-of($value) == 'list' and length($value) > 0 {
-    @each $item in $value {
-      @if obj.instance-of($item) != 'Function' { @return false; }
-    }
-
+    @each $item in $value { @if obj.instance-of($item) != 'Function' { @return false; } }
     @return true;
   } @else {
     @return false;
   }
 }
 
-@function _process-args($arg) {
+@function _process-args($arg, $args...) {
   @if obj.instance-of($arg) == 'Placeholder' { @return obj.call($arg, 'replace'); } 
   @if obj.instance-of($arg) == 'Function' { @return obj.call($arg, 'invoke'); } 
   @if _is-fn-list($arg) { @return invoke-fn-list($arg); }
+  @if is-list-or-map($arg) { @return map($arg, get-function('_process-args')); }
 
-  @if type-of($arg) == 'list' {
-    $list: ();
-    @each $item in $arg {
-      $list: append($list, _process-args($item));
-    }
+  // @if type-of($arg) == 'list' {
+  //   $list: ();
+  //   @each $item in $arg {
+  //     $list: append($list, _process-args($item));
+  //   }
 
-    @return $list;
-  }
+  //   @return $list;
+  //   @return map($arg, get-function('_process-args'));
+  // }
 
-  @if type-of($arg) == 'map' {
-    $map: ();
-    @each $key, $value in $arg {
-      $map: map.set($map, $key, _process-args($value));
-    }
+  // @if type-of($arg) == 'map' {
+  //   $map: ();
+  //   @each $key, $value in $arg {
+  //     $map: map.set($map, $key, _process-args($value));
+  //   }
 
-    @return $map;
-  }
+  //   @return $map;
+  // }
 
   @return $arg;
 }
@@ -68,7 +71,7 @@
   $case: _process-args(nth($args, 1));
   $cases: nth($args, 2);
 
-  $case: if(map-has($cases, $case), $case, 'default');
+  $case: if(map-has-key($cases, $case), $case, 'default');
   $value: _process-args(map-get($cases, $case));
 
   @return ($case, map.set($cases, $case, $value));

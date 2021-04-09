@@ -47,7 +47,7 @@
   @return Placeholder.create($name);
 }
 
-@function invoke($fns...) {
+@function c($fns...) {
   $ports: ports.reset();
   $result: Function.invoke-fn-list(arglist-to-list($fns));
   $ports: ports.reset();

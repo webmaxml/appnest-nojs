@@ -1,6 +1,108 @@
 @function switch($case, $cases) {
   @if type-of($cases) != 'map' { @error "switch() expects cases as map, #{type-of($cases)} - provided"; }
-  @if not map-has($cases, 'default') { @error "cases in switch() must have 'default' case"; }
+  @if not map-has-key($cases, 'default') { @error "cases in switch() must have 'default' case"; }
 
-  @return map-get($cases, if(map-has($cases, $case), $case, 'default'));
+  @return map-get($cases, if(map-has-key($cases, $case), $case, 'default'));
+}
+
+@function is-list-or-map($value) {
+  @return type-of($value) == 'list' or type-of($value) == 'map';
+}
+
+@function for-each($list, $cb, $deep: false) {
+  @if type-of($cb) != 'function' { @error "map() expects function, #{type-of($cb)} - provided"; };
+
+  @if type-of($list) == 'list' {
+    $result: null;
+    @each $item in $list {
+      $item: if($deep and is-list-or-map($item), for-each($item, $cb, $deep), $item);
+      $result: call($cb, $item, index($list, $item), $list);
+    }
+
+    @return $result;
+  }
+
+  @if type-of($list) == 'map' {
+    $result: null;
+    @each $key, $value in $list {
+      $value: if($deep and is-list-or-map($value), for-each($value, $cb, $deep), $value);
+      $result: call($cb, $value, $key, $list);
+    }
+
+    @return $result;
+  }
+
+  @error "for-each() expects list or map, #{type-of($list)} - provided";
+}
+
+@function reduce($list, $cb, $init: null) {
+  @if type-of($list) != 'list' { @error "reduce() expects list, #{type-of($list)} - provided"; };
+  @if type-of($cb) != 'function' { @error "reduce() expects function, #{type-of($cb)} - provided"; };
+
+  $result: if($init, $init, nth($list, 1));
+  @each $item in $list {
+    $i: index($list, $item);
+    @if if($init, true, $i != 1) {
+      $result: call($cb, $result, $item, index($list, $item), $list);
+    }
+  }
+
+  @return $result;
+}
+
+@function map($list, $cb, $deep: false) {
+  @if type-of($cb) != 'function' { @error "map() expects function, #{type-of($cb)} - provided"; };
+
+  @if type-of($list) == 'list' {
+    $result: ();
+    @each $item in $list {
+      $item: if($deep and is-list-or-map($item), map($item, $cb, $deep), $item);
+      $result: append($result, call($cb, $item, index($list, $item), $list));
+    }
+
+    @return $result;
+  }
+
+  @if type-of($list) == 'map' {
+    $result: ();
+    @each $key, $value in $list {
+      $value: if($deep and is-list-or-map($value), map($value, $cb, $deep), $value);
+      $result: map.set($result, $key, call($cb, $value, $key, $list));
+    }
+
+    @return $result;
+  }
+
+  @error "map() expects list or map, #{type-of($list)} - provided";
+}
+
+
+@function filter($list, $cb, $deep: false) {
+  @if type-of($cb) != 'function' { @error "map() expects function, #{type-of($cb)} - provided"; };
+
+  @if type-of($list) == 'list' {
+    $result: ();
+    @each $item in $list {
+      $item: if($deep and is-list-or-map($item), filter($item, $cb, $deep), $item);
+      $passed: call($cb, $item, index($list, $item), $list);
+
+      @if $passed { $result: append($result, $item); }  
+    }
+
+    @return $result;
+  }
+
+  @if type-of($list) == 'map' {
+    $result: ();
+    @each $key, $value in $list {
+      $value: if($deep and is-list-or-map($value), filter($value, $cb, $deep), $value);
+      $passed: call($cb, $value, $key, $list);
+
+      @if $passed { $result: map.set($result, $key, $value); }  
+    }
+
+    @return $result;
+  }
+
+  @error "filter() expects list or map, #{type-of($list)} - provided";
 }

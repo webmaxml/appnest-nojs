@@ -11,52 +11,6 @@
 // @use 'sections';
 // @use 'pages';
 
-@use 'sass:meta';
-@use 'utilities/modules/core/fn' as *;
+@use 'utilities/modules/helpers/main' as *;
 
-@function f($str, $args...) {
-  $module: get-module-name($str);
-  $fn: get-function-name($str);
-  $port: get-port-name($str);
-  $args: arglist-to-list($args);
-
-  $fn-exists: if(
-    $module,
-    map-has-key(meta.module-functions($module), $fn),
-    function-exists($fn)
-  );
-
-  @if not $fn-exists { @error 'No such function: "#{$fn}"'; }
-  
-  @return create-fn(get-function($fn, $module: $module), $port, $args);
-}
-
-
-@function throw($message) {
-  @error $message;
-}
-
-@function get-str() {
-  @return 'fuck you';
-}
-
-@function add($a, $b) {
-  @return $a + $b;
-}
-
-@function decrement($num) {
-  @return $num - 1;
-}
-
-@function increment($num) {
-  @return $num + 1;
-}
-
-@debug invoke(
-  f('if', 
-    true, 
-    f('increment', p()), 
-    f('throw', 'fuck this')
-  )
-);
-
+@debug check(34, 'number', 'some()');

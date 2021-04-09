@@ -1,6 +1,27 @@
 @use 'sass:meta';
 @use 'sass:list';
 @use 'sass:map';
+@use 'core/fn' as *;
+@use 'core/helpers' as *;
+
+@function f($str, $args...) {
+  $module: get-module-name($str);
+  $fn: get-function-name($str);
+  $port: get-port-name($str);
+  $args: arglist-to-list($args);
+
+  $fn-exists: if(
+    $module,
+    map-has-key(meta.module-functions($module), $fn),
+    function-exists($fn)
+  );
+
+  @if not $fn-exists { @error 'No such function: "#{$fn}"'; }
+  
+  @return create-fn(get-function($fn, $module: $module), $port, $args);
+}
+
+// ----------------------------------------- functions -----------------------------------------
 
 @function append($list, $val, $separator: auto) { @return list.append($list, $val, $separator); }
 @function index($list, $value) { @return list.index($list, $value); }
@@ -21,21 +42,6 @@
 @function values($map) { @return map.values($map); }
 
 
-@function is-list($value) {
-  @return meta.type-of($value) == list;
-}
-
-@function is-map($value) {
-  @return meta.type-of($value) == map;
-}
-
-@function is-empty-list($value) {
-  @if is-list($value) and length($value) == 0 {
-    @return true;
-  } @else {
-    @return false;
-  }
-}
 
 @function is-last-elem($list, $elem) {
   @if is-list($list) {
