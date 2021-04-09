@@ -40,12 +40,9 @@
 }
 
 @function invoke($fns...) {
-  $ports: ports.reset(); 
-  $result: null;
-  @each $fn in $fns {
-    $result: obj.call($fn, 'invoke');
-  }
-
+  $ports: ports.reset();
+  $result: fn.invoke-fn-list(fn.arglist-to-list($fns));
+  $ports: ports.reset();
   @return $result;
 }
 
@@ -67,8 +64,19 @@
 }
 
 @debug invoke(
-  f('get-str'),
-  f('string.index:i', p(), ' '),
-  f('string.slice', p(), 1, p('i')),
+  f('string.slice', 
+    (
+      f('get-str'),
+      f('string.index:i', p(), ' '),
+      f('string.slice', p(), 1, p('i')),
+    ),
+    1,
+    (
+      f('add', 1, 1),
+      f('increment', p()),
+      f('increment', p()),
+      f('decrement', p()),
+    )
+  ) 
 );
 

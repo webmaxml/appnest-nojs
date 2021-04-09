@@ -45,91 +45,33 @@
   @return $list;
 }
 
-// @function _process-args($args, $return) {
-//   @return _replace-placeholders($args, $return);
-// }
+@function _is-fn-list($value) {
+  @if type-of($value) == 'list' and length($value) > 0 {
+    @each $item in $value {
+      @if obj.instance-of($item) != 'Fn' { @return false; }
+    }
 
-// @function _replace-args($this, $return) {
-//   @if obj.instance-of($return) != 'Return' { @error 'replace-args() expects instance of Return, #{type-of($return)} - provided'; }
+    @return true;
+  } @else {
+    @return false;
+  }
+}
 
-//   $replaced: ();
-//   @each $arg in obj.get($this, 'args') {
-//     @if obj.is-obj($arg) and obj.instance-of($arg) == 'Placeholder' {
-//       $arg: obj.call($arg, 'replace', $return);
-//     } 
+@function invoke-fn-list($list) {
+  @if not _is-fn-list($list) { @error "invoke-fn-list() expects list of Fn, #{type-of($list)} - provided"; }
 
-//     $replaced: append($replaced, $arg);
-//   }
+  $result: null;
+  @each $fn in $list {
+    $result: obj.call($fn, 'invoke');
+  }
 
-//   @return obj.set($this, 'args', $replaced);
-// }
-
-// @function _invoke-args($this, $return) {
-//   @if obj.instance-of($return) != 'Return' { @error 'replace-args() expects instance of Return, #{type-of($return)} - provided'; }
-
-//   $invoked: ();
-//   @each $arg in obj.get($this, 'args') {
-//     @if obj.is-obj($arg) and obj.instance-of($arg) == 'Fn' {
-//       $r: obj.call($arg, 'invoke', $return);
-//       $arg: obj.call($r, 'get-last');
-//     } 
-//     // @else if type-of($arg) == 'list' and
-//     //            obj.is-obj(nth($arg, 1)) and
-//     //            obj.instance-of(nth($arg, 1)) == 'Fn' {
-//     //   @each $fn in $arg {
-        
-//     //   }
-//     // }
-
-//     $invoked: append($invoked, $arg);
-//   }
-
-//   @return obj.set($this, 'args', $invoked);
-// }
-
-// @function _process-arg($arg, $return) {
-//   @if obj.instance-of($return) != 'Return' { @error 'process-arg() expects instance of Return, #{type-of($return)} - provided'; }
-
-//   @if obj.is-obj($arg) and obj.instance-of($arg) == 'Placeholder' {
-//     $arg: obj.call($arg, 'replace', $return);
-//   } @else if obj.is-obj($arg) and obj.instance-of($arg) == 'Fn' {
-//     $arg: obj.call($arg, 'invoke', $return);
-//   } @else if type-of($arg) == list {
-//     $processed: ();
-//     @each $item in $arg {
-//       $processed: append($processed, _process-arg($item, $return));
-//     }
-//   }
-
-// }
-
-// @function _for-each($list, $cb) {
-//   @if type-of($cb) != 'function' { @error "for-each() expects cb to function, #{type-of($cb)} - provided"; }
-
-//   $result: null;
-//   @if type-of($list) == 'list' {
-//     @each $item in $list {
-//       $result: call($cb, $item, index($list, $item), $list);
-//     }
-//   } @else if type-of($list) == 'map' {
-//     @each $key, $value in $list {
-//       $result: call($cb, $value, $key, $list);
-//     }
-//   } @else {
-//     @error "for-each() expects list to be list or map, #{type-of($list)} - provided";
-//   }
-
-//   @return $result;
-// }
+  @return $result;
+}
 
 @function _process-args($arg) {
-  @if obj.is-obj($arg) and obj.instance-of($arg) == 'Placeholder'{
-    @return obj.call($arg, 'replace');
-  } 
-  
-  @if obj.is-obj($arg) and obj.instance-of($arg) == 'Fn' {
-    @return obj.call($arg, 'invoke');
-  } 
+  @if obj.instance-of($arg) == 'Placeholder' { @return obj.call($arg, 'replace'); } 
+  @if obj.instance-of($arg) == 'Fn' { @return obj.call($arg, 'invoke'); } 
+  @if _is-fn-list($arg) { @return invoke-fn-list($arg); }
 
   @if type-of($arg) == 'list' {
     $list: ();

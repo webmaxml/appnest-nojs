@@ -37,8 +37,7 @@
 }
 
 @function instance-of($obj) {
-  @if not is-obj($obj) { @error '#{type-of($obj)} is not an object'; }
-  @return get-class($obj);
+  @return if(is-obj($obj), get-class($obj), '');
 }
 
 @function call($obj, $method, $args...) {
