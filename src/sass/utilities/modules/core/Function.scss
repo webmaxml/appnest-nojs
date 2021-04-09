@@ -1,0 +1,111 @@
+@use 'sass:map';
+@use 'obj';
+@use 'ports';
+@use 'helpers' as *;
+
+// ----------------------------------------- static -----------------------------------------
+
+@function invoke-fn-list($list) {
+  @if not _is-fn-list($list) { @error "invoke-fn-list() expects list of Fn, #{type-of($list)} - provided"; }
+
+  $result: null;
+  @each $fn in $list {
+    $result: obj.call($fn, 'invoke');
+  }
+
+  @return $result;
+}
+
+// ----------------------------------------- instance -----------------------------------------
+
+@function _is-fn-list($value) {
+  @if type-of($value) == 'list' and length($value) > 0 {
+    @each $item in $value {
+      @if obj.instance-of($item) != 'Function' { @return false; }
+    }
+
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@function _process-args($arg) {
+  @if obj.instance-of($arg) == 'Placeholder' { @return obj.call($arg, 'replace'); } 
+  @if obj.instance-of($arg) == 'Function' { @return obj.call($arg, 'invoke'); } 
+  @if _is-fn-list($arg) { @return invoke-fn-list($arg); }
+
+  @if type-of($arg) == 'list' {
+    $list: ();
+    @each $item in $arg {
+      $list: append($list, _process-args($item));
+    }
+
+    @return $list;
+  }
+
+  @if type-of($arg) == 'map' {
+    $map: ();
+    @each $key, $value in $arg {
+      $map: map.set($map, $key, _process-args($value));
+    }
+
+    @return $map;
+  }
+
+  @return $arg;
+}
+
+@function _process-if-args($args) {
+  $cond: _process-args(nth($args, 1));
+  $truthy: if($cond, _process-args(nth($args, 2)), nth($args, 2));
+  $falsy: if($cond, nth($args, 3), _process-args(nth($args, 3)));
+
+  @return ($cond, $truthy, $falsy);
+}
+
+@function _process-switch-args($args) {
+  $case: _process-args(nth($args, 1));
+  $cases: nth($args, 2);
+
+  $case: if(map-has($cases, $case), $case, 'default');
+  $value: _process-args(map-get($cases, $case));
+
+  @return ($case, map.set($cases, $case, $value));
+}
+
+@function _invoke($this) {
+  $fn: obj.get($this, 'fn');
+  $port: obj.get($this, 'port');
+  $args: obj.get($this, 'args');
+
+  $args: if(
+    $fn == get-function('if'),
+    _process-if-args($args),
+    if(
+      $fn == get-function('switch'),
+      _process-switch-args($args),
+      _process-args($args)
+    )
+  );
+
+  $result: call($fn, $args...);
+  $ports: ports.set($port, $result);
+
+  @return $result;
+}
+
+
+@function create($fn, $port, $args) {
+  @if type-of($fn) != 'function' { @error "Fn expects function, #{type-of($fn)} - provided"; }
+  @if type-of($port) != 'string' { @error "Fn expects port as string, #{type-of($port)} - provided"; }
+  @if type-of($args) != 'list' { @error "Fn expects args as list, #{type-of($args)} - provided"; }
+
+  @return obj.create-class('Function', (
+    'fn': $fn,
+    'port': $port,
+    'args': $args,
+    'invoke': get-function('_invoke'),
+  ));
+}
+

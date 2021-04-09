@@ -1,0 +1,194 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:list';
+@use 'sass:map';
+@use 'obj';
+@use 'fn';
+@use 'ports';
+@use 'args';
+
+@function f($name, $args...) {
+  $fn: fn.get-function-name($name);
+  $port: fn.get-port-name($name);
+  $args: args.create(join((), $args));
+  @if not function-exists($fn) { @error 'No such function: "#{$fn}"'; }
+
+  @return fn.create(get-function($fn), $port, $args);
+}
+
+$fn: f('if', true, 1, 2);
+
+
+// ----------------------------------------- placeholder -----------------------------------------
+
+@function _is-placeholder($value) {
+  @return 
+    type-of($value) == 'string' and 
+    string.slice($value, 1, 1) == '<' and
+    string.slice($value, -1) == '>';
+}
+
+@function _get-port-from-placeholder($placeholder) {
+  @if not _is-placeholder($placeholder) { @error '_get-port-from-placeholder() expects placeholder, #{$placeholder} - provided'; }
+
+  $ch: string.slice($placeholder, 2, -2);
+  @return if($ch == '', 'default', $ch);
+}
+
+@function _replace-placeholder($fn-map, $port-map) {
+  @if not _is-function-map($fn-map) { @error 'replace-placeholder() expects fn-map, #{type-of($fn-map)} - provided'; }
+  @if not _is-port-map($port-map) { @error 'replace-placeholder() expects port-map, #{type-of($port-map)} - provided'; }
+
+  $processed: ();
+  @each $arg in _get-args($fn-map) {
+    $arg: if(
+      _is-placeholder($arg),
+      _get-port-value($port-map, _get-port-from-placeholder($arg)),
+      $arg
+    );
+
+    $processed: list.append($processed, $arg); 
+  }
+
+  @return _set-args($fn-map, $processed);
+}
+
+// ----------------------------------------- pipe -----------------------------------------
+
+@function _call-or-return($value, $cb) {
+  @return if(
+    _is-function-list($value) or _is-list-of-function-lists($value),
+    call($cb, $value),
+    $value
+  );
+}
+
+@function _process-if-args($fn-list, $cb) {
+  @return list.set-nth(
+    $fn-list, 
+    2, 
+    _call-or-return(list.nth($fn-list, 2), $cb)
+  );
+}
+
+@function _process-args($fn-list, $cb) {
+  $processed: ();
+  @each $arg in $fn-list {
+    $processed: list.append($processed, _call-or-return($arg, $cb));
+  }
+
+  @return $processed;
+}
+
+@function _invoke-fn-map($fn-map, $port-map, $cb) {
+  $fn-list: _replace-placeholder($fn-list, $channels);
+
+  $result: if(
+    list.nth($fn-list, 1) == get-function('if'),
+    _call-or-return(call(_process-if-args($fn-list, $cb)...), $cb),
+    _call-or-return(call(_process-args($fn-list, $cb)...), $cb)
+  );
+
+  @return set-fn-state($result);
+}
+
+
+@function _invoke($value, $port-map) {
+  @if not _is-port-map($port-map) { @error 'invoke() expects port-map, #{type-of($port-map)} - provided'; }
+  $cb: get-function('_invoke');
+
+  @if _is-function-map($value) {
+    @return _invoke-fn-map($value, $port-map, $cb);
+  } @else if type-of($value) == list {
+
+  } @else {
+    @error 'invoke() expects fn-map or list of fn-maps, #{type-of($value)} - provided';
+  }
+
+
+  // $result: null;
+  // @each $item in $list {
+  //   $result: if(
+  //     _is-function-map($item),
+  //     _invoke-fn-map($item, $port-map, $cb),
+  //     if(
+  //       type-of($item) == 'list',
+  //       _c($item, $port-map),
+  //       throw('invoke() expects fn-map or list of fn-maps, #{type-of($item)} - provided')
+  //     )
+  //   );
+  // }
+
+  // @return $result;
+}
+
+@function pipe($args...) {
+  @return _invoke(list.join((), $args), _create-port-map());
+}
+
+
+
+// ----------------------------------------- test -----------------------------------------
+
+@function join($a, $b) {
+  @return list.join($a, $b);
+}
+
+@function exists($value) {
+  @return $value != null;
+}
+@function to-list($str) {
+  @return list.append((), $str);
+}
+
+@function has($str, $sub) {
+  @return string.index($str, $sub);
+}
+
+@function decrement($num) {
+  @return $num - 1;
+}
+
+@function increment($num) {
+  @return $num + 1;
+}
+
+@function is-empty-string($value) {
+  @return $value == '';
+}
+
+
+@function split-with-sep($str, $sep) {
+  @return pipe(
+    f('if',
+      f('has', $str, $sep),
+      f('join', 
+        (
+          f('str-index', $str, $sep), 
+          f('if', f('is-empty-string|1', $sep), null, f('decrement', '<>')),
+          f('str-slice', $str, 1, '<>'),
+          f('to-list', '<>'),
+        ),
+        (
+          f('str-index', $str, $sep),
+          f('increment', '<>'),
+          f('str-slice', $str, '<>'),
+          f('split-with-sep', '<>', $sep)
+        )
+      ),
+      f('to-list', $str)
+    )
+  );
+}
+
+@function split($str, $sep: null) {
+  @return pipe(
+    f('if', 
+      f('exists', $sep), 
+      f('split-with-sep', $str, $sep), 
+      f('to-list', $str)
+    )
+  );
+}
+
+// @debug split('fuck you', ' ');
