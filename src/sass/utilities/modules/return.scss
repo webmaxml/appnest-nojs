@@ -1,8 +1,13 @@
 @use 'sass:map';
 @use 'obj';
 
-@function _port-exists($this, $port) {
-  @return map-has-key(obj.get($this, 'ports'), $port);
+$ports: (
+  'default': null
+);
+
+
+@function exists($port) {
+  @return map-has-key($ports, $port);
 }
 
 @function _get($this, $port) { 
@@ -21,14 +26,14 @@
 }
 
 
-@function create($value: null) {
-  @return obj.create-class('Return', (
-    'ports': (
-      'default': $value
-    ),
-    'last-value': $value,
-    'get': get-function('_get'),
-    'set': get-function('_set'),
-    'get-last': get-function('_get-last'),
-  ));
-}
+// @function create($value: null) {
+//   @return obj.create-class('Return', (
+//     'ports': (
+//       'default': $value
+//     ),
+//     'last-value': $value,
+//     'get': get-function('_get'),
+//     'set': get-function('_set'),
+//     'get-last': get-function('_get-last'),
+//   ));
+// }

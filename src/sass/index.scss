@@ -14,11 +14,11 @@
 @use 'utilities/modules/obj';
 @use 'utilities/modules/fn';
 @use 'utilities/modules/placeholder';
-@use 'utilities/modules/return';
+@use 'utilities/modules/ports';
 @use 'sass:string';
 @use 'sass:meta';
 
-@function pl($name: 'default') {
+@function p($name: 'default') {
   @return placeholder.create($name);
 }
 
@@ -40,23 +40,35 @@
 }
 
 @function invoke($fns...) {
-  $return: return.create(); 
+  $ports: ports.reset(); 
+  $result: null;
   @each $fn in $fns {
-    $return: obj.call($fn, 'invoke', $return);
+    $result: obj.call($fn, 'invoke');
   }
 
-  @return obj.call($return, 'get-last');
+  @return $result;
 }
 
+
+@function get-str() {
+  @return 'fuck you';
+}
 
 @function add($a, $b) {
   @return $a + $b;
 }
 
+@function decrement($num) {
+  @return $num - 1;
+}
+
+@function increment($num) {
+  @return $num + 1;
+}
 
 @debug invoke(
-  f('add', 1, 1),
-  f('add:some', 3, 3),
-  f('add:ass', 10, 10),
-  f('add', pl(), 10)
+  f('get-str'),
+  f('string.index:i', p(), ' '),
+  f('string.slice', p(), 1, p('i')),
 );
+
