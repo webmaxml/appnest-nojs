@@ -1,5 +1,5 @@
-@use 'sass:meta';
 @use 'sass:string';
+@use 'type' as *;
 @use 'list';
 
 @function unquote($string) { @return string.unquote($string); }
@@ -12,44 +12,57 @@
 @function to-lower-case($string) { @return string.to-lower-case($string); }
 @function unique-id() { @return string.unique-id(); }
 
-@function is-string($value) {
-  @return meta.type-of($value) == string;
+@function has($str, $sub) {
+  $str: validate($str, 'string');
+  $sub: validate($sub, 'string');
+
+  @return if(str-index($str, $sub), true, false);
 }
 
-// turns strings with '/' into list - (sub-string1, /, sub-string2)
-@function normalize-slash($value) {
-  @if is-string($value) and length($value) > 1 and index($value, '/') {
-    $result: ();
+@function first-slice($str, $sep) {
+  $str: validate($str, 'string');
+  $sep: validate($sep, 'string');
 
-    $slash-i: index($value, '/');
-    $sub1: slice($value, 1, $slash-i - 1);
-    $sub2: slice($value, $slash-i + 1);
-
-    @if index($sub2, '/') {
-      $sub2: normalize-slash($sub2);
-    }
-
-    $result: list.append($result, $sub1);
-    $result: list.append($result, unquote('/'));
-    $result: list.join($result, $sub2);
-
-    @return $result;
-  } @else if list.is-list($value) {
-    $result: ();
-    @each $elem in $value {
-      $elem: normalize-slash($elem);
-      @if list.is-list($elem) {
-        $result: list.join($result, $elem);
-      } @else {
-        $result: list.append($result, $elem);
-      }
-    }
-
-    @return $result;
-  } @else {
-    @return $value;
-  }
+  @return if(
+    has($str, $sep), 
+    if(
+      $sep == '',
+      str-slice($str, 1, 1), 
+      str-slice($str, 1, str-index($str, $sep) - 1), 
+    ),
+    $str
+  );
 }
+
+@function last-slice($str, $sep) {
+  $str: validate($str, 'string');
+  $sep: validate($sep, 'string');
+
+  @return if(
+    has($str, $sep),
+    if(
+      $sep == '',
+      str-slice($str, 2),
+      str-slice($str, str-index($str, $sep) + str-length($sep))
+    ),
+    ''
+  );
+}
+
+@function split($str, $sep: null) {
+  $str: validate($str, 'string');
+  $sep: validate($sep, 'string|null');
+  
+  @if $str == '' { @return (); }
+  
+  @return join(
+    list.to-list(first-slice($str, $sep)), 
+    split(last-slice($str, $sep), $sep)
+  );
+}
+
+
+
 
 @function process-var($value) {
   $value: normalize-slash($value);
@@ -65,25 +78,5 @@
     @return var($value);
   } @else {
     @return $value;
-  }
-}
-
-// meta.inspect!!!
-
-@function to-string($value) {
-  $output: '';
-  @if list.is-map($value) {
-    $output: '(';
-    @each $key, $val in $value {
-      $end: if(not list.is-last-elem($value, $key), ', ', '');
-      $key: to-string($key);
-      $val: to-string($val);
-
-      $output: $output + $key + ': ' + $val + $end;
-    }
-
-    @return $output + ')';
-  } @else {
-    @return $output + $value;
   }
 }

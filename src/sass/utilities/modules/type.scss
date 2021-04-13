@@ -1,0 +1,35 @@
+@use 'obj';
+
+@function _types-to-list($types) {
+  $or-i: str-index($types, '|');
+  @if $or-i {
+    $before: str-slice($types, 1, $or-i - 1);
+    $after: str-slice($types, $or-i + 1);
+
+    @return join(append((), $before), _types-to-list($after));
+  } @else {
+    @return append((), $types);
+  }
+}
+
+@function type($value) {
+  @return if(obj.is-obj($value), obj.get-class($value), type-of($value));
+}
+
+@function is($value, $types) {
+  @if type-of($types) != 'string' { @error "is() expects types as string, #{type($types)} - provided"; }
+
+  $types: _types-to-list($types);
+  @each $type in $types {
+    @if type($value) == $type { @return true; }
+  }
+
+  @return false;
+}
+
+@function validate($value, $types) {
+  @if type-of($types) != 'string' { @error "validate() expects types as string, #{type($types)} - provided"; }
+
+  @if is($value, $types) { @return $value; }
+  @error "Wrong type: '#{type-of($value)}' instead of '#{$types}'";
+}

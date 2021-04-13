@@ -11,6 +11,7 @@
 // @use 'sections';
 // @use 'pages';
 
-@use 'utilities/modules/helpers/main' as *;
+@use 'utilities/modules/string' as *;
 
-@debug check(34, 'number', 'some()');
+// @debug first-slice('fuck you', 'f');
+@debug split('126px/--color', '/');
