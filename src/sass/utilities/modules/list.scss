@@ -75,7 +75,7 @@
   @return append((), $value);
 }
 
-@function map($list, $cb, $deep: false) {
+@function map($list, $cb, $deep: false, $args...) {
   $cb: validate($cb, 'function');
   $list: validate($list, 'list|map');
 
@@ -83,7 +83,7 @@
     $result: ();
     @each $item in $list {
       $item: if($deep and is($item, 'list|map'), map($item, $cb, $deep), $item);
-      $result: append($result, call($cb, $item, index($list, $item), $list));
+      $result: append($result, call($cb, $item, index($list, $item), $list, $args...));
     }
 
     @return $result;
@@ -93,14 +93,14 @@
     $result: ();
     @each $key, $value in $list {
       $value: if($deep and is($item, 'list|map'), map($value, $cb, $deep), $value);
-      $result: map.set($result, $key, call($cb, $value, $key, $list));
+      $result: map.set($result, $key, call($cb, $value, $key, $list, $args...));
     }
 
     @return $result;
   }
 }
 
-@function for-each($list, $cb, $deep: false) {
+@function for-each($list, $cb, $deep: false, $args...) {
   $cb: validate($cb, 'function');
   $list: validate($list, 'list|map');
 
@@ -108,7 +108,7 @@
     $result: null;
     @each $item in $list {
       $item: if($deep and is($item, 'list|map'), for-each($item, $cb, $deep), $item);
-      $result: call($cb, $item, index($list, $item), $list);
+      $result: call($cb, $item, index($list, $item), $list, $args...);
     }
 
     @return $result;
@@ -118,14 +118,14 @@
     $result: null;
     @each $key, $value in $list {
       $value: if($deep and is($item, 'list|map'), for-each($value, $cb, $deep), $value);
-      $result: call($cb, $value, $key, $list);
+      $result: call($cb, $value, $key, $list, $args...);
     }
 
     @return $result;
   }
 }
 
-@function reduce($list, $cb, $init: null) {
+@function reduce($list, $cb, $init: null, $args...) {
   $list: validate($list, 'list');
   $cb: validate($list, 'function');
 
@@ -133,14 +133,14 @@
   @each $item in $list {
     $i: index($list, $item);
     @if if($init, true, $i != 1) {
-      $result: call($cb, $result, $item, index($list, $item), $list);
+      $result: call($cb, $result, $item, index($list, $item), $list, $args...);
     }
   }
 
   @return $result;
 }
 
-@function filter($list, $cb, $deep: false) {
+@function filter($list, $cb, $deep: false, $args...) {
   $cb: validate($cb, 'function');
   $list: validate($list, 'list|map');
 
@@ -148,7 +148,7 @@
     $result: ();
     @each $item in $list {
       $item: if($deep and is($item, 'list|map'), filter($item, $cb, $deep), $item);
-      $passed: call($cb, $item, index($list, $item), $list);
+      $passed: call($cb, $item, index($list, $item), $list, $args...);
 
       @if $passed { $result: append($result, $item); }  
     }
@@ -160,7 +160,7 @@
     $result: ();
     @each $key, $value in $list {
       $value: if($deep and is($item, 'list|map'), filter($value, $cb, $deep), $value);
-      $passed: call($cb, $value, $key, $list);
+      $passed: call($cb, $value, $key, $list, $args...);
 
       @if $passed { $result: map.set($result, $key, $value); }  
     }
@@ -192,14 +192,38 @@
   } 
 }
 
-@function map-keys($map, $cb, $deep: false) {
+@function map-keys($map, $cb, $deep: false, $args...) {
   $map: validate($map, 'map');
   $cb: validate($cb, 'function');
 
   $result: ();
   @each $key, $value in $map {
     $value: if($deep and is($value, 'map'), map-keys($value, $cb, $deep), $value);
-    $result: map.set($result, call($cb, $key, $value, $map), $value);
+    $result: map.set($result, call($cb, $key, $value, $map, $args...), $value);
+  }
+
+  @return $result;
+}
+
+@function map-to-map($map, $cb, $args...) {
+  $map: validate($map, 'map');
+  $cb: validate($cb, 'function');
+
+  $result: ();
+  @each $key, $value in $map {
+    $result: map-merge($result, call($cb, $value, $key, $map, $args...));
+  }
+
+  @return $result;
+}
+
+@function map-to-list($map, $cb, $args...) {
+  $map: validate($map, 'map');
+  $cb: validate($cb, 'function');
+
+  $result: ();
+  @each $key, $value in $map {
+    $result: append($result, call($cb, $value, $key, $map, $args...));
   }
 
   @return $result;

@@ -1,0 +1,29 @@
+@use 'type' as *;
+@use 'obj';
+@use 'Prop';
+@use 'list';
+
+$_custom-props: (
+  pos: position top right bottom left z-index, 
+  text: font-family font-wight font-size line-height color, 
+);
+
+@function exists($prop) { @return map-has-key($_custom-props, $prop); }
+
+@function _create-prop-objs($prop, $i, $props, $values) {
+  @return Prop.create($prop, nth($values, $i));
+}
+
+@function _get-props($this) { @return obj.get($this, 'props'); }
+
+@function create($prop, $values) {
+  @if not exists($prop) { @error "No such custom prop - '#{inspect($prop)}'"; }
+  
+  $props: map-get($_custom-props, $prop);
+  $prop-objs: list.map($props, get-function('_create-prop-objs'), false, $values);
+
+  @return obj.create-class('Custom-Prop', (
+    'props': $prop-objs,
+    'get-props': get-function('_get-props')
+  ));
+}

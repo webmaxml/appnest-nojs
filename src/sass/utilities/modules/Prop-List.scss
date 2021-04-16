@@ -1,16 +1,23 @@
 @use 'obj';
 @use 'type' as *;
 @use 'Prop';
+@use 'Custom-Prop';
+@use 'list';
+
 
 @function _get-props($this) { @return obj.get($this, 'props'); }
 
+@function _create-prop-obj($value, $key, $map) {
+  @return if(
+    Custom-Prop.exists($key), 
+    Custom-Prop.create($key, $value), 
+    Prop.create($key, $value), 
+  );
+}
+
 @function create($map) {
   $map: validate($map, 'map');
-
-  $props: ();
-  @each $prop, $value in $map {
-    $props: append($props, Prop.create($prop, $value));
-  }
+  $props: list.map-to-list($map, get-function('_create-prop-obj'));
 
   @return obj.create-class('Prop-List', (
     'props': $props,

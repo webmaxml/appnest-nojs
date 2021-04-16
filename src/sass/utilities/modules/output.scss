@@ -31,10 +31,21 @@
   @if $bps { @include _breakpoints($prop, $bps); }
 }
 
+@mixin _output-custom-prop($prop-obj) {
+  $prop-obj: validate($prop-obj, 'Custom-Prop');
+  $props: obj.call($prop-obj, 'get-props');
+
+  @each $prop in $props { @include _output-prop($prop); }
+}
 
 @mixin output($prop-list) {
   $prop-list: validate($prop-list, 'Prop-List');
   $props: obj.call($prop-list, 'get-props');
 
-  @each $prop in $props { @include _output-prop($prop); }
+  @each $prop in $props { 
+    $prop: validate($prop, 'Prop|Custom-Prop');
+
+    @if is($prop, 'Prop') { @include _output-prop($prop); }
+    @if is($prop, 'Custom-Prop') { @include _output-custom-prop($prop); }
+  }
 }

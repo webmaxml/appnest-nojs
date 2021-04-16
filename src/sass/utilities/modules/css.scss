@@ -4,6 +4,5 @@
 
 @mixin css($styles) {
   $styles: validate($styles, 'map');
-  $decs: Prop-List.create($styles);
-  @include output($decs);
+  @include output(Prop-List.create($styles));
 }

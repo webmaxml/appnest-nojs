@@ -15,7 +15,8 @@
 
 body {
   @include css((
-    color: red,
-    font-size: fluid (320: 16px, 768: 30px, 1024: 20px)
+    width: 1000px,
+    text: sans-serif bold (fluid (320: 16px, 1024: 22px)) 18px green,
+    pos: absolute null null null null 0,
   ));
 }
