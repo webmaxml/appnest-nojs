@@ -8,6 +8,13 @@
 @function _is-breakpoints($value) { @return is($value, 'map'); }
 @function _is-value-with-breakpoints($value) {  @return is($value, 'list') and is(list.last($value), 'map') and not _is-fluid($value); }
 
+@function _get-prop($this) { @return obj.get($this, 'prop'); }
+@function _get-value($this) { @return obj.get($this, 'value'); }
+@function _get-breakpoints($this) { 
+  $bps: obj.get($this, 'breakpoints');
+  @return if($bps, obj.call($bps, 'get-breakpoints'), null); 
+}
+
 @function create($prop, $value) {
   $prop: validate($prop, 'string');
   $val: $value;
@@ -31,6 +38,9 @@
   @return obj.create-class('Prop', (
     'prop': $prop,
     'value': $val,
-    'breakpoints': $bps
+    'breakpoints': $bps,
+    'get-prop': get-function('_get-prop'),
+    'get-value': get-function('_get-value'),
+    'get-breakpoints': get-function('_get-breakpoints')
   ));
 }

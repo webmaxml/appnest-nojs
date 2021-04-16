@@ -11,25 +11,11 @@
 // @use 'sections';
 // @use 'pages';
 
-@use 'utilities/modules/Prop';
-@use 'utilities/modules/list';
+@use 'utilities/modules/css' as *;
 
-// body {
-//   @include css((
-//     color: red,
-//     font-size: 16px
-//   ));
-// }
-
-// 1. 16px
-// 2. 16px (768: 22px)
-// 3. (768: 22px)
-// 4. fluid (320: 16px, 1024: 22px)
-
-@debug Prop.create(font, 16px);
-@debug Prop.create(font, 1px solid red);
-@debug Prop.create(font, 16px (768: 22 34));
-@debug Prop.create(font, 16px 22px (768: 22px 34px));
-@debug Prop.create(font, (768: 22px));
-@debug Prop.create(font, fluid (320: 16, 1024: 22));
-
+body {
+  @include css((
+    color: red,
+    font-size: fluid (320: 16px, 768: 30px, 1024: 20px)
+  ));
+}

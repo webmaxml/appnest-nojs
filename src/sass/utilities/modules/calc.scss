@@ -3,14 +3,6 @@
 @use 'number';
 @use 'string';
 
-// (320: 16, 768: 20, 1024: 22)
-
-// (
-//  320px: calc(16px + (20 - 16) * ((100vw - 320px) / (768 - 320))),
-//  768px: calc(20px + (22 - 20) * ((100vw - 768px) / (1024 - 768))),
-//  1024px: 22px 
-// )
-
 @function _calc($str) {
   $str: validate($str, 'string');
   @return string.unquote("calc(#{$str})");

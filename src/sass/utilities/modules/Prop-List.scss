@@ -1,0 +1,19 @@
+@use 'obj';
+@use 'type' as *;
+@use 'Prop';
+
+@function _get-props($this) { @return obj.get($this, 'props'); }
+
+@function create($map) {
+  $map: validate($map, 'map');
+
+  $props: ();
+  @each $prop, $value in $map {
+    $props: append($props, Prop.create($prop, $value));
+  }
+
+  @return obj.create-class('Prop-List', (
+    'props': $props,
+    'get-props': get-function('_get-props')
+  ));
+}

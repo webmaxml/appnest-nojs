@@ -17,6 +17,8 @@
   @return calc.get-fluid($key, $next-key, $value, $next-value);
 }
 
+@function _get-breakpoints($this) { @return obj.get($this, 'breakpoints'); }
+
 @function create($bps, $fluid: false) {
   $bps: validate($bps, 'map');
   $bps: _keys-to-px($bps);
@@ -24,6 +26,7 @@
   @if $fluid { $bps: list.map($bps, get-function('_set-fluid-value')); }
 
   @return obj.create-class('Breakpoints', (
-    'breakpoints': $bps
+    'breakpoints': $bps,
+    'get-breakpoints': get-function('_get-breakpoints')
   ));
 }
