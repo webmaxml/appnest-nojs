@@ -1,0 +1,36 @@
+@use 'obj';
+@use 'type' as *;
+@use 'Breakpoints';
+@use 'list';
+@use 'number';
+
+@function _is-fluid($value) { @return is($value, 'list') and list.first($value) == 'fluid'; } 
+@function _is-breakpoints($value) { @return is($value, 'map'); }
+@function _is-value-with-breakpoints($value) {  @return is($value, 'list') and is(list.last($value), 'map') and not _is-fluid($value); }
+
+@function create($prop, $value) {
+  $prop: validate($prop, 'string');
+  $val: $value;
+  $bps: null;
+
+  @if _is-fluid($value) { 
+    $val: number.to-px(list.first(list.last($value)));
+    $bps: Breakpoints.create(list.last($value), true); 
+  }
+
+  @if _is-breakpoints($value) {
+    $val: null;
+    $bps: Breakpoints.create($value); 
+  }
+
+  @if _is-value-with-breakpoints($value) { 
+    $val: list.remove($value, list.last($value));
+    $bps: Breakpoints.create(list.last($value)); 
+  }
+
+  @return obj.create-class('Prop', (
+    'prop': $prop,
+    'value': $val,
+    'breakpoints': $bps
+  ));
+}

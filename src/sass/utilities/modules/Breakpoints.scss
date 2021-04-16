@@ -1,0 +1,29 @@
+@use 'obj';
+@use 'type' as *;
+@use 'list';
+@use 'number';
+@use 'calc';
+
+@function _keys-to-px($bps) { 
+  @return list.map-keys($bps, get-function('to-px', $module: 'number')); 
+}
+
+@function _set-fluid-value($value, $key, $bps) {
+  @if $value == list.last($bps) { @return number.to-px($value); }
+
+  $next-key: list.next-key($bps, $key);
+  $next-value: list.next-value($bps, $value);
+
+  @return calc.get-fluid($key, $next-key, $value, $next-value);
+}
+
+@function create($bps, $fluid: false) {
+  $bps: validate($bps, 'map');
+  $bps: _keys-to-px($bps);
+
+  @if $fluid { $bps: list.map($bps, get-function('_set-fluid-value')); }
+
+  @return obj.create-class('Breakpoints', (
+    'breakpoints': $bps
+  ));
+}

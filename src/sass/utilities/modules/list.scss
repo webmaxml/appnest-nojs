@@ -20,6 +20,46 @@
 @function set($map, $key, $value) { @return map.set($map, $key, $value); }
 @function values($map) { @return map.values($map); }
 
+@function first($list) {
+  $list: validate($list, 'list|map');
+
+  @if is($list, 'list') { @return nth($list, 1); }
+  @if is($list, 'map') { @return nth(nth($list, 1), 2); }
+}
+
+@function last($list) {
+  $list: validate($list, 'list|map');
+
+  @if is($list, 'list') { @return nth($list, -1); }
+  @if is($list, 'map') { @return nth(nth($list, -1), 2); }
+}
+
+@function next-value($list, $value) {
+  $list: validate($list, 'list|map');
+  $values: if(is($list, 'list'), $list, values($list));
+  $i: index($values, $value);
+
+  @if not $i { @error "No such value '#{inspect($value)}' in list"; }
+  @if $i == length($values) { @error "Value '#{inspect($value)}' is the last one in list"; }
+
+  @return if(
+    is($list, 'list'),
+    nth($list, $i + 1),
+    nth(nth($list, $i + 1), 2)
+  );
+}
+
+@function next-key($map, $key) {
+  $map: validate($map, 'map');
+  $keys: keys($map);
+  $i: index($keys, $key);
+
+  @if not $i { @error "No such key '#{inspect($key)}' in map"; }
+  @if $i == length($keys) { @error "Key '#{inspect($key)}' is the last one in map"; }
+
+  @return nth(nth($map, $i + 1), 1);
+}
+
 @function to-list($value) {
   @if is($value, 'arglist') {
     $result: ();
@@ -127,13 +167,6 @@
 
     @return $result;
   }
-}
-
-@function is-last($list, $elem) {
-  $list: validate($list, 'list|map');
-
-  @if is($list, 'list') { @return nth($list, -1) == $elem; }
-  @if is($list, 'map') { @return nth(nth($list, -1), 1) == $elem; }
 }
 
 @function remove($list, $elem, $keys...) {

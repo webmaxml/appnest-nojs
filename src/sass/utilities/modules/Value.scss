@@ -1,0 +1,69 @@
+@use 'obj';
+@use 'type' as *;
+@use 'list';
+@use 'number';
+
+@function _is-fluid($data) { @return is($data, 'list') and list.first($data) == 'fluid'; } 
+@function _is-breakpoints($data) { @return is($data, 'map'); }
+@function _is-value-with-breakpoints($data) {  @return is($data, 'list') and is(list.last($data), 'map') and not _is-fluid($data); }
+
+@function create($data) {
+  $handler: null;
+  @if _is-value-with-breakpoints($data) { $handler: _create-value-with-breakpoints($data) }
+  @else if _is-breakpoints($data) { $handler: _create-breakpoints($data) } 
+  @else if _is-fluid($data) { $handler: _create-fluid($data) }
+  @else { $handler: _create-single-value($data); }
+
+  @return obj.create-class('Value', (
+    'value': $value,
+    'breakpoints': $bps
+  ));
+}
+
+// ----------------------------------------- Value-Breakpoints -----------------------------------------
+
+@function _create-value-with-breakpoints($data) {
+  $data: validate($data, 'list');
+
+  $bps: _bps-width-to-px(list.last($data));
+  $value: list.remove($data, $bps);
+
+  @return obj.create-class('Value-Breakpoints', (
+    'value': $value,
+    'breakpoints': $bps
+  ));
+}
+
+// ----------------------------------------- Breakpoints -----------------------------------------
+
+@function _create-breakpoints($data) {
+  $data: validate($data, 'map');
+
+  @return obj.create-class('Breakpoints', (
+    'value': null,
+    'breakpoints': _bps-width-to-px($data)
+  ));
+}
+
+// ----------------------------------------- Fluid -----------------------------------------
+
+@function _create-fluid($data) {
+  $data: validate($data, 'list');
+
+  $value: null;
+  $bps: _bps-width-to-px(list.last($data));
+
+  @return obj.create-class('Fluid', (
+    'value': $value,
+    'breakpoints': $bps
+  ));
+}
+
+// ----------------------------------------- Single-Value -----------------------------------------
+
+@function _create-single-value($data) {
+  @return obj.create-class('Single-Value', (
+    'value': $data,
+    'breakpoints': null
+  ));
+}

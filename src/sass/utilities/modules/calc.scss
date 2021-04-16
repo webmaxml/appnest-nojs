@@ -1,6 +1,42 @@
 @use 'type' as *;
 @use 'list';
+@use 'number';
 @use 'string';
+
+// (320: 16, 768: 20, 1024: 22)
+
+// (
+//  320px: calc(16px + (20 - 16) * ((100vw - 320px) / (768 - 320))),
+//  768px: calc(20px + (22 - 20) * ((100vw - 768px) / (1024 - 768))),
+//  1024px: 22px 
+// )
+
+@function _calc($str) {
+  $str: validate($str, 'string');
+  @return string.unquote("calc(#{$str})");
+}
+
+@function get-fluid($w1, $w2, $val1, $val2 ) {
+  $w1: validate($w1, 'number');
+  $w2: validate($w2, 'number');
+  $val1: validate($val1, 'number');
+  $val2: validate($val2, 'number');
+
+  $w1: number.to-px($w1);
+  $w2: number.to-px($w2);
+  $val1: number.to-px($val1);
+  $val2: number.to-px($val2);
+
+  $w-diff: number.strip-unit($w2 - $w1);
+  $val-diff: number.strip-unit($val2 - $val1);
+
+  @return _calc('#{$val1} + #{$val-diff} * ((100vw - #{$w1}) / #{$w-diff})');
+}
+
+
+
+
+
 
 @function process-var($value) {
   $value: normalize-slash($value);
