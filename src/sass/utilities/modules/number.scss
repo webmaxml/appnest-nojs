@@ -1,7 +1,6 @@
-@use 'sass:meta';
 @use 'sass:math';
+@use 'type' as *;
 @use 'list';
-
 
 @function ceil($number) { @return math.ceil($number); }
 @function floor($number) { @return math.floor($number); }
@@ -14,45 +13,14 @@
 @function unit($number) { @return math.unit($number); }
 @function random($limit: null) { @return math.random($limit); }
 
-
-
-@function is-number($value) {
-  @return meta.type-of($value) == number;
-}
-
-@function is-px($value) {
-  @return is-number($value) and unit($value) == 'px';
-}
-
 @function strip-unit($value) {
-  @if not is-number($value) {
-    @error "strip-unit() expects 'number', '#{meta.type-of($value)}' - provided";
-  }
-
+  $value: validate($value, 'number');
   @return $value / ($value * 0 + 1);
 }
 
-
 @function to-px($value, $args...) {
-  @if is-number($value) {
-    @return strip-unit($value) * 1px;
-  } @else if list.is-list($value) {
+  $value: validate($value, 'number|list|map');
 
-    $result: ();
-    @each $elem in $value {
-      $result: list.append($result, to-px($elem));
-    }
-
-    @return $result;
-  } @else if list.is-map($value) {
-
-    $result: ();
-    @each $key, $val in $value {
-      $result: list.set($result, to-px($key), to-px($val));
-    }
-
-    @return $result;
-  } @else {
-    @error "to-px() expects 'number' or 'list'/'map' of numbers, '#{meta.type-of($value)}' - provided";
-  }
+  @if is($value, 'number') { @return strip-unit($value) * 1px; } 
+  @if is($value, 'list|map') { @return list.map($value, get-function('to-px')); } 
 }

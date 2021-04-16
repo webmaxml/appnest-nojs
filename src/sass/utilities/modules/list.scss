@@ -141,7 +141,6 @@
 
   @if is($list, 'list') {
     @if index($list, $elem) {
-
       $result: ();
       @each $item in $list {
         @if $item != $elem {

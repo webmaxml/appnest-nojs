@@ -1,0 +1,20 @@
+@use 'type' as *;
+@use 'list';
+@use 'string';
+
+@function process-var($value) {
+  $value: normalize-slash($value);
+  
+  @if is-list($value) {
+    $result: ();
+    @each $elem in $value {
+      $result: list.append($result, process-var($elem));
+    }
+    
+    @return $result;
+  } @else if is-string($value) and string.index($value, "--") == 1 {
+    @return var($value);
+  } @else {
+    @return $value;
+  }
+}
