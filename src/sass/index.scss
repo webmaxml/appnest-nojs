@@ -16,7 +16,8 @@
 body {
   @include css((
     width: 1000px,
-    text: sans-serif bold (fluid (320: 16px, 1024: 22px)) 18px green,
-    pos: absolute null null null null 0,
+    text: --ff-header (768: --ff-text),
+    // pos: absolute 0 null null null 100px,
+    bor: (1px solid --c-text) 50%
   ));
 }

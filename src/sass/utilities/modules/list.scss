@@ -228,3 +228,15 @@
 
   @return $result;
 }
+
+@function list-to-map($list, $cb, $args...) {
+  $list: validate($list, 'list');
+  $cb: validate($cb, 'function');
+
+  $result: ();
+  @each $elem in $list {
+    $result: map-merge($result, call($cb, $elem, index($list, $elem), $list, $args...));
+  }
+
+  @return $result;
+}

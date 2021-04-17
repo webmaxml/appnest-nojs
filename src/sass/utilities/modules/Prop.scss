@@ -3,6 +3,7 @@
 @use 'Breakpoints';
 @use 'list';
 @use 'number';
+@use 'calc';
 
 @function _is-fluid($value) { @return is($value, 'list') and list.first($value) == 'fluid'; } 
 @function _is-breakpoints($value) { @return is($value, 'map'); }
@@ -17,6 +18,8 @@
 
 @function create($prop, $value) {
   $prop: validate($prop, 'string');
+  $value: calc.wrap-css-vars($value);
+
   $val: $value;
   $bps: null;
 

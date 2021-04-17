@@ -1,11 +1,10 @@
 @use 'type' as *;
 @use 'list';
 @use 'number';
-@use 'string';
 
 @function _calc($str) {
   $str: validate($str, 'string');
-  @return string.unquote("calc(#{$str})");
+  @return unquote("calc(#{$str})");
 }
 
 @function get-fluid($w1, $w2, $val1, $val2 ) {
@@ -25,24 +24,8 @@
   @return _calc('#{$val1} + #{$val-diff} * ((100vw - #{$w1}) / #{$w-diff})');
 }
 
-
-
-
-
-
-@function process-var($value) {
-  $value: normalize-slash($value);
-  
-  @if is-list($value) {
-    $result: ();
-    @each $elem in $value {
-      $result: list.append($result, process-var($elem));
-    }
-    
-    @return $result;
-  } @else if is-string($value) and string.index($value, "--") == 1 {
-    @return var($value);
-  } @else {
-    @return $value;
-  }
+@function wrap-css-vars($value, $args...) {
+  @if is($value, 'string') and str-index($value, '--') == 1 { @return unquote('var(#{$value})'); }
+  @if is($value, 'list|map') { @return list.map($value, get-function('wrap-css-vars')); }
+  @return $value;
 }
