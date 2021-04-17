@@ -42,11 +42,8 @@
   @if not $i { @error "No such value '#{inspect($value)}' in list"; }
   @if $i == length($values) { @error "Value '#{inspect($value)}' is the last one in list"; }
 
-  @return if(
-    is($list, 'list'),
-    nth($list, $i + 1),
-    nth(nth($list, $i + 1), 2)
-  );
+  @if is($list, 'list') { @return nth($list, $i + 1); }
+  @if is($list, 'map') { @return nth(nth($list, $i + 1), 2); }
 }
 
 @function next-key($map, $key) {
@@ -74,6 +71,7 @@
 
   @return append((), $value);
 }
+
 
 @function map($list, $cb, $deep: false, $args...) {
   $cb: validate($cb, 'function');
@@ -239,4 +237,21 @@
   }
 
   @return $result;
+}
+
+@function _get-reverse-item($elem, $i, $list) {
+  @return nth($list, length($list) - $i + 1);
+}
+
+@function reverse($list) {
+  $list: validate($list, 'list');
+  @return map($list, get-function('_get-reverse-item'));
+}
+
+@function join-to-str($list, $sep: '') {
+  $list: validate($list, 'list');
+  $sep: validate($sep, 'string');
+  $first: nth($list, 1);
+
+  @return if(length($list) == 1, #{$first}, #{$first} + $sep + join-to-str(remove($list, $first), $sep));
 }

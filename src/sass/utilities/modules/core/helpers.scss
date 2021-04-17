@@ -1,8 +1,0 @@
-@function switch($case, $cases) {
-  @if type-of($cases) != 'map' { @error "switch() expects cases as map, #{type-of($cases)} - provided"; }
-  @if not map-has-key($cases, 'default') { @error "cases in switch() must have 'default' case"; }
-
-  @return map-get($cases, if(map-has-key($cases, $case), $case, 'default'));
-}
-
-

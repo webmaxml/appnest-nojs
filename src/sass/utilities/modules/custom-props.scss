@@ -3,7 +3,7 @@
 @use '../custom-props' as *;
 
 @function exists($prop) { @return map-has-key($custom-props, $prop); }
-@function _not-null($value, $args...) { @return $value; }
+@function _truthy($value, $args...) { @return $value; }
 
 @function _create-prop-map($prop, $i, $props, $values) { 
   $value: if($i > length($values), null, nth($values, $i));
@@ -16,5 +16,5 @@
   $props: map-get($custom-props, $prop);
 
   $prop-map: list.list-to-map($props, get-function('_create-prop-map'), $values);
-  @return list.filter($prop-map, get-function('_not-null'));
+  @return list.filter($prop-map, get-function('_truthy'));
 }

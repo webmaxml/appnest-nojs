@@ -1,6 +1,5 @@
 @use 'type' as *;
 @use 'obj';
-@use 'number';
 
 @mixin _prop($prop, $value) {
   $prop: validate($prop, 'string');
@@ -12,7 +11,7 @@
   $bps: validate($bps, 'map');
 
   @each $width, $value in $bps {
-    @if number.unit($width) != 'px' { @error "width must be px number, '#{inspect($width)}' - provided"; }
+    @if unit($width) != 'px' { @error "width must be px number, '#{inspect($width)}' - provided"; }
 
     @media screen and (min-width: $width) {
       @include _prop($prop, $value);

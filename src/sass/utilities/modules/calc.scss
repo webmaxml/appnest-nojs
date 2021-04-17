@@ -1,25 +1,50 @@
+@use 'sass:math';
 @use 'type' as *;
 @use 'list';
-@use 'number';
+
+// ----------------------------------------- private -----------------------------------------
+
+@function _strip-unit($value) {
+  $value: validate($value, 'number');
+  @return $value / ($value * 0 + 1);
+}
 
 @function _calc($str) {
   $str: validate($str, 'string');
   @return unquote("calc(#{$str})");
 }
 
-@function get-fluid($w1, $w2, $val1, $val2 ) {
-  $w1: validate($w1, 'number');
-  $w2: validate($w2, 'number');
-  $val1: validate($val1, 'number');
-  $val2: validate($val2, 'number');
+@function _width-part($width, $i, $list) {
+  @if $i < length($list) {
+    $width: validate($width, 'number');
+    $next-width: validate(list.next-value($list, $width), 'number');
+    $diff: _strip-unit($next-width - $width);
 
-  $w1: number.to-px($w1);
-  $w2: number.to-px($w2);
-  $val1: number.to-px($val1);
-  $val2: number.to-px($val2);
+    @return '(clamp(0px, #{to-px($width)} - 100%, 0.1px) * #{$diff} * 10)';
+  }
 
-  $w-diff: number.strip-unit($w2 - $w1);
-  $val-diff: number.strip-unit($val2 - $val1);
+  @return null;
+}
+
+@function _truthy($value, $args...) { @return $value; }
+
+// ----------------------------------------- public -----------------------------------------
+
+@function to-px($value, $args...) {
+  $value: validate($value, 'number|list|map');
+
+  @if is($value, 'number') { @return _strip-unit($value) * 1px; } 
+  @if is($value, 'list|map') { @return list.map($value, get-function('to-px')); } 
+}
+
+@function fluid($w1, $w2, $val1, $val2 ) {
+  $w1: to-px(validate($w1, 'number'));
+  $w2: to-px(validate($w2, 'number'));
+  $val1: to-px(validate($val1, 'number'));
+  $val2: to-px(validate($val2, 'number'));
+
+  $w-diff: _strip-unit($w2 - $w1);
+  $val-diff: _strip-unit($val2 - $val1);
 
   @return _calc('#{$val1} + #{$val-diff} * ((100vw - #{$w1}) / #{$w-diff})');
 }
@@ -28,4 +53,24 @@
   @if is($value, 'string') and str-index($value, '--') == 1 { @return unquote('var(#{$value})'); }
   @if is($value, 'list|map') { @return list.map($value, get-function('wrap-css-vars')); }
   @return $value;
+}
+
+@function size($value) {
+  $value: validate($value, 'number');
+  @return _calc('#{_strip-unit($value)} * (var(--size) / 100)');
+}
+
+// formula example
+// calc(700px + (clamp(0px, 700px - 100%, 0.1px) * (500 - 700) * 10) + (clamp(0px, 500px - 100%, 0.1px) * (300 - 500) * 10));
+
+// with --size
+// calc((700px + (clamp(0px, 700px - 100%, 0.1px) * (500 - 700) * 10) + (clamp(0px, 500px - 100%, 0.1px) * (300 - 500) * 10)) * (var(--size) / 100))
+
+@function width($widths...) {
+  $widths: list.reverse(list.to-list($widths));
+  $parts: list.map($widths, get-function('_width-part'));
+  $filtered: list.filter($parts, get-function('_truthy'));
+  $formula: join((to-px(list.first($widths))), $filtered);
+
+  @return _calc(list.join-to-str($formula, ' + '));
 }

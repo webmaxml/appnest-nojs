@@ -2,7 +2,6 @@
 @use 'type' as *;
 @use 'Breakpoints';
 @use 'list';
-@use 'number';
 @use 'calc';
 
 @function _is-fluid($value) { @return is($value, 'list') and list.first($value) == 'fluid'; } 
@@ -24,7 +23,7 @@
   $bps: null;
 
   @if _is-fluid($value) { 
-    $val: number.to-px(list.first(list.last($value)));
+    $val: calc.to-px(list.first(list.last($value)));
     $bps: Breakpoints.create(list.last($value), true); 
   }
 
