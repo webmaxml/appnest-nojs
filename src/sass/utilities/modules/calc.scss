@@ -1,6 +1,7 @@
 @use 'sass:math';
 @use 'type' as *;
 @use 'list';
+@use 'string';
 
 // ----------------------------------------- private -----------------------------------------
 
@@ -37,6 +38,31 @@
   @if is($value, 'list|map') { @return list.map($value, get-function('to-px')); } 
 }
 
+@function wrap-css-vars($value, $args...) {
+  @if is($value, 'string') and str-index($value, '--') == 1 { 
+    @return if(
+      string.has($value, '/'),
+      list.join-to-str(wrap-css-vars(string.split($value, '/')), '/'),
+      unquote('var(#{$value})')
+    );
+  }
+
+  @if is($value, 'list|map') { 
+    @return list.map($value, get-function('wrap-css-vars')); 
+  }
+
+  @return $value;
+}
+
+// calc(22 * (var(--size) / 100));
+
+@function size($value) {
+  $value: validate($value, 'number');
+  @return _calc('#{_strip-unit($value)} * (var(--size) / 100)');
+}
+
+// calc(16px + (22 - 16) * ((100vw - 320px) / (768 - 320)));
+
 @function fluid($w1, $w2, $val1, $val2 ) {
   $w1: to-px(validate($w1, 'number'));
   $w2: to-px(validate($w2, 'number'));
@@ -49,22 +75,7 @@
   @return _calc('#{$val1} + #{$val-diff} * ((100vw - #{$w1}) / #{$w-diff})');
 }
 
-@function wrap-css-vars($value, $args...) {
-  @if is($value, 'string') and str-index($value, '--') == 1 { @return unquote('var(#{$value})'); }
-  @if is($value, 'list|map') { @return list.map($value, get-function('wrap-css-vars')); }
-  @return $value;
-}
-
-@function size($value) {
-  $value: validate($value, 'number');
-  @return _calc('#{_strip-unit($value)} * (var(--size) / 100)');
-}
-
-// formula example
 // calc(700px + (clamp(0px, 700px - 100%, 0.1px) * (500 - 700) * 10) + (clamp(0px, 500px - 100%, 0.1px) * (300 - 500) * 10));
-
-// with --size
-// calc((700px + (clamp(0px, 700px - 100%, 0.1px) * (500 - 700) * 10) + (clamp(0px, 500px - 100%, 0.1px) * (300 - 500) * 10)) * (var(--size) / 100))
 
 @function width($widths...) {
   $widths: list.reverse(list.to-list($widths));

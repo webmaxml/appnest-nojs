@@ -16,7 +16,7 @@
 body {
   @include css((
     --size: 100px,
-    margin: 0,
-    width: width(300, 600, 900),
+    font-size: calc(2px * 5px),
+    width: width(500px, 1000px),
   ));
 }
