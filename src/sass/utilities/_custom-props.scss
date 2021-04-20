@@ -1,5 +1,18 @@
 $custom-props: (
   pos: position z-index top right bottom left, 
-  text: font-family font-weight font-size line-height color,
-  bor: border border-radius 
+  box: width height padding margin,
+  bor: border border-radius,
+
+  fl: display flex-direction flex-wrap justify-content align-items align-content,
+  fl-item: flex-grow flex-shrink flex-basis align-self,
+
+  gr: display grid-template,
+  gr-item: grid-area justify-self align-self,
+
+  text: font-family font-weight font-style font-size line-height color,
+  text-style: text-transform text-decoration text-shadow,
+
+  over: overflow white-space text-overflow,
+  transform-elem: transform backface-visibility transform-origin,
+  transform-parent: perspective perspective-origin,
 );
