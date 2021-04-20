@@ -1,22 +1,29 @@
 // @use 'reset';
+@use 'utilities' as *;
 // @use 'assets';
-
-// @use '../mixins/vars' as *;
-// @use 'utilities/vars' as *;
-
-// :root { @include vars($css); }
-
 // @use 'common';
 // @use 'blocks';
 // @use 'sections';
 // @use 'pages';
 
-@use 'utilities/modules/css' as *;
+:root { @include css($css); }
 
 body {
   @include css((
     --size: 100px,
-    font-size: calc(2px * 5px),
+    font-size: calc(2px * 5),
     width: width(500px, 1000px),
+    color: set-opacity(--c-text, 0.8)
+  ));
+
+  @include screen-height-section((
+    320: 560 700,
+    360: 580 1050,
+    412: 630 1050,
+    480: 680 1050,
+    600: 780 1050,
+    768: 780 1050,
+    1024: 768 1050,
+    1280: 1050 1050
   ));
 }
