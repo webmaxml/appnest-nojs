@@ -1,7 +1,10 @@
 @use '../utilities' as *;
 
 .b-nav {
+
+
   &__list {
+    
     @include css((
       fl: flex row wrap center stretch
     ));

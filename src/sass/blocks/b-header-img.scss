@@ -1,13 +1,12 @@
 @use '../utilities/' as *;
 
 .b-header-img {
-  @include css((
-    fl: flex row nowrap center flex-start
-  ));
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: flex-start;
 
   &__picture {
-    @include css((
-      width: size(540)
-    ));
+    width: size(540);
   }
 }

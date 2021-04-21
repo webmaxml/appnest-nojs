@@ -1,24 +1,19 @@
 @use '../utilities' as *;
 
 .b-burger {
-  @include css((
-    padding: size(10),
-    color: --c-header-text,
-    bor: (size(1) solid --c-header-text) size(6),
-    transition: 0.3s
-  ));
+  padding: size(10);
+  color: v(--c-header-text);
+  border: size(1) solid v(--c-header-text);
+  border-radius: size(6);
+  transition: 0.3s;
   
   &:hover {
-    @include css((
-      color: --c-active,
-      border-color: --c-active
-    ));
+    color: v(--c-active);
+    border-color: v(--c-active);
   }
 
   & .fas {
-    @include css((
-      font-size: size(33),
-      line-height: size(35)
-    ));
+    font-size: size(33);
+    line-height: size(35);
   }
 }

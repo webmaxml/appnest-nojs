@@ -1,23 +1,22 @@
 @use '../utilities' as *;
 
 .b-get-btn {
-  @include css((
-    padding: size(20) size(34),
-    bor: (size(1) solid --c-header) size(32),
-    transition: 0.3s
-  ));
+  padding: size(20) size(34);
+  border: size(1) solid v(--c-header);
+  border-radius: size(32);
+  transition: 0.3s;
 
   &:hover {
-    @include css((
-      background: --c-active,
-      border-color: --c-active
-    ));
+    background: v(--c-active);
+    border-color: v(--c-active);
   }
 
   &__link {
-    @include css((
-      text: --ff-header --fw-semi-bold normal size(16) size(16) --c-header-text,
-      text-style: uppercase
-    ));
+    font-family: v(--ff-header);
+    font-weight: v(--fw-semi-bold);
+    font-size: size(16);
+    line-height: size(16);
+    color: v(--c-header-text);
+    text-transform: uppercase;
   }
 }
