@@ -1,4 +1,4 @@
-@use '../utilities/functions/size' as *;
+@use '../utilities' as *;
 
 // завязка на --size внутри блока, чтобы иконка масштабировалась с изменением --size
 .icon {

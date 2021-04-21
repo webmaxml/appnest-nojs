@@ -1,18 +1,15 @@
 // @use 'reset';
-@use 'utilities' as *;
 // @use 'assets';
 // @use 'common';
 // @use 'blocks';
 // @use 'sections';
 // @use 'pages';
 
-:root { @include css($css); }
 
-body {
-  @include css((
-    --size: 100px,
-    font-size: calc(2px * 5),
-    width: width(500px, 1000px),
-    color: set-opacity(--c-text, 0.8)
-  ));
+@use 'utilities/modules/list' as *;
+
+@function add($result, $item, $args...) {
+  @return $result + $item;
 }
+
+@debug reduce(1 2 3 4 5, get-function('add'), 5);

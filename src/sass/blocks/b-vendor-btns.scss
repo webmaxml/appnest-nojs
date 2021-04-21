@@ -1,66 +1,89 @@
-@use '../utilities/block-modules' as *;
+@use '../utilities' as *;
 
 .b-vendor-btns {
-  @include display($di: flex);
-  @include text($te-al: center);
+  @include css((
+    display: flex,
+    text-align: center
+  ));
 
   &__link {
-    @include box($wi: size(170));
+    @include css((
+      width: size(170)
+    ));
 
     &:first-child {
-      @include box($ma-ri: size(30));
+      @include css((
+        margin-right: size(30)
+      ));
     }
   }
 
   &__btn {
-    @include display($di: block);
-    @include box($wi: 100%);
-    @include style($bo-wi: size(1), $bo-st: solid, $bo-ra: size(7));
-    @include animation($tr: 0.3s);
+    @include css((
+      display: block,
+      width: 100%,
+      bor: (size(1) solid currentcolor) size(7),
+      transition: 0.3s,
 
-    @include grid($gr-te: 
-      ". . . . ." size(13)
-      ". i . t ." max-content
-      ". i . v ." max-content
-      ". . . . ." size(13)
-      / 1fr max-content size(9) max-content 1fr
-    );
+      gr: grid (
+        ". . . . ." size(13)
+        ". i . t ." max-content
+        ". i . v ." max-content
+        ". . . . ." size(13)
+        / 1fr max-content size(9) max-content 1fr
+      )
+    ));
 
     &--light {
-      @include style($bo-co: --c-header-text);
+      @include css((
+        border-color: --c-header-text
+      ));
 
       &:hover {
-        @include style($ba: --c-active, $bo-co: --c-active);
+        @include css((
+          background: --c-active,
+          border-color: --c-active
+        ));
       }
     }
 
     &--dark {
-      @include style($bo-co: --c-h2);
+      @include css((
+        border-color: --c-h2
+      ));
 
-      & .b-vendor-btns__text { @include text($co: --c-h2); }
-      & .b-vendor-btns__vendor { @include text($co: --c-h2); }
+      & .b-vendor-btns__text { @include css((color: --c-h2)); }
+      & .b-vendor-btns__vendor { @include css((color: --c-h2)); }
 
       &:hover {
-        @include style($ba: --c-active, $bo-co: --c-active);
-
-        & .b-vendor-btns__text { @include text($co: --c-header-text); }
-        & .b-vendor-btns__vendor { @include text($co: --c-header-text);}
+        @include css((
+          background: --c-active,
+          border-color: --c-active
+        ));
+        & .b-vendor-btns__text { @include css((color: --c-header-text)); }
+        & .b-vendor-btns__vendor { @include css((color: --c-header-text)); }
       }
     }
   }
   &__icon {
-    @include grid($gr-ar: i);
+    @include css((
+      gr-item: i
+    ));
   }
 
   &__text {
-    @include grid($gr-ar: t, $ju-se: start, $al-se: end);
-
-    @include text($fo-fa: --ff-header, $fo-we: --fw-light, $fo-si: size(9), $li-he: size(11), $co: --c-header-text, $te-tr: uppercase);
+    @include css((
+      gr-item: t start end,
+      text: --ff-header --fw-light normal size(9) size(11) --c-header-text,
+      text-style: uppercase
+    ));
   }
   &__vendor {
-    @include grid($gr-ar: v, $ju-se: start, $al-se: start);
-
-    @include text($fo-fa: --ff-header, $fo-we: --fw-semi-bold, $fo-si: size(16), $li-he: size(15), $co: --c-header-text, $te-tr: uppercase);
+    @include css((
+      gr-item: v start start,
+      text: --ff-header --fw-semi-bold normal size(16) size(15) --c-header-text,
+      text-style: uppercase
+    ));
   }
 
   // меняем иконки на светлые при наведении

@@ -1,25 +1,38 @@
-@use '../utilities/block-modules' as *;
+@use '../utilities' as *;
 
 .b-header-text {
   &__header {
-    @include text($fo-fa: --ff-header, $fo-we: --fw-bold, $fo-si: size(48), $li-he: size(52), $co: --c-header-text, $te-tr: uppercase);
+    @include css((
+      text: --ff-header --fw-bold normal size(48) size(52) --c-header-text,
+      text-style: uppercase
+    ));
   }
 
   &__accent {
-    @include text($fo-fa: --ff-header, $fo-we: --fw-light, $fo-si: size(48), $li-he: size(52), $co: --c-accent, $te-tr: uppercase);
+    @include css((
+      text: --ff-header --fw-light normal size(48) size(52) --c-accent,
+      text-style: uppercase
+    ));
 
     & > b {
-      @include text($fo-we: --fw-bold);
+      @include css((
+        font-weight: --fw-bold
+      ));
     }
   }
 
   &__secondary-header {
-    @include display($di: block);
-    @include text($fo-fa: --ff-header, $fo-we: --fw-light, $fo-si: size(36), $li-he: size(52), $co: --c-header-text, $te-tr: uppercase);
+    @include css((
+      display: block,
+      text: --ff-header --fw-light normal size(36) size(52) --c-header-text,
+      text-style: uppercase
+    ));
   }
 
   &__text {
-    @include box($ma-to: size(20));
-    @include text($fo-fa: --ff-header, $fo-we: --fw-regular, $fo-si: size(18), $li-he: size(30), $co: --c-header-text);
+    @include css((
+      margin-top: size(20),
+      text: --ff-header --fw-regular normal size(18) size(30) --c-header-text
+    ));
   }
 }

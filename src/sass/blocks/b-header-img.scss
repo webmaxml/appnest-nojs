@@ -1,9 +1,13 @@
-@use '../utilities/block-modules' as *;
+@use '../utilities/' as *;
 
 .b-header-img {
-  @include flex($fl-wr: nowrap, $ju-co: center, $al-it: flex-start);
+  @include css((
+    fl: flex row nowrap center flex-start
+  ));
 
   &__picture {
-    @include box($wi: size(540));
+    @include css((
+      width: size(540)
+    ));
   }
 }

@@ -1,6 +1,6 @@
 @use 'sass:list';
 @use 'sass:map';
-@use 'type' as *;
+@use 'types' as *;
 
 @function append($list, $val, $separator: auto) { @return list.append($list, $val, $separator); }
 @function index($list, $value) { @return list.index($list, $value); }
@@ -21,21 +21,21 @@
 @function values($map) { @return map.values($map); }
 
 @function first($list) {
-  $list: validate($list, 'list|map');
+  $list: validate($list, 'list', 'map');
 
   @if is($list, 'list') { @return nth($list, 1); }
   @if is($list, 'map') { @return nth(nth($list, 1), 2); }
 }
 
 @function last($list) {
-  $list: validate($list, 'list|map');
+  $list: validate($list, 'list', 'map');
 
   @if is($list, 'list') { @return nth($list, -1); }
   @if is($list, 'map') { @return nth(nth($list, -1), 2); }
 }
 
 @function next-value($list, $value) {
-  $list: validate($list, 'list|map');
+  $list: validate($list, 'list', 'map');
   $values: if(is($list, 'list'), $list, values($list));
   $i: index($values, $value);
 
@@ -58,74 +58,75 @@
 }
 
 @function to-list($value) {
-  @if is($value, 'arglist') {
-    $result: ();
-    @each $arg in $value {
-      $result: append($result, $arg);
-    }
+  $list: ();
+  @if is($value, 'arglist') { @each $arg in $value { $list: append($list, $arg); } }
+  @else if is($value, 'list') { $list: $value; }
+  @else { $list: append($list, $value); }
 
-    @return $result;
-  }
-
-  @if is($value, 'list|map') { @return $value; }
-
-  @return append((), $value);
+  @return $list;
 }
 
-
 @function map($list, $cb, $deep: false, $args...) {
+  $list: validate($list, 'list', 'map');
   $cb: validate($cb, 'function');
-  $list: validate($list, 'list|map');
+
+  $result: ();
 
   @if is($list, 'list') {
-    $result: ();
     @each $item in $list {
-      $item: if($deep and is($item, 'list|map'), map($item, $cb, $deep), $item);
-      $result: append($result, call($cb, $item, index($list, $item), $list, $args...));
+      $result: if(
+        $deep and is($item, 'list', 'map'),
+        append($result, map($item, $cb, $deep, $args...)),
+        append($result, call($cb, $item, index($list, $item), $list, $args...))
+      );
     }
-
-    @return $result;
   }
 
   @if is($list, 'map') {
-    $result: ();
     @each $key, $value in $list {
-      $value: if($deep and is($item, 'list|map'), map($value, $cb, $deep), $value);
-      $result: map.set($result, $key, call($cb, $value, $key, $list, $args...));
+      $result: if(
+        $deep and is($value, 'list', 'map'),
+        map.set($result, $key, map($value, $cb, $deep, $args...)),
+        map.set($result, $key, call($cb, $value, $key, $list, $args...))
+      );
     }
-
-    @return $result;
   }
+
+  @return $result;
 }
 
 @function for-each($list, $cb, $deep: false, $args...) {
+  $list: validate($list, 'list', 'map');
   $cb: validate($cb, 'function');
-  $list: validate($list, 'list|map');
+
+  $result: null;
 
   @if is($list, 'list') {
-    $result: null;
     @each $item in $list {
-      $item: if($deep and is($item, 'list|map'), for-each($item, $cb, $deep), $item);
-      $result: call($cb, $item, index($list, $item), $list, $args...);
+      $result: if(
+        $deep and is($item, 'list', 'map'),
+        for-each($item, $cb, $deep, $args...),
+        call($cb, $item, index($list, $item), $list, $args...)
+      );
     }
-
-    @return $result;
   }
 
   @if is($list, 'map') {
-    $result: null;
     @each $key, $value in $list {
-      $value: if($deep and is($item, 'list|map'), for-each($value, $cb, $deep), $value);
-      $result: call($cb, $value, $key, $list, $args...);
+      $result: if(
+        $deep and is($value, 'list', 'map'),
+        for-each($value, $cb, $deep, $args...),
+        call($cb, $value, $key, $list, $args...)
+      );
     }
-
-    @return $result;
   }
+
+  @return $result;
 }
 
 @function reduce($list, $cb, $init: null, $args...) {
   $list: validate($list, 'list');
-  $cb: validate($list, 'function');
+  $cb: validate($cb, 'function');
 
   $result: if($init, $init, nth($list, 1));
   @each $item in $list {
@@ -140,31 +141,29 @@
 
 @function filter($list, $cb, $deep: false, $args...) {
   $cb: validate($cb, 'function');
-  $list: validate($list, 'list|map');
+  $list: validate($list, 'list', 'map');
+
+  $result: ();
 
   @if is($list, 'list') {
-    $result: ();
     @each $item in $list {
       $item: if($deep and is($item, 'list|map'), filter($item, $cb, $deep), $item);
       $passed: call($cb, $item, index($list, $item), $list, $args...);
 
       @if $passed { $result: append($result, $item); }  
     }
-
-    @return $result;
   }
 
   @if is($list, 'map') {
-    $result: ();
     @each $key, $value in $list {
       $value: if($deep and is($item, 'list|map'), filter($value, $cb, $deep), $value);
       $passed: call($cb, $value, $key, $list, $args...);
 
       @if $passed { $result: map.set($result, $key, $value); }  
     }
-
-    @return $result;
   }
+
+  @return $result;
 }
 
 @function remove($list, $elem, $keys...) {

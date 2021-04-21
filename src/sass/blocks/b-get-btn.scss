@@ -1,15 +1,23 @@
-@use '../utilities/block-modules' as *;
+@use '../utilities' as *;
 
 .b-get-btn {
-  @include box($pa: size(20) size(34));
-  @include style($bo: size(1) solid --c-header-text, $bo-ra: size(32));
-  @include animation($tr: 0.3s);
+  @include css((
+    padding: size(20) size(34),
+    bor: (size(1) solid --c-header) size(32),
+    transition: 0.3s
+  ));
 
   &:hover {
-    @include style($ba: --c-active, $bo-co: --c-active);
+    @include css((
+      background: --c-active,
+      border-color: --c-active
+    ));
   }
 
   &__link {
-    @include text($fo-fa: --ff-header, $fo-we: --fw-semi-bold, $fo-si: size(16), $li-he: size(16), $co: --c-header-text, $te-tr: uppercase);
+    @include css((
+      text: --ff-header --fw-semi-bold normal size(16) size(16) --c-header-text,
+      text-style: uppercase
+    ));
   }
 }

@@ -1,17 +1,24 @@
-@use '../utilities/block-modules' as *;
+@use '../utilities' as *;
 
 .b-burger {
-  @include box($pa: size(10));
-  @include text($co: --c-header-text);
-  @include style($bo: size(1) solid var(--c-header-text), $bo-ra: size(6));
-  @include animation($tr: 0.3s);
+  @include css((
+    padding: size(10),
+    color: --c-header-text,
+    bor: (size(1) solid --c-header-text) size(6),
+    transition: 0.3s
+  ));
   
   &:hover {
-    @include text($co: --c-active);
-    @include style($bo-co: --c-active);
+    @include css((
+      color: --c-active,
+      border-color: --c-active
+    ));
   }
 
   & .fas {
-    @include text($fo-si: size(33), $li-he: size(35));
+    @include css((
+      font-size: size(33),
+      line-height: size(35)
+    ));
   }
 }

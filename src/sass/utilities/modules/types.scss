@@ -1,0 +1,9 @@
+@function is($value, $types...) { 
+  @each $type in $types { @if type-of($value) == $type { @return true; } }
+  @return false;
+}
+
+@function validate($value, $types...) {
+  @if is($value, $types...) { @return $value; }
+  @error "Wrong type: '#{$types}' expected, '#{type-of($value)}' provided";
+}

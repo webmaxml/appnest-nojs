@@ -1,15 +1,20 @@
+@use '../utilities' as *;
+
 .fab {
-  font-family: 'Font Awesome 5 Brands';
-  font-weight: 400; 
+  @include css((
+    text: 'Font Awesome 5 Brands' --fw-regular
+  ));
 }
 
 .far {
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 400; 
+  @include css((
+    text: 'Font Awesome 5 Free' --fw-regular
+  ));
 }
 
 .fa,
 .fas {
-  font-family: 'Font Awesome 5 Free';
-  font-weight: 900; 
+  @include css((
+    text: 'Font Awesome 5 Free' --fw-black
+  ));
 }

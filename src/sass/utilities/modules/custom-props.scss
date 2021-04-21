@@ -12,7 +12,7 @@
 
 @function get-props($prop, $values) {
   @if not exists($prop) { @error "No such custom prop - '#{inspect($prop)}'"; }
-  $values: validate($values, 'list');
+  $values: list.to-list($values);
   $props: map-get($custom-props, $prop);
 
   $prop-map: list.list-to-map($props, get-function('_create-prop-map'), $values);

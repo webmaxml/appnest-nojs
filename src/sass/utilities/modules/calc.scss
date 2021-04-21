@@ -61,6 +61,22 @@
   @return _calc('#{_strip-unit($value)} * (var(--size) / 100)');
 }
 
+// 16px
+// c 320vw - calc()
+// c 768vw - 22px
+
+// (clamp(0px, 100vw - 300px, 0.1px) * 10) - до 300px - 0px, после 300px - 1px
+// (clamp(0px, 1000px - 100vw, 0.1px) * 10) - до 1000px - 1px, после 1000px - 0px
+
+// ((clamp(0px, 100vw - 299px, 0.1px) + clamp(0px, 1000px - 100vw, 0.1px) - 0.1px) * 10) - 
+// - от 0 до 299px = 0px
+// - от 300px до 999px = 1px
+// - от 1000px = 0px
+
+// calc((clamp(0px, 320px - 100vw, 0.1px) * 10) * 16 + ((clamp(0px, 100vw - 319px, 0.1px) + clamp(0px, 1024px - 100vw, 0.1px) - 0.1px) * 10) * 20 + (clamp(0px, 100vw - 1023px, 0.1px) * 10) * 24)
+
+
+
 // calc(16px + (22 - 16) * ((100vw - 320px) / (768 - 320)));
 
 @function fluid($w1, $w2, $val1, $val2 ) {

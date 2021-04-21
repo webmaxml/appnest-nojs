@@ -1,4 +1,4 @@
-@use '../utilities/section-modules' as *;
+@use '../utilities' as *;
 
 .s-header {
   @include vars((--v-padding: 1fr (1280: 155px)));

@@ -1,0 +1,67 @@
+@use 'sass:map';
+
+// ----------------------------------------- types -----------------------------------------
+
+@function is($value, $types...) { 
+  @each $type in $types { @if type-of($value) == $type { @return true; } }
+  @return false;
+}
+
+@function validate($value, $types...) {
+  @if is($value, $types...) { @return $value; }
+  @error "Wrong type: '#{$types}' expected, '#{type-of($value)}' provided";
+}
+
+// ----------------------------------------- list -----------------------------------------
+
+@function map($list, $cb, $deep: false, $args...) {
+  $list: validate($list, 'list', 'map');
+  $cb: validate($cb, 'function');
+
+  $result: ();
+
+  @if is($list, 'list') {
+    @each $item in $list {
+      $item: if($deep and is($item, 'list', 'map'), map($item, $cb, $deep, $args...), $item);
+      $result: append($result, call($cb, $item, index($list, $item), $list, $args...));
+    }
+  }
+
+  @if is($list, 'map') {
+    @each $key, $value in $list {
+      $value: if($deep and is($value, 'list', 'map'), map($value, $cb, $deep, $args...), $value);
+      $result: map.set($result, $key, call($cb, $value, $key, $list, $args...));
+    }
+  }
+
+  @return $result;
+}
+
+// ----------------------------------------- calc -----------------------------------------
+
+@function strip-unit($value) {
+  $value: validate($value, 'number');
+  @return $value / ($value * 0 + 1);
+}
+
+@function to-px($value, $args...) {
+  $value: validate($value, 'number', 'list', 'map');
+
+  @if is($value, 'number') { @return strip-unit($value) * 1px; } 
+  @if is($value, 'list', 'map') { @return map($value, get-function('to-px')); } 
+}
+
+@function to-calc($str) {
+  $str: validate($str, 'string');
+  @return unquote("calc(#{$str})");
+}
+
+// ----------------------------------------- public -----------------------------------------
+
+
+// calc(22 * (var(--size) / 100));
+
+@function size($value) {
+  $value: validate($value, 'number');
+  @return to-calc('#{strip-unit($value)} * (var(--size) / 100)');
+}

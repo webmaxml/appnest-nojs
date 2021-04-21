@@ -1,29 +1,41 @@
-@use '../utilities/block-modules' as *;
+@use '../utilities' as *;
 
 .b-nav {
   &__list {
-    @include flex($fl-wr: wrap, $ju-co: center, $al-it: stretch);
+    @include css((
+      fl: flex row wrap center stretch
+    ));
   }
 
   &__item {
-    @include box($pa: 0 size(15));
-    @include text($fo-fa: --ff-header, $fo-we: --fw-regular, $fo-si: size(16), $li-he: size(34), $co: --c-header-text, $te-tr: uppercase);
+    @include css((
+      padding: 0 size(15),
+      text: --ff-header --fw-regular normal size(16) size(34) --c-header-text,
+      text-style: uppercase,
+    ));
   }
 
   &__link {
-    @include position($po: relative);
+    @include css((
+      pos: relative
+    ));
 
     &::after {
-      @include position($po: absolute, $bo: size(-10), $le: 50%);
-      @include display($di: block, $co: "");
-      @include box($wi: 0%, $he: 0);
-      @include style($ba: --c-header-text);
-      @include animation($tr: 0.3s);
+      @include css((
+        pos: absolute null null null size(-10) 50%,
+        display: block,
+        content: "",
+        box: 0% 0%,
+        background: --c-header-text,
+        transition: 0.3s
+      ));
     }
 
     &:hover::after {
-      @include position($le: 0);
-      @include box($wi: 100%, $he: size(1));
+      @include css((
+        left: 0,
+        box: 100% size(1)
+      ));
     }
   }
 }
