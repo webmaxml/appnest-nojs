@@ -1,23 +1,10 @@
-@use 'sass:list';
 @use 'sass:map';
 @use 'types' as *;
 
-@function append($list, $val, $separator: auto) { @return list.append($list, $val, $separator); }
-@function index($list, $value) { @return list.index($list, $value); }
-@function is-bracketed($list) { @return list.is-bracketed($list); }
-@function join($list1, $list2, $separator: auto, $bracketed: auto) { @return list.join($list1, $list2, $separator, $bracketed); }
-@function length($list) { @return list.length($list); }
-@function separator($list) { @return list.separator($list); }
-@function nth($list, $n) { @return list.nth($list, $n); }
-@function set-nth($list, $n, $value) { @return list.set-nth($list, $n, $value); }
-@function zip($lists...) { @return list.zip($lists...); }
-
 @function deep-merge($map1, $map2) { @return map.deep-merge($map1, $map2); }
-@function get($map, $key, $keys...) { @return map.get($map, $key, $keys...); }
-@function has-key($map, $key, $keys...) { @return map.has-key($map, $key, $keys...); }
-@function keys($map) { @return map.keys($map); }
-@function merge($map1, $map2) { @return map.merge($map1, $map2); }
+@function deep-remove($map, $key, $keys...) { @return map.deep-remove($map, $key, $keys...); }
 @function set($map, $key, $value) { @return map.set($map, $key, $value); }
+@function keys($map) { @return map.keys($map); }
 @function values($map) { @return map.values($map); }
 
 @function first($list) {
@@ -32,6 +19,11 @@
 
   @if is($list, 'list') { @return nth($list, -1); }
   @if is($list, 'map') { @return nth(nth($list, -1), 2); }
+}
+
+@function is-last($list, $elem) {
+  $list: validate($list, 'list', 'map');
+  @return last($list) == $elem;
 }
 
 @function next-value($list, $value) {
@@ -147,8 +139,8 @@
 
   @if is($list, 'list') {
     @each $item in $list {
-      $item: if($deep and is($item, 'list|map'), filter($item, $cb, $deep), $item);
-      $passed: call($cb, $item, index($list, $item), $list, $args...);
+      $item: if($deep and is($item, 'list', 'map'), filter($item, $cb, $deep, $args...), $item);
+      $passed: if($deep and is($item, 'list', 'map'), true, call($cb, $item, index($list, $item), $list, $args...));
 
       @if $passed { $result: append($result, $item); }  
     }
@@ -156,8 +148,8 @@
 
   @if is($list, 'map') {
     @each $key, $value in $list {
-      $value: if($deep and is($item, 'list|map'), filter($value, $cb, $deep), $value);
-      $passed: call($cb, $value, $key, $list, $args...);
+      $value: if($deep and is($value, 'list', 'map'), filter($value, $cb, $deep, $args...), $value);
+      $passed: if($deep and is($value, 'list', 'map'), true, call($cb, $value, $key, $list, $args...));
 
       @if $passed { $result: map.set($result, $key, $value); }  
     }
@@ -166,36 +158,19 @@
   @return $result;
 }
 
+@function _not-equal($item, $key, $list, $elem) { @return $item != $elem; }
+
 @function remove($list, $elem, $keys...) {
-  $list: validate($list, 'list|map');
-
-  @if is($list, 'list') {
-    @if index($list, $elem) {
-      $result: ();
-      @each $item in $list {
-        @if $item != $elem {
-          $result: append($result, $item);
-        }
-      }
-
-      @return $result;
-    } @else {
-      @return $list;
-    }
-  }
-  
-  @if is($list, 'map') {
-    @return map.deep-remove($list, $elem, $keys...);
-  } 
+  $list: validate($list, 'list', 'map');
+  @return filter($list, get-function('_not-equal'), false, $elem);
 }
 
-@function map-keys($map, $cb, $deep: false, $args...) {
+@function map-keys($map, $cb, $args...) {
   $map: validate($map, 'map');
   $cb: validate($cb, 'function');
 
   $result: ();
   @each $key, $value in $map {
-    $value: if($deep and is($value, 'map'), map-keys($value, $cb, $deep), $value);
     $result: map.set($result, call($cb, $key, $value, $map, $args...), $value);
   }
 
@@ -238,13 +213,13 @@
   @return $result;
 }
 
-@function _get-reverse-item($elem, $i, $list) {
+@function _get-opposite($elem, $i, $list) {
   @return nth($list, length($list) - $i + 1);
 }
 
 @function reverse($list) {
   $list: validate($list, 'list');
-  @return map($list, get-function('_get-reverse-item'));
+  @return map($list, get-function('_get-opposite'));
 }
 
 @function join-to-str($list, $sep: '') {

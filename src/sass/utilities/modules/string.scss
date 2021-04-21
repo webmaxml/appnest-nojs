@@ -1,62 +1,30 @@
-@use 'sass:string';
-@use 'type' as *;
-@use 'list';
-
-@function unquote($string) { @return string.unquote($string); }
-@function quote($string) { @return string.quote($string); }
-@function index($string, $substring) { @return string.index($string, $substring); }
-@function insert($string, $insert, $index) { @return string.insert($string, $insert, $index); }
-@function length($string) { @return string.length($string); }
-@function slice($string, $start-at, $end-at: -1) { @return string.slice($string, $start-at, $end-at); }
-@function to-upper-case($string) { @return string.to-upper-case($string); }
-@function to-lower-case($string) { @return string.to-lower-case($string); }
-@function unique-id() { @return string.unique-id(); }
-
-@function has($str, $sub) {
-  $str: validate($str, 'string');
-  $sub: validate($sub, 'string');
-
-  @return if(str-index($str, $sub), true, false);
-}
+@use 'types' as *;
 
 @function first-slice($str, $sep) {
   $str: validate($str, 'string');
-  $sep: validate($sep, 'string');
+  $sep: validate($sep, 'string', 'null');
 
   @return if(
-    has($str, $sep), 
-    if(
-      $sep == '',
-      str-slice($str, 1, 1), 
-      str-slice($str, 1, str-index($str, $sep) - 1), 
-    ),
+    $sep and str-index($str, $sep), 
+    if($sep == '', str-slice($str, 1, 1), str-slice($str, 1, str-index($str, $sep) - 1)),
     $str
   );
 }
 
 @function last-slice($str, $sep) {
   $str: validate($str, 'string');
-  $sep: validate($sep, 'string');
+  $sep: validate($sep, 'string', 'null');
 
   @return if(
-    has($str, $sep),
-    if(
-      $sep == '',
-      str-slice($str, 2),
-      str-slice($str, str-index($str, $sep) + str-length($sep))
-    ),
+    $sep and str-index($str, $sep),
+    if($sep == '', str-slice($str, 2), str-slice($str, str-index($str, $sep) + str-length($sep))),
     ''
   );
 }
 
 @function split($str, $sep: null) {
   $str: validate($str, 'string');
-  $sep: validate($sep, 'string|null');
-  
-  @if $str == '' { @return (); }
-  
-  @return join(
-    list.to-list(first-slice($str, $sep)), 
-    split(last-slice($str, $sep), $sep)
-  );
+  $sep: validate($sep, 'string', 'null');
+
+  @return if($str == '', (), join((first-slice($str, $sep)), split(last-slice($str, $sep), $sep)));
 }

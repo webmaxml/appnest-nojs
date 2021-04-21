@@ -1,15 +1,6 @@
-// @use 'reset';
-// @use 'assets';
-// @use 'common';
+@use 'reset';
+@use 'assets';
+@use 'common';
 // @use 'blocks';
 // @use 'sections';
 // @use 'pages';
-
-
-@use 'utilities/modules/list' as *;
-
-@function add($result, $item, $args...) {
-  @return $result + $item;
-}
-
-@debug reduce(1 2 3 4 5, get-function('add'), 5);

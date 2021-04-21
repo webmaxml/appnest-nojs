@@ -1,8 +1,0 @@
-@use 'type' as *;
-@use 'Prop-List';
-@use 'output' as *;
-
-@mixin css($styles) {
-  $styles: validate($styles, 'map');
-  @include output(Prop-List.create($styles));
-}

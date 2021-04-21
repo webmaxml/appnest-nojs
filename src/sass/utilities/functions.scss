@@ -1,67 +1,81 @@
-@use 'sass:map';
+@use 'modules/types' as *;
+@use 'modules/list';
+@use 'modules/string';
+@use 'modules/number';
+@use 'modules/vars';
 
-// ----------------------------------------- types -----------------------------------------
-
-@function is($value, $types...) { 
-  @each $type in $types { @if type-of($value) == $type { @return true; } }
-  @return false;
-}
-
-@function validate($value, $types...) {
-  @if is($value, $types...) { @return $value; }
-  @error "Wrong type: '#{$types}' expected, '#{type-of($value)}' provided";
-}
-
-// ----------------------------------------- list -----------------------------------------
-
-@function map($list, $cb, $deep: false, $args...) {
-  $list: validate($list, 'list', 'map');
-  $cb: validate($cb, 'function');
-
-  $result: ();
-
-  @if is($list, 'list') {
-    @each $item in $list {
-      $item: if($deep and is($item, 'list', 'map'), map($item, $cb, $deep, $args...), $item);
-      $result: append($result, call($cb, $item, index($list, $item), $list, $args...));
-    }
-  }
-
-  @if is($list, 'map') {
-    @each $key, $value in $list {
-      $value: if($deep and is($value, 'list', 'map'), map($value, $cb, $deep, $args...), $value);
-      $result: map.set($result, $key, call($cb, $value, $key, $list, $args...));
-    }
-  }
-
-  @return $result;
-}
-
-// ----------------------------------------- calc -----------------------------------------
-
-@function strip-unit($value) {
-  $value: validate($value, 'number');
-  @return $value / ($value * 0 + 1);
-}
-
-@function to-px($value, $args...) {
-  $value: validate($value, 'number', 'list', 'map');
-
-  @if is($value, 'number') { @return strip-unit($value) * 1px; } 
-  @if is($value, 'list', 'map') { @return map($value, get-function('to-px')); } 
-}
-
-@function to-calc($str) {
+@function _calc($str) {
   $str: validate($str, 'string');
   @return unquote("calc(#{$str})");
 }
 
-// ----------------------------------------- public -----------------------------------------
+@function v($var) {
+  @if not vars.has('css', $var) { @error "No such var '#{$var}'"; }
+  @return unquote('var(#{$var})');
+}
 
+// @function wrap-css-vars($value, $args...) {
+//   $is-var: is($value, 'string') and str-index($value, '--') == 1 and not str-index($value, '/');
+//   $is-var-with-sep: is($value, 'string') and str-index($value, '--') == 1 and str-index($value, '/');
+
+//   @if $is-var { @return unquote('var(#{$value})'); }
+//   @if $is-var-with-sep { @return list.join-to-str(wrap-css-vars(string.split($value, '/')), '/'); }
+//   @if is($value, 'list', 'map') { @return list.map($value, get-function('wrap-css-vars')); }
+
+//   @return $value;
+// } 
+
+@function set-opacity($var, $opacity) {
+  @if not vars.has('css', $var) { @error "No such color '#{$var}'"; }
+  @return rgba(vars.get('css', $var), $opacity);
+}
 
 // calc(22 * (var(--size) / 100));
 
 @function size($value) {
   $value: validate($value, 'number');
-  @return to-calc('#{strip-unit($value)} * (var(--size) / 100)');
+  @return _calc('#{number.strip-unit($value)} * (var(--size) / 100)');
 }
+
+// calc(16px + (22 - 16) * ((100vw - 320px) / (768 - 320)));
+
+@function fluid($w1, $w2, $val1, $val2 ) {
+  $w1: number.to-px(validate($w1, 'number'));
+  $w2: number.to-px(validate($w2, 'number'));
+  $val1: number.to-px(validate($val1, 'number'));
+  $val2: number.to-px(validate($val2, 'number'));
+
+  $w-diff: number.strip-unit($w2 - $w1);
+  $val-diff: number.strip-unit($val2 - $val1);
+
+  @return _calc('#{$val1} + #{$val-diff} * ((100vw - #{$w1}) / #{$w-diff})');
+}
+
+
+// calc(700px + (clamp(0px, 700px - 100%, 0.1px) * (500 - 700) * 10) + (clamp(0px, 500px - 100%, 0.1px) * (300 - 500) * 10));
+
+@function _width-part($width, $i, $list) {
+  @if $i < length($list) {
+    $width: validate($width, 'number');
+    $next-width: validate(list.next-value($list, $width), 'number');
+    $diff: number.strip-unit($next-width - $width);
+
+    @return '(clamp(0px, #{number.to-px($width)} - 100%, 0.1px) * #{$diff} * 10)';
+  }
+
+  @return null;
+}
+
+@function _truthy($value, $args...) { @return $value; }
+
+@function width($widths...) {
+  $widths: list.reverse(list.to-list($widths));
+  $parts: list.map($widths, get-function('_width-part'));
+  $filtered: list.filter($parts, get-function('_truthy'));
+  $formula: join((number.to-px(list.first($widths))), $filtered);
+
+  @return _calc(list.join-to-str($formula, ' + '));
+}
+
+
+
