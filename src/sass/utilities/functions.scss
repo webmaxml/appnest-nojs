@@ -14,17 +14,6 @@
   @return unquote('var(#{$var})');
 }
 
-// @function wrap-css-vars($value, $args...) {
-//   $is-var: is($value, 'string') and str-index($value, '--') == 1 and not str-index($value, '/');
-//   $is-var-with-sep: is($value, 'string') and str-index($value, '--') == 1 and str-index($value, '/');
-
-//   @if $is-var { @return unquote('var(#{$value})'); }
-//   @if $is-var-with-sep { @return list.join-to-str(wrap-css-vars(string.split($value, '/')), '/'); }
-//   @if is($value, 'list', 'map') { @return list.map($value, get-function('wrap-css-vars')); }
-
-//   @return $value;
-// } 
-
 @function set-opacity($var, $opacity) {
   @if not vars.has('css', $var) { @error "No such color '#{$var}'"; }
   @return rgba(vars.get('css', $var), $opacity);

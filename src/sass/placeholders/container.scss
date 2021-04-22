@@ -1,19 +1,15 @@
-@use '../mixins/box' as *;
+@use '../utilities' as *;
 
 %container {
-  @include box(
-    $ma-wi: 1200px,
-    $pa-le: 15px,
-    $pa-ri: 15px, 
-    $ma-le: auto,
-    $ma-ri: auto
-  );
+  max-width: 1200px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 %container-no-padding {
-  @include box(
-    $ma-wi: 1200px, 
-    $ma-le: auto,
-    $ma-ri: auto
-  );
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }

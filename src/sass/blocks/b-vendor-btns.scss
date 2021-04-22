@@ -1,89 +1,81 @@
 @use '../utilities' as *;
 
 .b-vendor-btns {
-  @include css((
-    display: flex,
-    text-align: center
-  ));
+  display: flex;
+  text-align: center;
 
   &__link {
-    @include css((
-      width: size(170)
-    ));
+    width: size(170);
 
-    &:first-child {
-      @include css((
-        margin-right: size(30)
-      ));
-    }
+    &:first-child { margin-right: size(30); }
   }
 
   &__btn {
-    @include css((
-      display: block,
-      width: 100%,
-      bor: (size(1) solid currentcolor) size(7),
-      transition: 0.3s,
+    display: grid;
+    grid-template:
+      ". . . . ." size(13)
+      ". i . t ." max-content
+      ". i . v ." max-content
+      ". . . . ." size(13)
+      / 1fr max-content size(9) max-content 1fr;
+    
+    width: 100%;
+    border: size(1) solid currentcolor;
+    border-radius: size(7);
 
-      gr: grid (
-        ". . . . ." size(13)
-        ". i . t ." max-content
-        ". i . v ." max-content
-        ". . . . ." size(13)
-        / 1fr max-content size(9) max-content 1fr
-      )
-    ));
+    transition: 0.3s;
 
     &--light {
-      @include css((
-        border-color: --c-header-text
-      ));
+      border-color: v(--c-header-text);
 
       &:hover {
-        @include css((
-          background: --c-active,
-          border-color: --c-active
-        ));
+        background: v(--c-active);
+        border-color: v(--c-active);
       }
     }
 
     &--dark {
-      @include css((
-        border-color: --c-h2
-      ));
+      border-color: v(--c-h2);
 
-      & .b-vendor-btns__text { @include css((color: --c-h2)); }
-      & .b-vendor-btns__vendor { @include css((color: --c-h2)); }
+      & .b-vendor-btns__text { color: v(--c-h2); }
+      & .b-vendor-btns__vendor { color: v(--c-h2); }
 
       &:hover {
-        @include css((
-          background: --c-active,
-          border-color: --c-active
-        ));
-        & .b-vendor-btns__text { @include css((color: --c-header-text)); }
-        & .b-vendor-btns__vendor { @include css((color: --c-header-text)); }
+        background: v(--c-active);
+        border-color: v(--c-active);
+
+        & .b-vendor-btns__text { color: v(--c-header-text); }
+        & .b-vendor-btns__vendor { color: v(--c-header-text); }
       }
     }
   }
   &__icon {
-    @include css((
-      gr-item: i
-    ));
+    grid-area: i;
   }
 
   &__text {
-    @include css((
-      gr-item: t start end,
-      text: --ff-header --fw-light normal size(9) size(11) --c-header-text,
-      text-style: uppercase
-    ));
+    grid-area: t;
+    justify-self: start;
+    align-self: end;
+
+    font-family: v(--ff-header);
+    font-weight: v(--fw-light);
+    font-size: size(9);
+    line-height: size(11);
+    color: v(--c-header-text);
+    text-transform: uppercase;
   }
   &__vendor {
-    @include css((
-      gr-item: v start start,
-      text: --ff-header --fw-semi-bold normal size(16) size(15) --c-header-text,
-      text-style: uppercase
-    ));
+    grid-area: v;
+    justify-self: start;
+    align-self: start;
+
+    font-family: v(--ff-header);
+    font-weight: v(--fw-semi-bold);
+    font-size: size(16);
+    line-height: size(15);
+    color: v(--c-header-text);
+    text-transform: uppercase;
   }
 
   // меняем иконки на светлые при наведении

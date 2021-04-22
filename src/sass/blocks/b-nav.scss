@@ -2,43 +2,48 @@
 
 .b-nav {
 
-
   &__list {
-    
-    @include css((
-      fl: flex row wrap center stretch
-    ));
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: stretch;
   }
 
   &__item {
-    @include css((
-      padding: 0 size(15),
-      text: --ff-header --fw-regular normal size(16) size(34) --c-header-text,
-      text-style: uppercase,
-    ));
+    padding: 0 size(15);
+
+    font-family: v(--ff-header);
+    font-weight: v(--fw-regular);
+    font-size: size(16);
+    line-height: size(34);
+    color: v(--c-header-text);
+    text-transform: uppercase;
   }
 
   &__link {
-    @include css((
-      pos: relative
-    ));
+    position: relative;
 
     &::after {
-      @include css((
-        pos: absolute null null null size(-10) 50%,
-        display: block,
-        content: "",
-        box: 0% 0%,
-        background: --c-header-text,
-        transition: 0.3s
-      ));
+      position: absolute;
+      bottom: size(-10);
+      left: 50%;
+
+      display: block;
+      content: '';
+
+      width: 0%;
+      height: 0%;
+
+      background: v(--c-header-text);
+
+      transition: 0.3s;
     }
 
     &:hover::after {
-      @include css((
-        left: 0,
-        box: 100% size(1)
-      ));
+      left: 0;
+      
+      width: 100%;
+      height: size(1);
     }
   }
 }

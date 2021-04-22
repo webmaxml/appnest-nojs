@@ -22,28 +22,6 @@
   }
 }
 
-// ----------------------------------------- screen-height-section -----------------------------------------
-
-@mixin screen-height-section($bps) {
-  $bps: validate($bps, 'map');
-
-  @each $width, $heights in $bps {
-    $width: validate($width, 'number');
-    $heights: validate($heights, 'list');
-
-    $width: number.to-px($width);
-    $min-height: number.to-px(nth($heights, 1));
-    $max-height: number.to-px(nth($heights, 2));
-
-    @if $min-height == $max-height {
-      @media only screen and (min-width: $width) { height: auto; }
-    } @else {
-      @media only screen and (min-width: $width) { min-height: $min-height; }
-      @media only screen and (min-width: $width) and (max-height: $max-height) { height: 100vh; }
-    }
-  }
-}
-
 // ----------------------------------------- prop -----------------------------------------
 
 @function _is-fluid($value) { @return is($value, 'list') and list.first($value) == 'fluid'; } 
@@ -82,4 +60,26 @@
 
   @if $val { @include _prop($prop, $val) };
   @if $bps { @include _breakpoints($prop, $bps); }
+}
+
+// ----------------------------------------- screen-height-section -----------------------------------------
+
+@mixin screen-height-section($bps) {
+  $bps: validate($bps, 'map');
+
+  @each $width, $heights in $bps {
+    $width: validate($width, 'number');
+    $heights: validate($heights, 'list');
+
+    $width: number.to-px($width);
+    $min-height: number.to-px(nth($heights, 1));
+    $max-height: number.to-px(nth($heights, 2));
+
+    @if $min-height == $max-height {
+      @media only screen and (min-width: $width) { height: auto; }
+    } @else {
+      @media only screen and (min-width: $width) { min-height: $min-height; }
+      @media only screen and (min-width: $width) and (max-height: $max-height) { height: 100vh; }
+    }
+  }
 }
