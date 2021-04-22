@@ -60,7 +60,7 @@
     width: 100%;
 
     & .b-logo {
-      @include p(--size, fluid $text-breakpoints);
+      @include p(--size, $text-fluid);
 
       grid-area: l;
       justify-self: start;
@@ -75,7 +75,7 @@
       align-self: center;
     }
     & .b-burger {
-      @include p(--size, fluid $text-breakpoints);
+      @include p(--size, $text-fluid);
 
       @include p(display, block (1024: none));
       grid-area: b;
@@ -83,7 +83,7 @@
       align-self: center;
     }
     & .b-get-btn {
-      @include p(--size, fluid $text-breakpoints);
+      @include p(--size, $text-fluid);
 
       grid-area: g;
       justify-self: end;
@@ -116,8 +116,9 @@
     width: 100%;
 
     & .b-header-text {
-      @include p(--size, fluid $text-breakpoints);
-
+      
+      @include p(--size, $text-fluid);
+      
       grid-area: t;
       justify-self: center;
       align-self: start;
@@ -133,7 +134,7 @@
       align-self: start;
     }
     & .b-vendor-btns {
-      @include p(--size, fluid $text-breakpoints);
+      @include p(--size, $text-fluid);
 
       grid-area: v;
       @include p(justify-self, center (768: start));

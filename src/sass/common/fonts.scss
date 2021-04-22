@@ -2,16 +2,16 @@
 
 .fab {
   font-family: 'Font Awesome 5 Brands';
-  font-weight: v(--fw-regular);
+  font-weight: var(--fw-regular);
 }
 
 .far {
   font-family: 'Font Awesome 5 Free';
-  font-weight: v(--fw-regular);
+  font-weight: var(--fw-regular);
 }
 
 .fa,
 .fas {
   font-family: 'Font Awesome 5 Free';
-  font-weight: v(--fw-black);
+  font-weight: var(--fw-black);
 }

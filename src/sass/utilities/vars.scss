@@ -43,4 +43,4 @@ $css: (
   '--h-padding': fluid (320: 15px, 768: 45px, 1280: 15px),
 );
 
-$text-breakpoints: (320: 60px, 1280: 100px);
+$text-fluid: fluid (320: 60px, 1280: 100px);
