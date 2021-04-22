@@ -2,45 +2,45 @@
 
 .b-header-text {
   &__header {
-    font-family: v(--ff-header);
-    font-weight: v(--fw-bold);
+    font-family: var(--ff-header);
+    font-weight: var(--fw-bold);
     font-size: size(48);
     line-height: size(52);
-    color: v(--c-header-text);
+    color: var(--c-header-text);
     text-transform: uppercase;
   }
 
   &__accent {
-    font-family: v(--ff-header);
-    font-weight: v(--fw-light);
+    font-family: var(--ff-header);
+    font-weight: var(--fw-light);
     font-size: size(48);
     line-height: size(52);
-    color: v(--c-accent);
+    color: var(--c-accent);
     text-transform: uppercase;
 
     & > b {
-      font-weight: v(--fw-bold);
+      font-weight: var(--fw-bold);
     }
   }
 
   &__secondary-header {
     display: block;
 
-    font-family: v(--ff-header);
-    font-weight: v(--fw-light);
+    font-family: var(--ff-header);
+    font-weight: var(--fw-light);
     font-size: size(36);
     line-height: size(52);
-    color: v(--c-header-text);
+    color: var(--c-header-text);
     text-transform: uppercase;
   }
 
   &__text {
     margin-top: size(20);
 
-    font-family: v(--ff-header);
-    font-weight: v(--fw-regular);
+    font-family: var(--ff-header);
+    font-weight: var(--fw-regular);
     font-size: size(18);
     line-height: size(30);
-    color: v(--c-header-text);
+    color: var(--c-header-text);
   }
 }

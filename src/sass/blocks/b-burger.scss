@@ -2,14 +2,14 @@
 
 .b-burger {
   padding: size(10);
-  color: v(--c-header-text);
-  border: size(1) solid v(--c-header-text);
+  color: var(--c-header-text);
+  border: size(1) solid var(--c-header-text);
   border-radius: size(6);
   transition: 0.3s;
   
   &:hover {
-    color: v(--c-active);
-    border-color: v(--c-active);
+    color: var(--c-active);
+    border-color: var(--c-active);
   }
 
   & .fas {

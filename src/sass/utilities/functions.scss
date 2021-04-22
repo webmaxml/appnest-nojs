@@ -9,11 +9,6 @@
   @return unquote("calc(#{$str})");
 }
 
-@function v($var) {
-  @if not vars.has('css', $var) { @error "No such var '#{$var}'"; }
-  @return unquote('var(#{$var})');
-}
-
 @function set-opacity($var, $opacity) {
   @if not vars.has('css', $var) { @error "No such color '#{$var}'"; }
   @return rgba(vars.get('css', $var), $opacity);

@@ -12,11 +12,11 @@
   &__item {
     padding: 0 size(15);
 
-    font-family: v(--ff-header);
-    font-weight: v(--fw-regular);
+    font-family: var(--ff-header);
+    font-weight: var(--fw-regular);
     font-size: size(16);
     line-height: size(34);
-    color: v(--c-header-text);
+    color: var(--c-header-text);
     text-transform: uppercase;
   }
 
@@ -34,7 +34,7 @@
       width: 0%;
       height: 0%;
 
-      background: v(--c-header-text);
+      background: var(--c-header-text);
 
       transition: 0.3s;
     }

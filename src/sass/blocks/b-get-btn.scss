@@ -2,21 +2,21 @@
 
 .b-get-btn {
   padding: size(20) size(34);
-  border: size(1) solid v(--c-header-text);
+  border: size(1) solid var(--c-header-text);
   border-radius: size(32);
   transition: 0.3s;
 
   &:hover {
-    background: v(--c-active);
-    border-color: v(--c-active);
+    background: var(--c-active);
+    border-color: var(--c-active);
   }
 
   &__link {
-    font-family: v(--ff-header);
-    font-weight: v(--fw-semi-bold);
+    font-family: var(--ff-header);
+    font-weight: var(--fw-semi-bold);
     font-size: size(16);
     line-height: size(16);
-    color: v(--c-header-text);
+    color: var(--c-header-text);
     text-transform: uppercase;
   }
 }
