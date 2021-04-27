@@ -1,6 +1,31 @@
-@use 'reset';
-@use 'assets';
-@use 'common';
-@use 'blocks';
-@use 'sections';
-@use 'pages';
+// @use 'reset';
+// @use 'assets';
+// @use 'common';
+// @use 'blocks';
+// @use 'sections';
+// @use 'pages';
+
+
+@mixin display {
+  display: block;
+  margin: auto;
+}
+
+@mixin box {
+  width: 1000px;
+  border-width: 1px;
+
+  & li { width: 100%; }
+}
+
+@mixin text {
+  font-size: 20px;
+
+  & li { color: red; }
+}
+
+ul {
+  @include display;
+  @include box;
+  @include text;
+}

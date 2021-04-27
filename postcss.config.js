@@ -1,9 +1,8 @@
 module.exports = {
   plugins: [
-    require('autoprefixer'),
+    require('postcss-combine-duplicated-selectors'),
     require('postcss-combine-media-query'),
-    require('cssnano')({
-      preset: 'default'
-    })
+    require('autoprefixer'),
+    require('cssnano')({ preset: 'default' })
   ]
 }

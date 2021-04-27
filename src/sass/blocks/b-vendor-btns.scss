@@ -1,15 +1,10 @@
 @use '../utilities' as *;
 
-.b-vendor-btns {
-  display: flex;
-  text-align: center;
+@mixin display {
+  display: flex; flex-flow: row nowrap; justify-content: flex-start; align-items: stretch;
 
-  &__link {
-    width: size(170);
-
-    &:first-child { margin-right: size(30); }
-  }
-
+  &__item { &:first-child { margin-right: size(30); } }
+  &__link { display: block; }
   &__btn {
     display: grid;
     grid-template:
@@ -18,46 +13,28 @@
       ". i . v ." max-content
       ". . . . ." size(13)
       / 1fr max-content size(9) max-content 1fr;
-    
-    width: 100%;
-    border: size(1) solid currentcolor;
-    border-radius: size(7);
 
-    transition: 0.3s;
-
-    &--light {
-      border-color: var(--c-header-text);
-
-      &:hover {
-        background: var(--c-active);
-        border-color: var(--c-active);
-      }
-    }
-
-    &--dark {
-      border-color: var(--c-h2);
-
-      & .b-vendor-btns__text { color: var(--c-h2); }
-      & .b-vendor-btns__vendor { color: var(--c-h2); }
-
-      &:hover {
-        background: var(--c-active);
-        border-color: var(--c-active);
-
-        & .b-vendor-btns__text { color: var(--c-header-text); }
-        & .b-vendor-btns__vendor { color: var(--c-header-text); }
-      }
-    }
+    & .b-vendor-btns__icon { grid-area: i; justify-self: start; align-self: start; }
+    & .b-vendor-btns__text { grid-area: t; justify-self: start; align-self: end; }
+    & .b-vendor-btns__vendor { grid-area: v; justify-self: start; align-self: start; }
   }
-  &__icon {
-    grid-area: i;
-  }
+}
 
+@mixin box {
+  &__item { width: size(170); }
+  &__btn { width: 100%; border-width: size(1); }
+}
+
+@mixin style {
+  &__btn { 
+    border-style: solid; border-color: var(--c-header-text); border-radius: size(7);
+
+    &:hover { background: var(--c-active); border-color: var(--c-active); }
+  }
+}
+
+@mixin text {
   &__text {
-    grid-area: t;
-    justify-self: start;
-    align-self: end;
-
     font-family: var(--ff-header);
     font-weight: var(--fw-light);
     font-size: size(9);
@@ -65,11 +42,8 @@
     color: var(--c-header-text);
     text-transform: uppercase;
   }
-  &__vendor {
-    grid-area: v;
-    justify-self: start;
-    align-self: start;
 
+  &__vendor {
     font-family: var(--ff-header);
     font-weight: var(--fw-semi-bold);
     font-size: size(16);
@@ -77,17 +51,47 @@
     color: var(--c-header-text);
     text-transform: uppercase;
   }
+}
 
-  // меняем иконки на светлые при наведении
-  &__apple.b-vendor-btns__btn--dark:hover .b-vendor-btns__icon {
-    width: 25em;
-    height: 29em;
-    background-position: -5em -5em;
-  }
+@mixin animation {
+  &__btn { transition: 0.3s; }
+}
 
-  &__play.b-vendor-btns__btn--dark:hover .b-vendor-btns__icon {
-    width: 27em;
-    height: 29em;
-    background-position: -220em -5em;
+// ----------------------------------------- modificators -----------------------------------------
+
+.b-vendor-btns__btn.b-vendor-btns__btn--dark {
+  border-color: var(--c-h2);
+
+  & .b-vendor-btns__text { color: var(--c-h2); }
+  & .b-vendor-btns__vendor { color: var(--c-h2); }
+
+  &:hover {
+    background: var(--c-active);
+    border-color: var(--c-active);
+
+    & .b-vendor-btns__text { color: var(--c-header-text); }
+    & .b-vendor-btns__vendor { color: var(--c-header-text); }
   }
+}
+
+// меняем иконки на светлые при наведении
+.b-vendor-btns__apple.b-vendor-btns__btn--dark:hover .b-vendor-btns__icon {
+  width: 25em;
+  height: 29em;
+  background-position: -5em -5em;
+}
+
+.b-vendor-btns__play.b-vendor-btns__btn--dark:hover .b-vendor-btns__icon {
+  width: 27em;
+  height: 29em;
+  background-position: -220em -5em;
+}
+
+
+.b-vendor-btns {
+  @include display;
+  @include box;
+  @include style;
+  @include text;
+  @include animation;
 }

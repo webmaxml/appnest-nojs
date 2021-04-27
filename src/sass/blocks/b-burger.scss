@@ -1,18 +1,29 @@
 @use '../utilities' as *;
 
 .b-burger {
+  // box
   padding: size(10);
-  color: var(--c-header-text);
   border: size(1) solid var(--c-header-text);
+
+  // style
   border-radius: size(6);
+
+  // text
+  color: var(--c-header-text);
+
+  // animation
   transition: 0.3s;
   
   &:hover {
-    color: var(--c-active);
+    // style
     border-color: var(--c-active);
+
+    // text
+    color: var(--c-active);
   }
 
   & .fas {
+    // text
     font-size: size(33);
     line-height: size(35);
   }

@@ -1,8 +1,11 @@
 @use '../utilities' as *;
 
-// завязка на --size внутри блока, чтобы иконка масштабировалась с изменением --size
 .icon {
+  display: block;
+
+  // завязка на --size внутри блока, чтобы иконка масштабировалась с изменением --size
   font-size: size(1);
+  background-size: 318em;
 }
 
 .icon-Apple {

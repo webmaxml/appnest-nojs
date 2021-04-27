@@ -26,18 +26,18 @@
     / 1fr;
 
   &::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-
-    display: block;
-    content: '';
+    background: set-opacity(--c-overlay, 0.9);
 
     width: 100%;
     height: 100%;
 
-    background: set-opacity(--c-overlay, 0.9);
+    display: block;
+    content: '';
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
   }
 
   &__top-grid {
@@ -60,7 +60,7 @@
     width: 100%;
 
     & .b-logo {
-      @include p(--size, $text-fluid);
+      @include p(--size, var(--fluid-text));
 
       grid-area: l;
       justify-self: start;
@@ -75,7 +75,7 @@
       align-self: center;
     }
     & .b-burger {
-      @include p(--size, $text-fluid);
+      @include p(--size, var(--fluid-text));
 
       @include p(display, block (1024: none));
       grid-area: b;
@@ -83,7 +83,7 @@
       align-self: center;
     }
     & .b-get-btn {
-      @include p(--size, $text-fluid);
+      @include p(--size, var(--fluid-text));
 
       grid-area: g;
       justify-self: end;
@@ -117,7 +117,7 @@
 
     & .b-header-text {
       
-      @include p(--size, $text-fluid);
+      @include p(--size, var(--fluid-text));
       
       grid-area: t;
       justify-self: center;
@@ -134,7 +134,7 @@
       align-self: start;
     }
     & .b-vendor-btns {
-      @include p(--size, $text-fluid);
+      @include p(--size, var(--fluid-text));
 
       grid-area: v;
       @include p(justify-self, center (768: start));
