@@ -83,3 +83,22 @@
     }
   }
 }
+
+// ----------------------------------------- text-fade -----------------------------------------
+
+@mixin text-fade($height, $color, $position: relative) {
+  position: $position;
+
+  &::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+
+    content: '';
+    width: 100%;
+    height: $height;
+
+    background: linear-gradient(to bottom, transparent, $color);
+  }
+}

@@ -1,13 +1,39 @@
-@use '../utilities/block-modules' as *;
+@use '../utilities' as *;
+
+// ----------------------------------------- display -----------------------------------------
 
 .b-feature-img {
-  @include flex($fl-wr: nowrap, $ju-co: center, $al-it: flex-end);
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: flex-end;
 
   &__front {
-    @include box($wi: size(304), $ma-le: size(-98));
+    margin-left: size(-98);
+  }
+}
+
+// ----------------------------------------- box -----------------------------------------
+
+.b-feature-img {
+  &__front {
+    width: size(304);
+    height: size(609);
   }
 
   &__back {
-    @include box($wi: size(265));
+    width: size(265);
+    height: size(531);
+  }
+}
+
+// ----------------------------------------- style -----------------------------------------
+
+.b-feature-img {
+  &__front {
+    object-fit: contain;
+  }
+  &__back {
+    object-fit: contain;
   }
 }

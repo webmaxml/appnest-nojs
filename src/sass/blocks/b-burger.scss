@@ -1,30 +1,41 @@
 @use '../utilities' as *;
 
-.b-burger {
-  // box
-  padding: size(10);
-  border: size(1) solid var(--c-header-text);
+// ----------------------------------------- box -----------------------------------------
 
-  // style
+.b-burger {
+  padding: size(10);
+  border-width: size(1);
+}
+
+// ----------------------------------------- style -----------------------------------------
+
+.b-burger {
+  border-style: solid;
+  border-color: var(--c-header-text);
   border-radius: size(6);
 
-  // text
+  &:hover {
+    border-color: var(--c-active);
+  }
+}
+
+// ----------------------------------------- text -----------------------------------------
+
+.b-burger {
   color: var(--c-header-text);
 
-  // animation
-  transition: 0.3s;
-  
-  &:hover {
-    // style
-    border-color: var(--c-active);
-
-    // text
-    color: var(--c-active);
+  &:hover { 
+    color: var(--c-active); 
   }
 
   & .fas {
-    // text
     font-size: size(33);
     line-height: size(35);
   }
+}
+
+// ----------------------------------------- animation -----------------------------------------
+
+.b-burger {
+  transition: 0.3s;
 }

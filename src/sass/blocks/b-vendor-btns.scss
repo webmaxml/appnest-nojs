@@ -1,10 +1,19 @@
 @use '../utilities' as *;
 
-@mixin display {
-  display: flex; flex-flow: row nowrap; justify-content: flex-start; align-items: stretch;
+// ----------------------------------------- display -----------------------------------------
 
-  &__item { &:first-child { margin-right: size(30); } }
-  &__link { display: block; }
+.b-vendor-btns {
+  display: flex; 
+  flex-flow: row nowrap; 
+  justify-content: flex-start; 
+  align-items: stretch;
+
+  &__item { 
+    &:first-child { margin-right: size(30); } 
+  }
+  &__link { 
+    display: block; 
+  }
   &__btn {
     display: grid;
     grid-template:
@@ -20,20 +29,36 @@
   }
 }
 
-@mixin box {
-  &__item { width: size(170); }
-  &__btn { width: 100%; border-width: size(1); }
-}
+// ----------------------------------------- box -----------------------------------------
 
-@mixin style {
+.b-vendor-btns {
+  &__item { 
+    width: size(170); 
+  }
   &__btn { 
-    border-style: solid; border-color: var(--c-header-text); border-radius: size(7);
-
-    &:hover { background: var(--c-active); border-color: var(--c-active); }
+    width: 100%; 
+    border-width: size(1); 
   }
 }
 
-@mixin text {
+// ----------------------------------------- style -----------------------------------------
+
+.b-vendor-btns {
+  &__btn { 
+    border-style: solid; 
+    border-color: var(--c-header-text); 
+    border-radius: size(7);
+
+    &:hover { 
+      background: var(--c-active); 
+      border-color: var(--c-active); 
+    }
+  }
+}
+
+// ----------------------------------------- text -----------------------------------------
+
+.b-vendor-btns {
   &__text {
     font-family: var(--ff-header);
     font-weight: var(--fw-light);
@@ -53,7 +78,9 @@
   }
 }
 
-@mixin animation {
+// ----------------------------------------- animation -----------------------------------------
+
+.b-vendor-btns {
   &__btn { transition: 0.3s; }
 }
 
@@ -85,13 +112,4 @@
   width: 27em;
   height: 29em;
   background-position: -220em -5em;
-}
-
-
-.b-vendor-btns {
-  @include display;
-  @include box;
-  @include style;
-  @include text;
-  @include animation;
 }

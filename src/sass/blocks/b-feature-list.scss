@@ -1,21 +1,72 @@
-@use '../utilities/block-modules' as *;
+@use '../utilities' as *;
+
+// ----------------------------------------- vars -----------------------------------------
 
 .b-feature-list {
-  @include flex($fl-wr: wrap, $ju-co: center, $al-it: flex-start);
+  @include p(--text-lh, size(24));
+}
+
+// ----------------------------------------- display -----------------------------------------
+
+.b-feature-list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
 
   &__item {
-    @include box($wi: size(270), $ma: size(35) size(15));
+    margin: size(35) size(15);
   }
+
   &__icon {
-    @include display($di: block);
+    display: block;
   }
 
   &__header {
-    @include text($fo-fa: --ff-header, $fo-we: --fw-bold, $fo-si: size(18), $li-he: size(18), $co: --c-h3);
-    @include box($ma-to: size(40));
+    margin-top: size(40);
   }
+
   &__text {
-    @include text($fo-fa: --ff-text, $fo-we: --fw-regular, $fo-si: size(15), $li-he: size(24), $co: --c-text);
-    @include box($ma-to: size(20));
+    margin-top: size(20);
+  }
+}
+
+// ----------------------------------------- box -----------------------------------------
+
+.b-feature-list {
+  &__item {
+    width: size(270);
+  }
+
+  &__header {
+    overflow: hidden;
+  }
+
+  &__text {
+    height: calc(var(--text-lh) * 3);
+    overflow: hidden;
+  }
+}
+
+// ----------------------------------------- text -----------------------------------------
+
+.b-feature-list {
+  &__header {
+    font-family: var(--ff-header);
+    font-weight: var(--fw-bold);
+    font-size: size(18);
+    line-height: size(18);
+    color: var(--c-h3);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &__text {
+    font-family: var(--ff-text);
+    font-weight: var(--fw-regular);
+    font-size: size(15);
+    line-height: var(--text-lh);
+    color: var(--c-text);
+    @include text-fade(var(--text-lh), var(--c-bg2));
   }
 }
