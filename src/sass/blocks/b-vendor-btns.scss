@@ -1,115 +1,121 @@
 @use '../utilities' as *;
+@include set-block('.b-vendor-btns');
 
 // ----------------------------------------- display -----------------------------------------
 
-.b-vendor-btns {
+@include b {
   display: flex; 
   flex-flow: row nowrap; 
   justify-content: flex-start; 
-  align-items: stretch;
+  align-items: flex-start;
 
-  &__item { 
+  @include e('item') { 
     &:first-child { margin-right: size(30); } 
-  }
-  &__link { 
-    display: block; 
-  }
-  &__btn {
-    display: grid;
-    grid-template:
-      ". . . . ." size(13)
-      ". i . t ." max-content
-      ". i . v ." max-content
-      ". . . . ." size(13)
-      / 1fr max-content size(9) max-content 1fr;
 
-    & .b-vendor-btns__icon { grid-area: i; justify-self: start; align-self: start; }
-    & .b-vendor-btns__text { grid-area: t; justify-self: start; align-self: end; }
-    & .b-vendor-btns__vendor { grid-area: v; justify-self: start; align-self: start; }
+    @include e('link') {
+      display: block;
+
+      @include e('btn') {
+        display: grid;
+        grid-template:
+          ". . . . ." size(13)
+          ". i . t ." max-content
+          ". i . v ." max-content
+          ". . . . ." size(13)
+          / 1fr max-content size(9) max-content 1fr;
+
+        @include e('icon') { grid-area: i; justify-self: start; align-self: start; }
+        @include e('text') { grid-area: t; justify-self: start; align-self: end; }
+        @include e('vendor') { grid-area: v; justify-self: start; align-self: start; }
+      }
+    }
   }
 }
 
 // ----------------------------------------- box -----------------------------------------
 
-.b-vendor-btns {
-  &__item { 
-    width: size(170); 
-  }
-  &__btn { 
-    width: 100%; 
-    border-width: size(1); 
+@include e('item') { 
+  width: size(170); 
+
+  @include e('link') {
+    @include e('btn') { 
+      width: 100%; 
+      border-width: size(1); 
+    }
   }
 }
 
 // ----------------------------------------- style -----------------------------------------
 
-.b-vendor-btns {
-  &__btn { 
-    border-style: solid; 
-    border-color: var(--c-header-text); 
-    border-radius: size(7);
+@include e('btn') { 
+  border-style: solid; 
+  border-color: var(--c-header-text); 
+  border-radius: size(7);
 
-    &:hover { 
-      background: var(--c-active); 
-      border-color: var(--c-active); 
-    }
+  &:hover { 
+    background: var(--c-active); 
+    border-color: var(--c-active); 
   }
 }
 
 // ----------------------------------------- text -----------------------------------------
 
-.b-vendor-btns {
-  &__text {
-    font-family: var(--ff-header);
-    font-weight: var(--fw-light);
-    font-size: size(9);
-    line-height: size(11);
-    color: var(--c-header-text);
-    text-transform: uppercase;
-  }
+@include e('text') {
+  font-family: var(--ff-header);
+  font-weight: var(--fw-light);
+  font-size: size(9);
+  line-height: size(11);
+  color: var(--c-header-text);
+  text-transform: uppercase;
+}
 
-  &__vendor {
-    font-family: var(--ff-header);
-    font-weight: var(--fw-semi-bold);
-    font-size: size(16);
-    line-height: size(15);
-    color: var(--c-header-text);
-    text-transform: uppercase;
-  }
+@include e('vendor') {
+  font-family: var(--ff-header);
+  font-weight: var(--fw-semi-bold);
+  font-size: size(16);
+  line-height: size(15);
+  color: var(--c-header-text);
+  text-transform: uppercase;
 }
 
 // ----------------------------------------- animation -----------------------------------------
 
-.b-vendor-btns {
-  &__btn { transition: 0.3s; }
-}
+@include e('btn') { transition: 0.3s; }
 
 // ----------------------------------------- modificators -----------------------------------------
 
-.b-vendor-btns__btn.b-vendor-btns__btn--dark {
+@include e('btn', 'dark') {
   border-color: var(--c-h2);
 
-  & .b-vendor-btns__text { color: var(--c-h2); }
-  & .b-vendor-btns__vendor { color: var(--c-h2); }
+  @include e-nested('text') { color: var(--c-h2); }
+  @include e-nested('vendor') { color: var(--c-h2); }
 
   &:hover {
     background: var(--c-active);
     border-color: var(--c-active);
 
-    & .b-vendor-btns__text { color: var(--c-header-text); }
-    & .b-vendor-btns__vendor { color: var(--c-header-text); }
+    @include e-nested('text') { color: var(--c-header-text); }
+    @include e-nested('vendor') { color: var(--c-header-text); }
   }
 }
 
 // меняем иконки на светлые при наведении
-.b-vendor-btns__apple.b-vendor-btns__btn--dark:hover .b-vendor-btns__icon {
-  width: 25em;
-  height: 29em;
-  background-position: -5em -5em;
+@include e-combined('apple', 'btn--dark') {
+  &:hover {
+    @include e-nested('icon') {
+      width: 25em;
+      height: 29em;
+      background-position: -5em -5em;
+    }
+  }
 }
 
-.b-vendor-btns__play.b-vendor-btns__btn--dark:hover .b-vendor-btns__icon {
-  width: 27em;
-  height: 29em;
-  background-position: -220em -5em;
+@include e-combined('play', 'btn--dark') {
+  &:hover {
+    @include e-nested('icon') {
+      width: 27em;
+      height: 29em;
+      background-position: -220em -5em;
+    }
+  }
 }

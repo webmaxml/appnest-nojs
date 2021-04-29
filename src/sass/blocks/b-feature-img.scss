@@ -1,39 +1,37 @@
 @use '../utilities' as *;
+@include set-block('.b-feature-img');
 
 // ----------------------------------------- display -----------------------------------------
 
-.b-feature-img {
+@include b {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: flex-end;
 
-  &__front {
+  @include e('front') {
     margin-left: size(-98);
   }
 }
 
 // ----------------------------------------- box -----------------------------------------
 
-.b-feature-img {
-  &__front {
-    width: size(304);
-    height: size(609);
-  }
+@include e('front') {
+  width: size(304);
+  height: size(609);
+}
 
-  &__back {
-    width: size(265);
-    height: size(531);
-  }
+@include e('back') {
+  width: size(265);
+  height: size(531);
 }
 
 // ----------------------------------------- style -----------------------------------------
 
-.b-feature-img {
-  &__front {
-    object-fit: contain;
-  }
-  &__back {
-    object-fit: contain;
-  }
+@include e('front') {
+  object-fit: contain;
+}
+
+@include e('back') {
+  object-fit: contain;
 }

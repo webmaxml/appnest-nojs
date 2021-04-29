@@ -1,72 +1,67 @@
 @use '../utilities' as *;
+@include set-block('.b-feature-list');
 
 // ----------------------------------------- vars -----------------------------------------
 
-.b-feature-list {
+@include b {
   @include p(--text-lh, size(24));
 }
 
 // ----------------------------------------- display -----------------------------------------
 
-.b-feature-list {
+@include b {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: flex-start;
 
-  &__item {
-    margin: size(35) size(15);
-  }
+  @include e('item') {
+    margin: size(30) size(15);
 
-  &__icon {
-    display: block;
-  }
-
-  &__header {
-    margin-top: size(40);
-  }
-
-  &__text {
-    margin-top: size(20);
+    @include e('icon') { display: block; }
+    @include e('header') { margin-top: size(40); }
+    @include e('text') { margin-top: size(20); }
   }
 }
 
 // ----------------------------------------- box -----------------------------------------
 
-.b-feature-list {
-  &__item {
+@include b {
+  @include e('item') {
     width: size(270);
-  }
 
-  &__header {
-    overflow: hidden;
-  }
+    @include e('header') { 
+      overflow: hidden;
+    }
 
-  &__text {
-    height: calc(var(--text-lh) * 3);
-    overflow: hidden;
+    @include e('text') { 
+      height: calc(var(--text-lh) * 3);
+      overflow: hidden;
+    }
   }
 }
 
 // ----------------------------------------- text -----------------------------------------
 
-.b-feature-list {
-  &__header {
-    font-family: var(--ff-header);
-    font-weight: var(--fw-bold);
-    font-size: size(18);
-    line-height: size(18);
-    color: var(--c-h3);
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
-  &__text {
-    font-family: var(--ff-text);
-    font-weight: var(--fw-regular);
-    font-size: size(15);
-    line-height: var(--text-lh);
-    color: var(--c-text);
-    @include text-fade(var(--text-lh), var(--c-bg2));
+@include b {
+  @include e('item') {
+    @include e('header') {
+      font-family: var(--ff-header);
+      font-weight: var(--fw-bold);
+      font-size: size(18);
+      line-height: size(18);
+      color: var(--c-h3);
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  
+    @include e('text') {
+      font-family: var(--ff-text);
+      font-weight: var(--fw-regular);
+      font-size: size(15);
+      line-height: var(--text-lh);
+      color: var(--c-text);
+      @include text-fade(var(--text-lh), var(--c-bg2));
+    }
   }
 }

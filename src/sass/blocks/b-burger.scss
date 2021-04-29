@@ -1,15 +1,16 @@
 @use '../utilities' as *;
+@include set-block('.b-burger');
 
 // ----------------------------------------- box -----------------------------------------
 
-.b-burger {
+@include b {
   padding: size(10);
   border-width: size(1);
 }
 
 // ----------------------------------------- style -----------------------------------------
 
-.b-burger {
+@include b {
   border-style: solid;
   border-color: var(--c-header-text);
   border-radius: size(6);
@@ -21,7 +22,7 @@
 
 // ----------------------------------------- text -----------------------------------------
 
-.b-burger {
+@include b {
   color: var(--c-header-text);
 
   &:hover { 
@@ -36,6 +37,6 @@
 
 // ----------------------------------------- animation -----------------------------------------
 
-.b-burger {
+@include b {
   transition: 0.3s;
 }

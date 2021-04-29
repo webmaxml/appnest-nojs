@@ -1,19 +1,37 @@
-@use '../utilities/block-modules' as *;
+@use '../utilities' as *;
+@include set-block('.b-feature-text');
 
-.b-feature-text {
-  @include box($pa: 0 15px);
-  
-  &__header {
-    @include text($fo-fa: --ff-header, $fo-we: --fw-bold, $fo-si: size(36), $li-he: size(48), $co: --c-h2);
+// ----------------------------------------- display -----------------------------------------
 
-    & b {
-      @include text($co: --c-accent);
-    }
+@include e('text') {
+  margin-top: size(10);
+}
+
+// ----------------------------------------- box -----------------------------------------
+
+@include b {
+  min-width: size(300);
+  max-width: size(465);
+}
+
+// ----------------------------------------- text -----------------------------------------
+
+@include e('header') {
+  font-family: var(--ff-header);
+  font-weight: var(--fw-bold);
+  font-size: size(36);
+  line-height: size(48);
+  color: var(--c-h2);
+
+  & b {
+    color: var(--c-accent);
   }
+}
 
-  &__text {
-    @include box($ma-to: size(10));
-    @include text($fo-fa: --ff-text, $fo-we: --fw-regular, $fo-si: size(15), $li-he: size(24), $co: --c-text);
-  }
-
+@include e('text') {
+  font-family: var(--ff-text);
+  font-weight: var(--fw-regular);
+  font-size: size(15);
+  line-height: size(24);
+  color: var(--c-text);
 }

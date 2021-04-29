@@ -102,3 +102,37 @@
     background: linear-gradient(to bottom, transparent, $color);
   }
 }
+
+// ----------------------------------------- BEM -----------------------------------------
+
+$block: null !default;
+
+@mixin set-block($selector) { $block: $selector !global; }
+
+@function _bem-selector($block, $elem: null, $mod: null) {
+  $selector: $block;
+  @if $elem { $selector: '#{$selector}__#{$elem}'; }
+  @if $mod { $selector: '#{$selector}--#{$mod}'; }
+  @return $selector;
+}
+
+@mixin b { 
+  #{$block} { @content; } 
+}
+
+@mixin e($elem, $mod: null) {
+  @at-root #{_bem-selector($block, $elem, $mod)} { @content; }
+}
+
+@mixin e-nested($elem, $mod: null) {
+  #{_bem-selector($block, $elem, $mod)} { @content; } 
+}
+
+@mixin e-combined($elems...) {
+  $selector: '';
+  @each $elem in $elems {
+    $selector: $selector + _bem-selector($block, $elem);
+  }
+
+  @at-root #{$selector} { @content; }
+}
