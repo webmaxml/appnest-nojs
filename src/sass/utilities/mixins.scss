@@ -136,3 +136,33 @@ $block: null !default;
 
   @at-root #{$selector} { @content; }
 }
+
+// ----------------------------------------- overlay -----------------------------------------
+
+@mixin overlay($color-var, $opacity) {
+  position: relative;
+  z-index: 0;
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    display: block; 
+
+    content: '';
+    width: 100%;
+    height: 100%;
+
+    background: set-opacity($color-var, $opacity);
+  }
+}
+
+// ----------------------------------------- area -----------------------------------------
+
+@mixin area($area, $justify: start, $align: start) {
+  grid-area: $area;
+  @include p(justify-self, $justify);
+  @include p(align-self, $align);
+}

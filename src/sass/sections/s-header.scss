@@ -10,21 +10,17 @@
 
   @include e('top') {
     @include p(--v-padding, fluid (320: 15px, 1280: 57px));
+
+    & .b-logo { @include p(--size, var(--fluid-text)); }
+    & .b-nav { @include p(--size, 100px); }
+    & .b-burger { @include p(--size, var(--fluid-text)); }
+    & .b-get-btn { @include p(--size, var(--fluid-text)); }
   }
-}
 
-
-// ----------------------------------------- position -----------------------------------------
-
-@include b {
-  position: relative;
-  z-index: 0;
-
-  &::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
+  @include e('center') {
+    & .b-header-text { @include p(--size, var(--fluid-text)); }
+    & .b-header-img { @include p(--size, fluid (320: 30px, 1280: 100px)); }
+    & .b-vendor-btns { @include p(--size, var(--fluid-text)); }
   }
 }
 
@@ -32,8 +28,8 @@
 
 @include b {
   display: grid;
-  @include e('top')    { grid-area: t; }
-  @include e('center') { grid-area: c; }
+  @include e('top')    { @include area(t) }
+  @include e('center') { @include area(c) }
 
   grid-template:
     "t" max-content
@@ -41,56 +37,55 @@
     "c" max-content
     "." var(--v-padding)
     / 1fr;
-  
-
-  &::before { 
-    display: block; 
-  }
-
-  @include e('top') {
-    display: grid;
-    & .b-burger  { grid-area: b; justify-self: start; align-self: center; }
-    & .b-logo    { grid-area: l; justify-self: start; align-self: center; }
-    & .b-nav     { grid-area: n; justify-self: center; align-self: center; }
-    & .b-get-btn { grid-area: g; justify-self: end; align-self: center; }
-
-    @include p(grid-template,
-      ". . . . ." var(--v-padding)
-      "b . l . g" max-content
-      / max-content 15px max-content 1fr max-content
-      (
-        1024: ". . ." var(--v-padding)
-              "l n g" max-content
-              /1fr max-content 1fr
-      )
-    );
-  }
-
-  @include e('center') {
-    display: grid;
-    & .b-header-text  { grid-area: t; justify-self: center; align-self: start; }
-    & .b-header-img   { grid-area: i; @include p(justify-self, center (768: end)); align-self: start; }
-    & .b-vendor-btns  { grid-area: v; @include p(justify-self, center (768: start)); align-self: start; }
-
-    @include p(grid-template, 
-      "t" max-content
-      "." 50px
-      "i" max-content
-      "." 50px
-      "v" max-content
-      / 1fr
-      (
-        768: ". i" max-content
-             "t i" max-content
-             ". i" 50px
-             "v i" max-content
-             ". i" max-content
-             / 1fr 1fr
-      )
-    );
-  }
 }
 
+@include e('top') {
+  display: grid;
+  & .b-burger  { @include area(b, start, center); }
+  & .b-logo    { @include area(l, start, center); }
+  & .b-nav     { @include area(n, center, center); }
+  & .b-get-btn { @include area(g, end, center); }
+
+  @include p(grid-template,
+    ". . . . ." var(--v-padding)
+    "b . l . g" max-content
+    / max-content 15px max-content 1fr max-content
+    (
+      1024: ". . ." var(--v-padding)
+            "l n g" max-content
+            /1fr max-content 1fr
+    )
+  );
+
+  & .b-nav { @include p(display, none (1024: flex)); }
+  & .b-burger { @include p(display, block (1024: none)); }
+}
+
+@include e('center') {
+  display: grid;
+  & .b-header-text  { @include area(t, center, start); }
+  & .b-header-img   { @include area(i, center (768: end), start); }
+  & .b-vendor-btns  { @include area(v, center (768: start), start); }
+
+  @include p(grid-template, 
+    "t" max-content
+    "." 50px
+    "i" max-content
+    "." 50px
+    "v" max-content
+    / 1fr
+    (
+      768: ". i" max-content
+            "t i" max-content
+            ". i" 50px
+            "v i" max-content
+            ". i" max-content
+            / 1fr 1fr
+    )
+  );
+
+  & .b-header-text { @include p(margin-top, (768: -10px)); }
+}
 
 // ----------------------------------------- box -----------------------------------------
 
@@ -106,12 +101,6 @@
     1280: 1050 1050
   ));
 
-  &::before {
-    content: '';
-    width: 100%;
-    height: 100%;
-  }
-
   @include e('top') {
     @extend %container;
     width: 100%;
@@ -126,39 +115,11 @@
 // ----------------------------------------- style -----------------------------------------
 
 @include b {
-  &::before { background: set-opacity(--c-overlay, 0.9); }
+  @include overlay(--c-overlay, 0.9);
 }
 
-
-// ----------------------------------------- media -----------------------------------------
-
-@include e('top') {
-  & .b-logo {
-    @include p(--size, var(--fluid-text));
-  }
-  & .b-nav {
-    --size: 100px;
-    @include p(display, none (1024: flex));
-  }
-  & .b-burger {
-    @include p(--size, var(--fluid-text));
-    @include p(display, block (1024: none));
-  }
-  & .b-get-btn {
-    @include p(--size, var(--fluid-text));
-  }
-}
+// ----------------------------------------- text -----------------------------------------
 
 @include e('center') {
-  & .b-header-text {
-    @include p(--size, var(--fluid-text));
-    @include p(margin-top, (768: -10px));
-    @include p(text-align, center (768: left));      
-  }
-  & .b-header-img {
-    @include p(--size, fluid (320: 30px, 1280: 100px));
-  }
-  & .b-vendor-btns {
-    @include p(--size, var(--fluid-text));
-  }
+  & .b-header-text { @include p(text-align, center (768: left)); }
 }

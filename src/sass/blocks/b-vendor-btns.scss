@@ -14,16 +14,16 @@
 
     @include e('link') {
       display: grid;
+      @include e('icon')   { @include area(i, start, start); }
+      @include e('text')   { @include area(t, start, end); }
+      @include e('vendor') { @include area(v, start, start); }
+
       grid-template:
         ". . . . ." size(13)
         ". i . t ." max-content
         ". i . v ." max-content
         ". . . . ." size(13)
         / 1fr max-content size(9) max-content 1fr;
-
-      @include e('icon') { grid-area: i; justify-self: start; align-self: start; }
-      @include e('text') { grid-area: t; justify-self: start; align-self: end; }
-      @include e('vendor') { grid-area: v; justify-self: start; align-self: start; }
     }
   }
 }
