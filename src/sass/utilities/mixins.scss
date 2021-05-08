@@ -86,8 +86,8 @@
 
 // ----------------------------------------- text-fade -----------------------------------------
 
-@mixin text-fade($height, $color, $position: relative) {
-  position: $position;
+@mixin text-fade($height, $color) {
+  position: relative;
 
   &::after {
     position: absolute;
@@ -165,4 +165,60 @@ $block: null !default;
   grid-area: $area;
   @include p(justify-self, $justify);
   @include p(align-self, $align);
+}
+
+// ----------------------------------------- flex -----------------------------------------
+
+@mixin flex($wrap, $justify: flex-start, $align: flex-start) {
+  display: flex;
+  flex-flow: row $wrap;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+// ----------------------------------------- border-style -----------------------------------------
+
+@mixin border-style($style, $color, $radius: null) {
+  border-style: $style;
+  border-color: $color;
+  border-radius: $radius;
+}
+
+// ----------------------------------------- text -----------------------------------------
+
+@mixin text($ff, $fw, $fz, $lh, $c, $tt: null) {
+  font-family: $ff;
+  font-weight: $fw;
+  font-size: $fz;
+  line-height: $lh;
+  color: $c;
+  text-transform: $tt;
+}
+
+// ----------------------------------------- hover-lines -----------------------------------------
+
+@mixin hover-center-line($height, $bottom, $color, $transition) {
+  position: relative;
+
+  &::after {
+    position: absolute;
+    left: 50%;
+    bottom: $bottom;
+
+    display: block;
+
+    content: '';
+    width: 0%;
+    height: 0%;
+
+    background: $color;
+    transition: $transition;
+  }
+
+  &:hover::after {
+    left: 0;
+
+    width: 100%;
+    height: $height;
+  }
 }

@@ -1,33 +1,14 @@
 @use '../utilities' as *;
 @include set-block('.b-nav');
 
-// ----------------------------------------- position -----------------------------------------
-
-@include e('link') {
-  position: relative;
-
-  &::after {
-    position: absolute;
-    left: 50%;
-    bottom: size(-10);
-  }
-
-  &:hover::after {
-    left: 0;
-  }
-}
-
 // ----------------------------------------- display -----------------------------------------
 
 @include e('list') {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
+  @include flex(wrap, flex-start, flex-start);
+}
 
-  @include e('link') {
-    &::after { display: block; }
-  }
+@include e('link') {
+  @include hover-center-line(size(1), size(-10), var(--c-header-text), var(--t-all));
 }
 
 // ----------------------------------------- box -----------------------------------------
@@ -36,39 +17,8 @@
   padding: 0 size(15);
 }
 
-@include e('link') {
-  &::after {
-    content: '';
-    width: 0%;
-    height: 0%;
-  }
-
-  &:hover::after {
-    width: 100%;
-    height: size(1);
-  }
-}
-
-// ----------------------------------------- style -----------------------------------------
-
-@include e('link') {
-  &::after { background: var(--c-header-text); }
-}
-
 // ----------------------------------------- text -----------------------------------------
 
-
 @include e('item') {
-  font-family: var(--ff-header);
-  font-weight: var(--fw-regular);
-  font-size: size(16);
-  line-height: size(34);
-  color: var(--c-header-text);
-  text-transform: uppercase;
-}
-
-// ----------------------------------------- animation -----------------------------------------
-
-@include e('link') {
-  &::after { transition: var(--t-all); }
+  @include text(var(--ff-header), var(--fw-regular), size(16), size(34), var(--c-header-text), uppercase);
 }

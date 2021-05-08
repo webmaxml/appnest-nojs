@@ -11,9 +11,7 @@
 // ----------------------------------------- style -----------------------------------------
 
 @include b {
-  border-style: solid;
-  border-color: var(--c-header-text);
-  border-radius: size(6);
+  @include border-style(solid, var(--c-header-text), size(6));
 
   &:hover {
     border-color: var(--c-active);

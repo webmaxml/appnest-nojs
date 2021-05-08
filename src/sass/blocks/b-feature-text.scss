@@ -16,11 +16,7 @@
 // ----------------------------------------- text -----------------------------------------
 
 @include e('header') {
-  font-family: var(--ff-header);
-  font-weight: var(--fw-bold);
-  font-size: size(36);
-  line-height: size(48);
-  color: var(--c-h2);
+  @include text(var(--ff-header), var(--fw-bold), size(36), size(48), var(--c-h2));
 
   & b {
     color: var(--c-accent);
@@ -28,9 +24,5 @@
 }
 
 @include e('text') {
-  font-family: var(--ff-text);
-  font-weight: var(--fw-regular);
-  font-size: size(15);
-  line-height: size(24);
-  color: var(--c-text);
+  @include text(var(--ff-text), var(--fw-regular), size(15), size(24), var(--c-text));
 }

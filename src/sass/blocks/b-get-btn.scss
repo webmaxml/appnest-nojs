@@ -17,9 +17,7 @@
 // ----------------------------------------- style -----------------------------------------
 
 @include b {
-  border-style: solid;
-  border-color: var(--c-header-text);
-  border-radius: size(32);
+  @include border-style(solid, var(--c-header-text), size(32));
 
   &:hover {
     background: var(--c-active);
@@ -30,12 +28,7 @@
 // ----------------------------------------- text -----------------------------------------
 
 @include b {
-  font-family: var(--ff-header);
-  font-weight: var(--fw-semi-bold);
-  font-size: size(16);
-  line-height: size(16);
-  color: var(--c-header-text);
-  text-transform: uppercase;
+  @include text(var(--ff-header), var(--fw-semi-bold), size(16), size(16), var(--c-header-text), uppercase);
 }
 
 // ----------------------------------------- animation -----------------------------------------

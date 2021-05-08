@@ -4,10 +4,7 @@
 // ----------------------------------------- display -----------------------------------------
 
 @include b {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-start;
-  align-items: flex-end;
+  @include flex(nowrap, flex-start, flex-end);
 
   @include e('front') {
     margin-left: size(-98);
