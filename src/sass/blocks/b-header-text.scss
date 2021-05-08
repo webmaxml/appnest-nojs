@@ -1,46 +1,49 @@
 @use '../utilities' as *;
 
-.b-header-text {
-  &__header {
-    font-family: var(--ff-header);
+@include set-block('.b-header-text');
+
+// ----------------------------------------- display -----------------------------------------
+
+@include e('header-bold') {
+  display: block;
+}
+
+@include e('text') {
+  margin-top: size(20);
+}
+
+// ----------------------------------------- box -----------------------------------------
+
+@include b {
+  max-width: size(670);
+}
+
+// ----------------------------------------- text -----------------------------------------
+
+@include e('header') {
+  font-family: var(--ff-header);
+  font-weight: var(--fw-light);
+  font-size: size(36);
+  line-height: size(52);
+  color: var(--c-header-text);
+  text-transform: uppercase;
+
+  @include e('header-bold') {
     font-weight: var(--fw-bold);
     font-size: size(48);
-    line-height: size(52);
-    color: var(--c-header-text);
-    text-transform: uppercase;
-  }
+    
+    @include e('header-accent') {
+      color: var(--c-accent);
 
-  &__accent {
-    font-family: var(--ff-header);
-    font-weight: var(--fw-light);
-    font-size: size(48);
-    line-height: size(52);
-    color: var(--c-accent);
-    text-transform: uppercase;
-
-    & > b {
-      font-weight: var(--fw-bold);
+      @include e('header-light') { font-weight: var(--fw-light); }
     }
   }
+}
 
-  &__secondary-header {
-    display: block;
-
-    font-family: var(--ff-header);
-    font-weight: var(--fw-light);
-    font-size: size(36);
-    line-height: size(52);
-    color: var(--c-header-text);
-    text-transform: uppercase;
-  }
-
-  &__text {
-    margin-top: size(20);
-
-    font-family: var(--ff-header);
-    font-weight: var(--fw-regular);
-    font-size: size(18);
-    line-height: size(30);
-    color: var(--c-header-text);
-  }
+@include e('text') {
+  font-family: var(--ff-header);
+  font-weight: var(--fw-regular);
+  font-size: size(18);
+  line-height: size(30);
+  color: var(--c-header-text);
 }

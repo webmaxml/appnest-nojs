@@ -1,12 +1,15 @@
 @use '../utilities/' as *;
+@include set-block('.b-header-img');
 
-.b-header-img {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: flex-start;
+// ----------------------------------------- box -----------------------------------------
 
-  &__picture {
-    width: size(540);
-  }
+@include b {
+  width: size(540);
+  height: size(623);
+}
+
+// ----------------------------------------- style -----------------------------------------
+
+@include b {
+  object-fit: contain;
 }

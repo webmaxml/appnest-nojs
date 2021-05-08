@@ -1,23 +1,45 @@
 @use '../utilities' as *;
+@include set-block('.b-get-btn');
 
-.b-get-btn {
+// ----------------------------------------- display -----------------------------------------
+
+@include b {
+  display: block;
+}
+
+// ----------------------------------------- box -----------------------------------------
+
+@include b {
   padding: size(20) size(34);
-  border: size(1) solid var(--c-header-text);
+  border-width: size(1);
+}
+
+// ----------------------------------------- style -----------------------------------------
+
+@include b {
+  border-style: solid;
+  border-color: var(--c-header-text);
   border-radius: size(32);
-  
-  transition: 0.3s;
 
   &:hover {
     background: var(--c-active);
     border-color: var(--c-active);
   }
+}
 
-  &__link {
-    font-family: var(--ff-header);
-    font-weight: var(--fw-semi-bold);
-    font-size: size(16);
-    line-height: size(16);
-    color: var(--c-header-text);
-    text-transform: uppercase;
-  }
+// ----------------------------------------- text -----------------------------------------
+
+@include b {
+  font-family: var(--ff-header);
+  font-weight: var(--fw-semi-bold);
+  font-size: size(16);
+  line-height: size(16);
+  color: var(--c-header-text);
+  text-transform: uppercase;
+}
+
+// ----------------------------------------- animation -----------------------------------------
+
+@include b {
+  transition: var(--t-all);
 }

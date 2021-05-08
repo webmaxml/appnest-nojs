@@ -13,41 +13,31 @@
     &:first-child { margin-right: size(30); } 
 
     @include e('link') {
-      display: block;
+      display: grid;
+      grid-template:
+        ". . . . ." size(13)
+        ". i . t ." max-content
+        ". i . v ." max-content
+        ". . . . ." size(13)
+        / 1fr max-content size(9) max-content 1fr;
 
-      @include e('btn') {
-        display: grid;
-        grid-template:
-          ". . . . ." size(13)
-          ". i . t ." max-content
-          ". i . v ." max-content
-          ". . . . ." size(13)
-          / 1fr max-content size(9) max-content 1fr;
-
-        @include e('icon') { grid-area: i; justify-self: start; align-self: start; }
-        @include e('text') { grid-area: t; justify-self: start; align-self: end; }
-        @include e('vendor') { grid-area: v; justify-self: start; align-self: start; }
-      }
+      @include e('icon') { grid-area: i; justify-self: start; align-self: start; }
+      @include e('text') { grid-area: t; justify-self: start; align-self: end; }
+      @include e('vendor') { grid-area: v; justify-self: start; align-self: start; }
     }
   }
 }
 
 // ----------------------------------------- box -----------------------------------------
 
-@include e('item') { 
+@include e('link') {
   width: size(170); 
-
-  @include e('link') {
-    @include e('btn') { 
-      width: 100%; 
-      border-width: size(1); 
-    }
-  }
+  border-width: size(1); 
 }
 
 // ----------------------------------------- style -----------------------------------------
 
-@include e('btn') { 
+@include e('link') { 
   border-style: solid; 
   border-color: var(--c-header-text); 
   border-radius: size(7);
@@ -80,11 +70,13 @@
 
 // ----------------------------------------- animation -----------------------------------------
 
-@include e('btn') { transition: 0.3s; }
+@include e('link') { 
+  transition: var(--t-all); 
+}
 
 // ----------------------------------------- modificators -----------------------------------------
 
-@include e('btn', 'dark') {
+@include e('link', 'dark') {
   border-color: var(--c-h2);
 
   @include e-nested('text') { color: var(--c-h2); }
@@ -100,7 +92,7 @@
 }
 
 // меняем иконки на светлые при наведении
-@include e-combined('apple', 'btn--dark') {
+@include e-combined('apple', 'link--dark') {
   &:hover {
     @include e-nested('icon') {
       width: 25em;
@@ -110,7 +102,7 @@
   }
 }
 
-@include e-combined('play', 'btn--dark') {
+@include e-combined('play', 'link--dark') {
   &:hover {
     @include e-nested('icon') {
       width: 27em;
