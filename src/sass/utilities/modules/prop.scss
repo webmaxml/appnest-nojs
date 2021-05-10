@@ -1,0 +1,96 @@
+@use 'types' as *;
+@use 'list';
+@use 'number';
+@use 'calc';
+@use 'output';
+
+// ----------------------------------------- private -----------------------------------------
+
+/**
+* checks if value is fluid 
+*
+* @param {*} value
+*
+* @returns {bool}
+*/
+
+@function _is-fluid($value) { 
+  @return is($value, 'list') and list.first($value) == 'fluid'; 
+} 
+
+/**
+* checks if value is breakpoints 
+*
+* @param {*} value
+*
+* @returns {bool}
+*/
+
+@function _is-breakpoints($value) { 
+  @return is($value, 'map'); 
+}
+
+/**
+* checks if value is value with breakpoints 
+*
+* @param {*} value
+*
+* @returns {bool}
+*/
+
+@function _is-value-with-breakpoints($value) {
+  @return is($value, 'list') and is(list.last($value), 'map') and list.first($value) != 'fluid'; 
+}
+
+/**
+* constructs fluid value 
+*
+* @param {*} value - bps value
+* @param {*} key - bps key
+* @param {map} bps - bps map
+*
+* @returns {string}
+*/
+
+@function _set-fluid-values($value, $key, $bps) {
+  @if list.is-last($bps, $value) { @return number.to-px($value); }
+
+  $next-key: list.next-key($bps, $key);
+  $next-value: list.next-value($bps, $value);
+  @return calc.fluid($key, $next-key, $value, $next-value);
+}
+
+// ----------------------------------------- public -----------------------------------------
+
+/**
+* outputs declaration in css 
+*
+* @param {string} prop
+* @param {*} value
+*/
+
+@mixin p($prop, $value) {
+  $prop: validate($prop, 'string');
+
+  $val: $value;
+  $bps: null;
+
+  @if _is-fluid($value) { 
+    $val: number.to-px(list.first(list.last($value)));
+    $bps: list.map-keys(list.last($value), get-function('to-px', $module: 'number'));
+    $bps: list.map($bps, get-function('_set-fluid-values'));
+  }
+
+  @if _is-breakpoints($value) {
+    $val: null;
+    $bps: list.map-keys($value, get-function('to-px', $module: 'number'));
+  }
+
+  @if _is-value-with-breakpoints($value) { 
+    $val: list.remove($value, list.last($value));
+    $bps: list.map-keys(list.last($value), get-function('to-px', $module: 'number')); 
+  }
+
+  @if $val { @include output.prop($prop, $val) };
+  @if $bps { @include output.breakpoints($prop, $bps); }
+}

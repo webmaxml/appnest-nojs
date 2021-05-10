@@ -1,0 +1,27 @@
+@use 'color';
+
+@mixin border-style($style, $color, $radius: null) {
+  border-style: $style;
+  border-color: $color;
+  border-radius: $radius;
+}
+
+@mixin overlay($color-var, $opacity) {
+  position: relative;
+  z-index: 0;
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    display: block; 
+
+    content: '';
+    width: 100%;
+    height: 100%;
+
+    background: color.set-opacity($color-var, $opacity);
+  }
+}

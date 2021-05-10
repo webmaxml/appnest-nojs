@@ -1,0 +1,25 @@
+@mixin text($ff, $fw, $fz, $lh, $c, $tt: null) {
+  font-family: $ff;
+  font-weight: $fw;
+  font-size: $fz;
+  line-height: $lh;
+  color: $c;
+  text-transform: $tt;
+}
+
+@mixin text-fade($height, $color) {
+  position: relative;
+
+  &::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+
+    content: '';
+    width: 100%;
+    height: $height;
+
+    background: linear-gradient(to bottom, transparent, $color);
+  }
+}

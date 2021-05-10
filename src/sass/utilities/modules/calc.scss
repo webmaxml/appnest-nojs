@@ -1,0 +1,125 @@
+@use 'types' as *;
+@use 'list';
+@use 'number';
+
+// ----------------------------------------- private -----------------------------------------
+
+/**
+* whether value is truthy 
+*
+* @param {*} value
+*
+* @returns {bool}
+*/
+
+@function _truthy($value, $args...) { @return if($value, true, false); }
+
+/**
+* wraps string in css calc() 
+*
+* @param {string} str
+*
+* @returns {string}
+*/
+
+@function _calc($str) {
+  $str: validate($str, 'string');
+  @return unquote("calc(#{$str})");
+}
+
+/**
+* constructs width css formula part 
+*
+* @example
+* // returns (clamp(0px, 768px - 100%, 0.1px) * (1024 - 768) * 10)
+* _width-part(768, 1, (768 1024))
+*
+* @param {number} width
+* @param {number} i - index of width in lisr
+* @param {lisr} list
+* 
+* @returns {string|null}
+*/
+
+@function _width-part($width, $i, $list) {
+  @if $i < length($list) {
+    $width: validate($width, 'number');
+    $next-width: validate(list.next-value($list, $width), 'number');
+    $diff: number.strip-unit($next-width - $width);
+
+    @return '(clamp(0px, #{number.to-px($width)} - 100%, 0.1px) * #{$diff} * 10)';
+  }
+
+  @return null;
+}
+
+
+// ----------------------------------------- public -----------------------------------------
+
+/**
+* constructs size formula - value dependency on --size var
+*
+* @exapmle
+* // returns calc(22 * (var(--size) / 100))
+* size(22)
+*
+* @param {number} value
+*
+* @returns {string}
+*/
+
+@function size($value) {
+  $value: validate($value, 'number');
+  @return _calc('#{number.strip-unit($value)} * (var(--size) / 100)');
+}
+
+/**
+* constructs fluid formula - fluid value change from one breakpoint to another
+*
+* @exapmle
+* // returns calc(16px + (22 - 16) * ((100vw - 320px) / (768 - 320)))
+* fluid(320, 768, 16, 22)
+*
+* @param {number} w1 - first breakpoint
+* @param {number} w2 - second breakpoint
+* @param {number} val1 - value on first breakpoint
+* @param {number} val2 - value on second breakpoint
+*
+* @returns {string}
+*/
+
+@function fluid($w1, $w2, $val1, $val2 ) {
+  $w1: number.to-px(validate($w1, 'number'));
+  $w2: number.to-px(validate($w2, 'number'));
+  $val1: number.to-px(validate($val1, 'number'));
+  $val2: number.to-px(validate($val2, 'number'));
+
+  $w-diff: number.strip-unit($w2 - $w1);
+  $val-diff: number.strip-unit($val2 - $val1);
+
+  @return _calc('#{$val1} + #{$val-diff} * ((100vw - #{$w1}) / #{$w-diff})');
+}
+
+/**
+* constructs width formula - certain given width depending on container size
+*
+* @exapmle
+* // returns calc(700px + (clamp(0px, 700px - 100%, 0.1px) * (500 - 700) * 10) + (clamp(0px, 500px - 100%, 0.1px) * (300 - 500) * 10))
+* width(300, 500, 700)
+*
+* @param {...number} widths
+*
+* @returns {string}
+*/
+
+@function width($widths...) {
+  $widths: list.reverse(list.to-list($widths));
+  $parts: list.map($widths, get-function('_width-part'));
+  $filtered: list.filter($parts, get-function('_truthy'));
+  $formula: join((number.to-px(list.first($widths))), $filtered);
+
+  @return _calc(list.join-to-str($formula, ' + '));
+}
+
+
+

@@ -1,3 +1,10 @@
 @forward 'vars';
-@forward 'functions' show size, width, set-opacity;
-@forward 'mixins';
+@forward 'modules/calc';
+@forward 'modules/color';
+@forward 'modules/bem';
+@forward 'modules/prop';
+@forward 'modules/position-mixins';
+@forward 'modules/display-mixins';
+@forward 'modules/box-mixins';
+@forward 'modules/style-mixins';
+@forward 'modules/text-mixins';

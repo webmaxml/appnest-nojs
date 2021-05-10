@@ -1,0 +1,22 @@
+@use 'types' as *;
+@use 'number';
+
+@mixin screen-height-section($bps) {
+  $bps: validate($bps, 'map');
+
+  @each $width, $heights in $bps {
+    $width: validate($width, 'number');
+    $heights: validate($heights, 'list');
+
+    $width: number.to-px($width);
+    $min-height: number.to-px(nth($heights, 1));
+    $max-height: number.to-px(nth($heights, 2));
+
+    @if $min-height == $max-height {
+      @media only screen and (min-width: $width) { height: auto; }
+    } @else {
+      @media only screen and (min-width: $width) { min-height: $min-height; }
+      @media only screen and (min-width: $width) and (max-height: $max-height) { height: 100vh; }
+    }
+  }
+}

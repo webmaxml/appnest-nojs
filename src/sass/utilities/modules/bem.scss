@@ -1,0 +1,81 @@
+@use 'output';
+
+// ----------------------------------------- private -----------------------------------------
+
+$_block: null !default;
+
+/**
+* constructs bem selector
+*
+* @param {string} block
+* @param {string|null} elem
+* @param {string|null} [mod=null]
+*
+* @returns {string}
+*/
+
+@function _bem-selector($block, $elem: null, $mod: null) {
+  $selector: $block;
+  @if $elem { $selector: '#{$selector}__#{$elem}'; }
+  @if $mod { $selector: '#{$selector}--#{$mod}'; }
+  @return $selector;
+}
+
+// ----------------------------------------- public -----------------------------------------
+
+/**
+* sets block variable with selector
+*
+* @param {string} selector
+*/
+
+@mixin set-block($selector) { 
+  $_block: $selector !global; 
+}
+
+/**
+* outputs bem block
+*/
+
+@mixin b { 
+  @include output.block($_block) { @content; }
+}
+
+/**
+* outputs bem element 
+*
+* @param {string} elem
+* @param {string|mod} [mod=null]
+*/
+
+@mixin e($elem, $mod: null) {
+  $selector: _bem-selector($_block, $elem, $mod);
+  @include output.root-block($selector) { @content; } 
+}
+
+/**
+* outputs nested bem element 
+*
+* @param {string} elem
+* @param {string|null} [mod=null]
+*/
+
+@mixin e-nested($elem, $mod: null) { 
+  $selector: _bem-selector($_block, $elem, $mod);
+  @include output.block($selector) { @content; } 
+}
+
+/**
+* outputs combined bem element 
+*
+* @param {...string} elems - element selectors
+*/
+
+@mixin e-combined($elems...) {
+  $selector: '';
+  @each $elem in $elems {
+    $selector: $selector + _bem-selector($_block, $elem);
+  }
+
+  @include output.root-block($selector) { @content; } 
+}
