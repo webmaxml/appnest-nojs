@@ -1,7 +1,25 @@
 @use 'sass:meta';
 @use '../vars';
 
+// ----------------------------------------- private -----------------------------------------
+
+/**
+* gets variables map 
+*
+* @returns {map}
+*/
+
 @function _vars() { @return meta.module-variables('vars'); }
+
+// ----------------------------------------- public -----------------------------------------
+
+/**
+* whether variables map has provided variable
+*
+* @param {...string} names - nested var name structure
+*
+* @returns {bool}
+*/
 
 @function has($names...) {
   $vars: _vars();
@@ -12,6 +30,14 @@
 
   @return true;
 }
+
+/**
+* gets variable value
+*
+* @param {...string} names - nested var name structure
+*
+* @returns {*} value
+*/
 
 @function get($names...) {
   $value: _vars();

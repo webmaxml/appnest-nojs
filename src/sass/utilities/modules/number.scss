@@ -1,10 +1,26 @@
 @use 'types' as *;
 @use 'list';
 
+/**
+* strips unit 
+*
+* @param {number} value
+*
+* @returns {number}
+*/
+
 @function strip-unit($value) {
   $value: validate($value, 'number');
   @return $value / ($value * 0 + 1);
 }
+
+/**
+* converts to px 
+*
+* @param {number|list|map} value
+*
+* @returns {number|list|map}
+*/
 
 @function to-px($value, $args...) {
   $value: validate($value, 'number', 'list', 'map');

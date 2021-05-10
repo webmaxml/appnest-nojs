@@ -3,12 +3,26 @@
 @use 'modules/number';
 @use 'functions' as *;
 
-// ----------------------------------------- output -----------------------------------------
+// ----------------------------------------- private -----------------------------------------
 
+// var for setting block class
+$_block: null !default;
+
+// BEM selector constructor
+@function _bem-selector($block, $elem: null, $mod: null) {
+  $selector: $block;
+  @if $elem { $selector: '#{$selector}__#{$elem}'; }
+  @if $mod { $selector: '#{$selector}--#{$mod}'; }
+  @return $selector;
+}
+
+// prop output
 @mixin _prop($prop, $value) { 
   $prop: validate($prop, 'string');
   #{$prop}: $value; 
 }
+
+// media breakpoints output
 @mixin _breakpoints($prop, $bps) {
   $prop: validate($prop, 'string');
   $bps: validate($bps, 'map');
@@ -22,7 +36,29 @@
   }
 }
 
-// ----------------------------------------- prop -----------------------------------------
+
+// ----------------------------------------- main -----------------------------------------
+
+// BEM
+
+@mixin set-block($selector) { $_block: $selector !global; }
+@mixin b { #{$_block} { @content; } }
+@mixin e($elem, $mod: null) { @at-root #{_bem-selector($_block, $elem, $mod)} { @content; } }
+@mixin e-nested($elem, $mod: null) { #{_bem-selector($_block, $elem, $mod)} { @content; } }
+@mixin e-combined($elems...) {
+  $selector: '';
+  @each $elem in $elems {
+    $selector: $selector + _bem-selector($block, $elem);
+  }
+
+  @at-root #{$selector} { @content; }
+}
+
+// output
+
+
+
+// prop
 
 @function _is-fluid($value) { @return is($value, 'list') and list.first($value) == 'fluid'; } 
 @function _is-breakpoints($value) { @return is($value, 'map'); }
@@ -61,6 +97,12 @@
   @if $val { @include _prop($prop, $val) };
   @if $bps { @include _breakpoints($prop, $bps); }
 }
+
+
+
+// ----------------------------------------- position -----------------------------------------
+
+
 
 // ----------------------------------------- screen-height-section -----------------------------------------
 
@@ -105,37 +147,7 @@
 
 // ----------------------------------------- BEM -----------------------------------------
 
-$block: null !default;
 
-@mixin set-block($selector) { $block: $selector !global; }
-
-@function _bem-selector($block, $elem: null, $mod: null) {
-  $selector: $block;
-  @if $elem { $selector: '#{$selector}__#{$elem}'; }
-  @if $mod { $selector: '#{$selector}--#{$mod}'; }
-  @return $selector;
-}
-
-@mixin b { 
-  #{$block} { @content; } 
-}
-
-@mixin e($elem, $mod: null) {
-  @at-root #{_bem-selector($block, $elem, $mod)} { @content; }
-}
-
-@mixin e-nested($elem, $mod: null) {
-  #{_bem-selector($block, $elem, $mod)} { @content; } 
-}
-
-@mixin e-combined($elems...) {
-  $selector: '';
-  @each $elem in $elems {
-    $selector: $selector + _bem-selector($block, $elem);
-  }
-
-  @at-root #{$selector} { @content; }
-}
 
 // ----------------------------------------- overlay -----------------------------------------
 
@@ -159,6 +171,24 @@ $block: null !default;
   }
 }
 
+// ----------------------------------------- position -----------------------------------------
+
+@mixin position($position, $z-index: null, $top: null, $right: null, $bottom: null, $left: null) {
+  position: $position;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+  z-index: $z-index;
+}
+
+// ----------------------------------------- grid -----------------------------------------
+
+@mixin grid($template) {
+  display: grid;
+  @include p(grid-template, $template);
+}
+
 // ----------------------------------------- area -----------------------------------------
 
 @mixin area($area, $justify: start, $align: start) {
@@ -174,6 +204,15 @@ $block: null !default;
   flex-flow: row $wrap;
   justify-content: $justify;
   align-items: $align;
+}
+
+// ----------------------------------------- flex-item -----------------------------------------
+
+@mixin flex-item($grow: null, $shrink: null, $basis: null, $align: null ) {
+  flex-grow: $grow;
+  flex-shrink: $shrink;
+  flex-basis: $basis;
+  align-self: $align;
 }
 
 // ----------------------------------------- border-style -----------------------------------------

@@ -1,5 +1,14 @@
 @use 'types' as *;
 
+/**
+* gets first string slice before separator 
+*
+* @param {string} str
+* @param {string|null} sep
+*
+* @returns {string}
+*/
+
 @function first-slice($str, $sep) {
   $str: validate($str, 'string');
   $sep: validate($sep, 'string', 'null');
@@ -11,6 +20,15 @@
   );
 }
 
+/**
+* gets last string slice after separator 
+*
+* @param {string} str
+* @param {string|null} sep
+*
+* @returns {string}
+*/
+
 @function last-slice($str, $sep) {
   $str: validate($str, 'string');
   $sep: validate($sep, 'string', 'null');
@@ -21,6 +39,15 @@
     ''
   );
 }
+
+/**
+* splits string into list 
+*
+* @param {string} str
+* @param {string|null} sep
+*
+* @returns {list}
+*/
 
 @function split($str, $sep: null) {
   $str: validate($str, 'string');

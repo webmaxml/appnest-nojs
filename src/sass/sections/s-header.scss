@@ -10,43 +10,31 @@
 
   @include e('top') {
     @include p(--v-padding, fluid (320: 15px, 1280: 57px));
-
-    & .b-logo { @include p(--size, var(--fluid-text)); }
-    & .b-nav { @include p(--size, 100px); }
-    & .b-burger { @include p(--size, var(--fluid-text)); }
-    & .b-get-btn { @include p(--size, var(--fluid-text)); }
-  }
-
-  @include e('center') {
-    & .b-header-text { @include p(--size, var(--fluid-text)); }
-    & .b-header-img { @include p(--size, fluid (320: 30px, 1280: 100px)); }
-    & .b-vendor-btns { @include p(--size, var(--fluid-text)); }
   }
 }
 
 // ----------------------------------------- display -----------------------------------------
 
 @include b {
-  display: grid;
   @include e('top')    { @include area(t) }
   @include e('center') { @include area(c) }
 
-  grid-template:
+  @include grid(
     "t" max-content
     "." var(--v-padding)
     "c" max-content
     "." var(--v-padding)
-    / 1fr;
+    / 1fr
+  );
 }
 
 @include e('top') {
-  display: grid;
   & .b-burger  { @include area(b, start, center); }
   & .b-logo    { @include area(l, start, center); }
   & .b-nav     { @include area(n, center, center); }
   & .b-get-btn { @include area(g, end, center); }
 
-  @include p(grid-template,
+  @include grid(
     ". . . . ." var(--v-padding)
     "b . l . g" max-content
     / max-content 15px max-content 1fr max-content
@@ -56,18 +44,14 @@
             /1fr max-content 1fr
     )
   );
-
-  & .b-nav { @include p(display, none (1024: flex)); }
-  & .b-burger { @include p(display, block (1024: none)); }
 }
 
 @include e('center') {
-  display: grid;
   & .b-header-text  { @include area(t, center, start); }
   & .b-header-img   { @include area(i, center (768: end), start); }
   & .b-vendor-btns  { @include area(v, center (768: start), start); }
 
-  @include p(grid-template, 
+  @include grid(
     "t" max-content
     "." 50px
     "i" max-content
@@ -83,8 +67,6 @@
             / 1fr 1fr
     )
   );
-
-  & .b-header-text { @include p(margin-top, (768: -10px)); }
 }
 
 // ----------------------------------------- box -----------------------------------------
@@ -118,8 +100,35 @@
   @include overlay(--c-overlay, 0.9);
 }
 
-// ----------------------------------------- text -----------------------------------------
+// ----------------------------------------- sinked -----------------------------------------
+
+@include e('top') {
+  & .b-logo { 
+    @include p(--size, var(--fluid-text)); 
+  }
+  & .b-nav {
+     @include p(--size, 100px);
+     @include p(display, none (1024: flex));
+    }
+  & .b-burger { 
+    @include p(--size, var(--fluid-text)); 
+    @include p(display, block (1024: none));
+  }
+  & .b-get-btn { 
+    @include p(--size, var(--fluid-text)); 
+  }
+}
 
 @include e('center') {
-  & .b-header-text { @include p(text-align, center (768: left)); }
+  & .b-header-text { 
+    @include p(--size, var(--fluid-text));
+    @include p(margin-top, (768: -10px));
+    @include p(text-align, center (768: left));
+   }
+  & .b-header-img { 
+    @include p(--size, fluid (320: 30px, 1280: 100px)); 
+  }
+  & .b-vendor-btns { 
+    @include p(--size, var(--fluid-text)); 
+  }
 }

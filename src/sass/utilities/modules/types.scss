@@ -1,7 +1,25 @@
+/**
+* checks if value is of provided types
+*
+* @param {*} value
+* @param {...string} types
+*
+* @returns {bool}
+*/
+
 @function is($value, $types...) { 
   @each $type in $types { @if type-of($value) == $type { @return true; } }
   @return false;
 }
+
+/**
+* validates value to be provided types 
+*
+* @param {*} value
+* @param {...string} types
+*
+* @returns {*} value
+*/
 
 @function validate($value, $types...) {
   @if is($value, $types...) { @return $value; }
