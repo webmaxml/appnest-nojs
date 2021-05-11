@@ -1,18 +1,29 @@
-@use '../utilities/block-modules' as *;
+@use '../utilities' as *;
+@include set-block('.b-video-overview-text');
 
-.b-video-overview-text {
-  @include box($pa: 0 size(15));
 
-  &__header {
-    @include text($fo-fa: --ff-header, $fo-we: --fw-bold, $fo-si: size(36), $li-he: size(48), $co: --c-h2);
+// ----------------------------------------- display -----------------------------------------
 
-    & b {
-      @include text($co: --c-accent);
-    }
-  }
+@include e('text') {
+  margin-top: size(10);  
+}
 
-  &__text {
-    @include box($ma-to: size(10));
-    @include text($fo-fa: --ff-text, $fo-we: --fw-regular, $fo-si: size(15), $li-he: size(24), $co: --c-text);
-  }
+// ----------------------------------------- box -----------------------------------------
+
+@include b {
+  padding: 0 size(15);
+}
+
+// ----------------------------------------- text -----------------------------------------
+
+@include e('header') {
+  @include text(var(--ff-header), var(--fw-bold), size(36), size(48), var(--c-h2));
+}
+
+@include e('header-accent') {
+  color: var(--c-accent);
+}
+
+@include e('text') {
+  @include text(var(--ff-text), var(--fw-regular), size(15), size(24), var(--c-text));
 }
