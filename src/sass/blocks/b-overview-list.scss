@@ -1,53 +1,89 @@
-@use '../utilities/block-modules' as *;
+@use '../utilities' as *;
+@include set-block('.b-overview-list');
 
-.b-overview-list {
-  @include flex($fl-wr: wrap, $ju-co: center, $al-it: flex-start);
+// ----------------------------------------- display -----------------------------------------
 
-  &__item {
-    @include box($wi: size(270), $ma-le: size(15), $ma-ri: size(15));
-    @include grid(
-      $gr-te: "c" max-content
-              "." size(40)
-              "h" max-content
-              "." size(20)
-              "t" max-content
-              / 1fr
-    );
+@include b {
+  @include flex(wrap, flex-start, flex-start);
+}
 
-    &:nth-child(1) .b-overview-list__icon-circle { @include style($ba: --c-active); }
-    &:nth-child(2) .b-overview-list__icon-circle { @include style($ba: --c-accent); }
-    &:nth-child(3) .b-overview-list__icon-circle { @include style($ba: --c-overview1); }
-    &:nth-child(4) .b-overview-list__icon-circle { @include style($ba: --c-overview2); }
-  }
+@include e('item') {
+  margin: size(30) size(15);
+}
 
-  &__outer-circle {
-    @include grid($gr-ar: c, $ju-se: center, $al-se: center);
+@include e('outer-circle') {
+  @include flex(nowrap, center, center);
+  margin: 0 auto;
+}
 
-    @include flex($fl-wr: nowrap, $ju-co: center, $al-it: center);
-    @include box($wi: size(145), $he: size(145));
-    @include style($ba: --c-header-text, $bo-ra: 100%, $bo-sh: 0px 0px 5px 0px rgba(0, 0, 0, 0.15));
-  }
+@include e('inner-circle') {
+  @include flex(nowrap, center, center);
+}
 
-  &__inner-circle {
-    @include flex($fl-wr: nowrap, $ju-co: center, $al-it: center);
-    @include box($wi: size(115), $he: size(115));
-    @include style($ba: --c-header-text, $bo-ra: 100%, $bo-sh: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.15));
-  }
+@include e('icon-circle') {
+  @include flex(nowrap, center, center);
+}
 
-  &__icon-circle {
-    @include flex($fl-wr: nowrap, $ju-co: center, $al-it: center);
-    @include box($wi: size(85), $he: size(85));
-    @include style($bo-ra: 100%);
-  }
+@include e('header') {
+  margin-top: size(40);
+}
 
-  &__header {
-    @include grid($gr-ar: h);
+@include e('text') {
+  margin-top: size(20);
+}
 
-    @include text($fo-fa: --ff-header, $fo-we: --fw-bold, $fo-si: size(18), $li-he: size(18), $co: --c-h3, $te-al: center);
-  }
-  &__text {
-    @include grid($gr-ar: t);
+// ----------------------------------------- box -----------------------------------------
 
-    @include text($fo-fa: --ff-text, $fo-we: --fw-regular, $fo-si: size(15), $li-he: size(24), $co: --c-text, $te-al: center);
-  }
+@include e('item') {
+  width: size(270);
+}
+
+@include e('outer-circle') {
+  width: size(145);
+  height: size(145);
+}
+
+@include e('inner-circle') {
+  width: size(115);
+  height: size(115);
+}
+
+@include e('icon-circle') {
+  width: size(85);
+  height: size(85);
+}
+
+// ----------------------------------------- style -----------------------------------------
+
+@include e('item:nth-child(1)') { @include e-nested('icon-circle') { background: var(--c-active); } }
+@include e('item:nth-child(2)') { @include e-nested('icon-circle') { background: var(--c-accent); } }
+@include e('item:nth-child(3)') { @include e-nested('icon-circle') { background: var(--c-overview1); } }
+@include e('item:nth-child(4)') { @include e-nested('icon-circle') { background: var(--c-overview2); } }
+
+@include e('outer-circle') {
+  background: var(--c-header-text);
+  border-radius: 100%;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
+}
+
+@include e('inner-circle') {
+  background: var(--c-header-text);
+  border-radius: 100%;
+  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
+}
+
+@include e('icon-circle') {
+  border-radius: 100%;
+}
+
+// ----------------------------------------- text -----------------------------------------
+
+@include e('header') {
+  @include text(var(--ff-header), var(--fw-bold), size(18), size(18), var(--c-h3));
+  text-align: center;
+}
+
+@include e('text') {
+  @include text(var(--ff-text), var(--fw-regular), size(15), size(24), var(--c-text));
+  text-align: center;
 }
