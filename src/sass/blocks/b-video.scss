@@ -1,36 +1,161 @@
-@use '../utilities/block-modules' as *;
+@use '../utilities' as *;
+@use '../utilities/modules/string';
+@include set-block('.b-video');
+
+@function elem($parent, $selector) {
+  $parent: nth(nth($parent, 1), 1);
+  $trimmed: string.first-slice($parent, '__');
+  @return '#{$trimmed}__#{$selector}';
+}
 
 .b-video {
-  &__poster { 
-    @include position($po: relative);
-    @include style($cu: pointer);
+  position: relative;
 
-    &::after {
-      @include position($po: absolute, $to: 0, $le: 0, $z-in: 1);
-      @include display($di: block, $co: "");
-      @include box($wi: 100%, $he: 100%);
-      @include style($ba: rgba(36, 198, 87, 0.8));
-    }
+  height: size(500);
 
-    &:hover .b-video__icon-wrap {
-      @include style($ba: rgba(0, 207, 241, 0.2));
-    }
-
-    &--hidden {
-      @include display($di: none);
-    }
+  &__frame {
+    width: 100%;
+    height: 100%;
   }
 
-  &__img {
-    @include box($wi: 100%);
-    @include style($ob-fi: cover);
+  &__poster {
+    top: 0;
+    left: 0;
+
+    @include flex(nowrap, center, center);
+
+    width: 100%;
+    height: 100%;
+
+    @include overlay(--c-active, 0.8, absolute, 1);
+    cursor: pointer;
   }
 
   &__icon-wrap {
-    @include position($po: absolute, $to: 0, $ri: 0, $bo: 0, $le: 0, $z-in: 2);
-    @include flex($fl-wr: nowrap, $ju-co: center, $al-it: center);
-    @include box($wi: size(120), $he: size(120), $ma: auto);
-    @include style($bo-ra: 100%);
-    @include animation($tr: 0.3s);
+    @include flex(nowrap, center, center);
+
+    width: size(120);
+    height: size(120);
+
+    border-radius: 100%;
+
+    transition: var(--t-all);
+
+    &:hover {
+      background: set-opacity(--c-accent, 0.2);
+      transform: scale(1.1, 1.1);
+    }
   }
 }
+
+// // ----------------------------------------- position -----------------------------------------
+
+// @include b {
+//   position: relative;
+// }
+
+// @include e('poster') {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   z-index: 1;
+// }
+
+// // ----------------------------------------- display -----------------------------------------
+
+// @include e('poster') {
+//   @include flex(nowrap, center, center);
+// }
+
+// @include e('icon-wrap') {
+//   @include flex(nowrap, center, center);
+// }
+
+// // ----------------------------------------- box -----------------------------------------
+
+// @include b {
+//   height: size(500);
+// }
+
+// @include e('frame') {
+//   width: 100%;
+//   height: 100%;
+// }
+
+// @include e('poster') {
+//   width: 100%;
+//   height: 100%;
+// }
+
+// @include e('icon-wrap') {
+//   width: size(120);
+//   height: size(120);
+// }
+
+
+// // ----------------------------------------- style -----------------------------------------
+
+// @include e('poster') {
+//   @include overlay(--c-active, 0.8, absolute, 1);
+//   cursor: pointer;
+// }
+
+// @include e('icon-wrap') {
+//   border-radius: 100%;
+// }
+
+// // ----------------------------------------- animation -----------------------------------------
+
+// @include e('icon-wrap') {
+//   transition: var(--t-all);
+// }
+
+// @include e('icon') {
+//   transition: var(--t-all);
+// }
+
+// // ----------------------------------------- pseudoclasses -----------------------------------------
+
+// @include e('icon-wrap:hover') {
+//   background: set-opacity(--c-accent, 0.2);
+
+//   @include e-nested('icon') {
+//     transform: scale(1.2, 1.2);
+//   }
+// }
+
+
+
+
+// .b-video {
+//   &__poster { 
+
+//     &::after {
+//       @include position($po: absolute, $to: 0, $le: 0, $z-in: 1);
+//       @include display($di: block, $co: "");
+//       @include box($wi: 100%, $he: 100%);
+//       @include style($ba: rgba(36, 198, 87, 0.8));
+//     }
+
+//     &:hover .b-video__icon-wrap {
+//       @include style($ba: rgba(0, 207, 241, 0.2));
+//     }
+
+//     &--hidden {
+//       @include display($di: none);
+//     }
+//   }
+
+//   &__img {
+//     @include box($wi: 100%);
+//     @include style($ob-fi: cover);
+//   }
+
+//   &__icon-wrap {
+//     @include position($po: absolute, $to: 0, $ri: 0, $bo: 0, $le: 0, $z-in: 2);
+//     @include flex($fl-wr: nowrap, $ju-co: center, $al-it: center);
+//     @include box($wi: size(120), $he: size(120), $ma: auto);
+//     @include style($bo-ra: 100%);
+//     @include animation($tr: 0.3s);
+//   }
+// }

@@ -6,9 +6,9 @@
   border-radius: $radius;
 }
 
-@mixin overlay($color-var, $opacity) {
-  position: relative;
-  z-index: 0;
+@mixin overlay($color-var, $opacity, $position: relative, $z: 0) {
+  position: $position;
+  z-index: $z;
 
   &::before {
     position: absolute;
