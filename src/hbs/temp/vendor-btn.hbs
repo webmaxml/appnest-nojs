@@ -1,0 +1,29 @@
+{{#if (equals type 'apple')}}
+  {{setVar 'linkClass' 'vendor-btn__apple'}}
+  {{setVar 'iconClass' 'icon-Apple'}}
+  {{setVar 'vendor' 'apple store'}}
+
+  {{#if dark}}
+    {{setVar 'linkClass' 'vendor-btn__apple vendor-btn--dark'}}
+    {{setVar 'iconClass' 'icon-Apple-dark'}}
+  {{/if}}
+{{/if}}
+
+{{#if (equals type 'play')}}
+  {{setVar 'linkClass' 'vendor-btn__play'}}
+  {{setVar 'iconClass' 'icon-Play-store'}}
+  {{setVar 'vendor' 'play store'}}
+
+  {{#if dark}}
+    {{setVar 'linkClass' 'vendor-btn__play vendor-btn--dark'}}
+    {{setVar 'iconClass' 'icon-Play-store-dark'}}
+  {{/if}}
+{{/if}}
+
+<!-- BEGIN VENDOR-BTN -->
+<a href="#" class="vendor-btn {{linkClass}}">
+  {{> vendor-icon class="vendor-btn__icon" type=type style=style }}
+  <span class="vendor-btn__text">download from</span>
+  <b class="vendor-btn__vendor">{{vendor}}</b>
+</a>
+<!-- END VENDOR-BTN -->

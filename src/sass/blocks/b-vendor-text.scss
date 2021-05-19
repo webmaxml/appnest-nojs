@@ -1,0 +1,13 @@
+@use '../utilities' as *;
+
+// ----------------------------------------- public -----------------------------------------
+
+.b-vendor-text {
+  --p-color: var(--c-header-text);
+}
+
+// ----------------------------------------- styles -----------------------------------------
+
+.b-vendor-text {
+  @include text(var(--ff-header), var(--fw-light), size(9), size(11), var(--p-color), uppercase);
+}

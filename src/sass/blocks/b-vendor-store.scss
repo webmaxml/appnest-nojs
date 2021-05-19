@@ -1,0 +1,13 @@
+@use '../utilities' as *;
+
+// ----------------------------------------- public -----------------------------------------
+
+.b-vendor-store {
+  --p-color: var(--c-header-text);
+}
+
+// ----------------------------------------- styles -----------------------------------------
+
+.b-vendor-store {
+  @include text(var(--ff-header), var(--fw-semi-bold), size(16), size(15), var(--p-color), uppercase);
+}

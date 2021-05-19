@@ -1,0 +1,21 @@
+@use '../utilities' as *;
+
+.burger {
+  padding: size(10);
+  border: size(1) solid var(--c-header-text);
+  border-radius: size(6);
+
+  color: var(--c-header-text);
+
+  transition: var(--d-all);
+
+  &:hover {
+    border-color: var(--c-active);
+    color: var(--c-active); 
+  }
+
+  & .fas {
+    font-size: size(33);
+    line-height: size(35);
+  }
+}

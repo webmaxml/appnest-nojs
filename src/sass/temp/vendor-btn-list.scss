@@ -1,0 +1,10 @@
+@use '../utilities' as *;
+
+.vendor-btn-list {
+  @include flex(nowrap, flex-start, flex-start);
+
+  &__item {
+    &:first-child { margin-right: size(30); } 
+  }
+}
+

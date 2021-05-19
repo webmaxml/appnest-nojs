@@ -1,0 +1,63 @@
+@use '../utilities' as *;
+@use '../common/icons' as *;
+
+.vendor-btn {
+  &__icon   { @include area(i, start, start); }
+  &__text   { @include area(t, start, end); }
+  &__vendor { @include area(v, start, start); }
+
+  @include grid(
+    ". . . . ." size(13)
+    ". i . t ." max-content
+    ". i . v ." max-content
+    ". . . . ." size(13)
+    / 1fr max-content size(9) max-content 1fr
+  );
+
+  width: size(170);
+  border: size(1) solid var(--c-header-text);
+  border-radius: size(7);
+
+  transition: var(--d-all); 
+
+  &:hover {
+    --sized: 150px;
+    background: var(--c-active); 
+    border-color: var(--c-active); 
+  }
+
+  &__text {
+    @include text(var(--ff-header), var(--fw-light), size(9), size(11), var(--c-header-text), uppercase);
+  }
+
+  &__vendor {
+    @include text(var(--ff-header), var(--fw-semi-bold), size(16), size(15), var(--c-header-text), uppercase);
+  }
+}
+
+
+// ----------------------------------------- mods -----------------------------------------
+
+.vendor-btn--dark {
+  border-color: var(--c-h2);
+
+  & .vendor-btn__text { color: var(--c-h2); }
+  & .vendor-btn__vendor { color: var(--c-h2); }
+
+  &:hover {
+    background: var(--c-active);
+    border-color: var(--c-active);
+
+    & .vendor-btn__text { color: var(--c-header-text); }
+    & .vendor-btn__vendor { color: var(--c-header-text); }
+  }
+
+  // меняем иконки на светлые при наведении
+  &.vendor-btn__apple:hover .vendor-btn__icon {
+    @extend .icon-Apple;
+  }
+
+  &.vendor-btn__play:hover .vendor-btn__icon{
+    @extend .icon-Play-store;
+  }
+}

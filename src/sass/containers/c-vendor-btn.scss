@@ -1,0 +1,96 @@
+@use '../utilities' as *;
+
+// ----------------------------------------- vars -----------------------------------------
+
+.c-vendor-btn {
+  --p-border-color: var(--c-header-text);
+
+  &--light {
+    --l-bg: transparent;
+    --l-border-color: var(--p-border-color);
+  }
+
+  &--dark {
+    --l-bg: transparent;
+    --l-border-color: var(--c-h2);
+  }
+
+  &--light:hover, &--dark:hover {
+    --l-bg: var(--c-active);
+    --l-border-color: var(--c-active);
+  }
+}
+
+// ----------------------------------------- config -----------------------------------------
+
+.c-vendor-btn {
+  &--light {
+    & .c-vendor-btn__text { --p-color: var(--c-header-text); }
+    & .c-vendor-btn__store { --p-color: var(--c-header-text); }
+  }
+
+  &--dark {
+    & .c-vendor-btn__text { --p-color: var(--c-h2); }
+    & .c-vendor-btn__store { --p-color: var(--c-h2); }
+
+    &:hover {
+      & .c-vendor-btn__text { --p-color: var(--c-header-text); }
+      & .c-vendor-btn__store { --p-color: var(--c-header-text); }
+    }
+  }
+
+  &--apple {
+    & .c-vendor-btn__icon { --p-width: var(--p-apple-width); }
+
+    &.c-vendor-btn--light {
+      & .c-vendor-btn__icon { --p-pos: var(--p-apple-light); }
+    }
+
+    &.c-vendor-btn--dark {
+      & .c-vendor-btn__icon { --p-pos: var(--p-apple-dark); }
+
+      &:hover {
+        & .c-vendor-btn__icon { --p-pos: var(--p-apple-light); }
+      }
+    }
+  }
+
+  &--play {
+    & .c-vendor-btn__icon { --p-width: var(--p-play-width); }
+
+    &.c-vendor-btn--light {
+      & .c-vendor-btn__icon { --p-pos: var(--p-play-light); }
+    }
+
+    &.c-vendor-btn--dark {
+      & .c-vendor-btn__icon { --p-pos: var(--p-play-dark); }
+
+      &:hover {
+        & .c-vendor-btn__icon { --p-pos: var(--p-play-light); }
+      }
+    }
+  }
+}
+
+
+// ----------------------------------------- styles -----------------------------------------
+
+.c-vendor-btn {
+  &__icon   { @include area(i, start, start); }
+  &__text   { @include area(t, start, end); }
+  &__store  { @include area(s, start, start); }
+
+  @include grid(
+    ". . . . ." size(13)
+    ". i . t ." max-content
+    ". i . s ." max-content
+    ". . . . ." size(13)
+    / 1fr max-content size(9) max-content 1fr
+  );
+
+  width: size(170);
+  border: size(1) solid var(--l-border-color);
+  border-radius: size(7);
+
+  background: var(--l-bg);
+}

@@ -1,0 +1,23 @@
+@use '../utilities' as *;
+
+// ----------------------------------------- public -----------------------------------------
+
+.b-vendor-icon {
+  --p-width: var(--l-apple-width);
+  --p-pos: var(--l-apple-light);
+
+  --p-apple-width: 25em;
+  --p-play-width: 27em;
+  --p-apple-light: -5em -5em;
+  --p-apple-dark: -40em -5em;
+  --p-play-light: -220em -5em;
+  --p-play-dark: -130em -95em;
+}
+
+// ----------------------------------------- styles -----------------------------------------
+
+.b-vendor-icon {
+  width: var(--p-width);
+  height: 29em;
+  background-position: var(--p-pos);
+}

@@ -1,4 +1,5 @@
-@use 'vars';
-@use 'fonts';
-@use 'icons';
-@use 'base';
+@forward 'vars';
+@forward 'placeholders';
+@forward 'fonts';
+@forward 'icons';
+@forward 'base';

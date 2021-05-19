@@ -22,10 +22,13 @@ module.exports = {
         test: /\.hbs$/,
         loader: 'handlebars-loader',
         options: {
+          helperDirs: [
+            path.resolve(__dirname, 'src/hbs/helpers')
+          ],
           partialDirs: [
             path.resolve(__dirname, 'src/hbs/partials'),
             path.resolve(__dirname, 'src/hbs/blocks'),
-            path.resolve(__dirname, 'src/hbs/sections')
+            path.resolve(__dirname, 'src/hbs/containers')
           ]
         }
       }
