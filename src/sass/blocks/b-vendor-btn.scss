@@ -1,0 +1,99 @@
+@use '../utilities' as *;
+
+// ----------------------------------------- local -----------------------------------------
+
+.b-vendor-btn {
+  --l-apple-width: 25em;
+  --l-play-width: 27em;
+  --l-apple-light: -5em -5em;
+  --l-apple-dark: -40em -5em;
+  --l-play-light: -220em -5em;
+  --l-play-dark: -130em -95em;
+
+  &--light {
+    --l-bg: transparent;
+    --l-border-color: var(--c-header-text);
+    --l-color: var(--c-header-text);
+  }
+
+  &--dark {
+    --l-bg: transparent;
+    --l-border-color: var(--c-h2);
+    --l-color: var(--c-h2);
+  }
+
+  &--light:hover, &--dark:hover {
+    --l-bg: var(--c-active);
+    --l-border-color: var(--c-active);
+    --l-color: var(--c-header-text);
+  }
+
+  &--apple {
+    & .b-vendor-btn__icon { --l-width: var(--l-apple-width); }
+
+    &.b-vendor-btn--light {
+      & .b-vendor-btn__icon { --l-pos: var(--l-apple-light); }
+    }
+
+    &.b-vendor-btn--dark {
+      & .b-vendor-btn__icon { --l-pos: var(--l-apple-dark); }
+
+      &:hover {
+        & .b-vendor-btn__icon { --l-pos: var(--l-apple-light); }
+      }
+    }
+  }
+
+  &--play {
+    & .b-vendor-btn__icon { --l-width: var(--l-play-width); }
+
+    &.b-vendor-btn--light {
+      & .b-vendor-btn__icon { --l-pos: var(--l-play-light); }
+    }
+
+    &.b-vendor-btn--dark {
+      & .b-vendor-btn__icon { --l-pos: var(--l-play-dark); }
+
+      &:hover {
+        & .b-vendor-btn__icon { --l-pos: var(--l-play-light); }
+      }
+    }
+  }
+}
+
+
+// ----------------------------------------- styles -----------------------------------------
+
+.b-vendor-btn {
+  &__icon   { @include area(i, start, start); }
+  &__text   { @include area(t, start, end); }
+  &__store  { @include area(s, start, start); }
+
+  @include grid(
+    ". . . . ." size(13)
+    ". i . t ." max-content
+    ". i . s ." max-content
+    ". . . . ." size(13)
+    / 1fr max-content size(9) max-content 1fr
+  );
+
+  width: size(170);
+  border: size(1) solid var(--l-border-color);
+  border-radius: size(7);
+
+  background: var(--l-bg);
+
+  &__icon {
+    width: var(--l-width);
+    height: 29em;
+    background-position: var(--l-pos);
+  }
+
+  &__text {
+    @include text(var(--ff-header), var(--fw-light), size(9), size(11), var(--l-color), uppercase);
+  }
+
+  &__store {
+    @include text(var(--ff-header), var(--fw-semi-bold), size(16), size(15), var(--l-color), uppercase);
+  }
+}

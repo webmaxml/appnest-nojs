@@ -3,11 +3,3 @@
 @use 'common';
 @use 'blocks';
 @use 'containers';
-
-@use 'utilities' as *;
-
-#home {
-  .c-vendor-btn {
-    // @include p(--size, fluid (320: 60px, 768: 150px, 1024: 100px));
-  }
-}
