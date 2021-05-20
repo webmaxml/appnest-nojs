@@ -1,0 +1,35 @@
+@use '../utilities' as *;
+
+// ----------------------------------------- public -----------------------------------------
+
+.b-get-btn {
+  --p-size: 100px;
+}
+
+// ----------------------------------------- local -----------------------------------------
+
+.b-get-btn {
+  --l-bg: transparent;
+  --l-border-color: var(--c-header-text);
+  
+  &:hover {
+    --l-bg: var(--c-active);
+    --l-border-color: var(--c-active);
+  }
+}
+
+// ----------------------------------------- styles -----------------------------------------
+
+.b-get-btn {
+  display: block;
+
+  padding: size(20) size(34);
+  border: size(1) solid var(--l-border-color);
+  border-radius: size(32);
+
+  background: var(--l-bg);
+
+  @include text(var(--ff-header), var(--fw-semi-bold), size(16), size(16), var(--c-header-text), uppercase);
+
+  transition: var(--d-all);
+}

@@ -1,0 +1,44 @@
+@use '../utilities' as *;
+
+// ----------------------------------------- breakpoints -----------------------------------------
+
+$bp1: 1024;
+
+// ----------------------------------------- config -----------------------------------------
+
+.c-top-line {
+  &__logo { 
+    @include p(--p-size, var(--fluid-text)); 
+  }
+
+  &__nav {
+    @include p(--p-display, none ($bp1: flex));
+  }
+
+  &__burger { 
+    @include p(--p-size, var(--fluid-text));
+    @include p(--p-display, block ($bp1: none));
+  }
+
+  &__get-btn { 
+    @include p(--p-size, var(--fluid-text));
+  }
+}
+
+// ----------------------------------------- styles -----------------------------------------
+
+.c-top-line {
+  &__burger  { @include area(b, start, center); }
+  &__logo    { @include area(l, start, center); }
+  &__nav     { @include area(n, center, center); }
+  &__get-btn { @include area(g, end, center); }
+
+  @include grid(
+    "b . l . g" max-content
+    / max-content 15px max-content 1fr max-content
+    (
+      $bp1: "l n g" max-content
+           / 1fr max-content 1fr
+    )
+  );
+}

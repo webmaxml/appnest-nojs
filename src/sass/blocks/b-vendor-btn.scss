@@ -1,5 +1,11 @@
 @use '../utilities' as *;
 
+// ----------------------------------------- public -----------------------------------------
+
+.b-vendor-btn {
+  --p-size: 100px;
+}
+
 // ----------------------------------------- local -----------------------------------------
 
 .b-vendor-btn {
@@ -82,6 +88,8 @@
   border-radius: size(7);
 
   background: var(--l-bg);
+
+  transition: var(--d-all);
 
   &__icon {
     width: var(--l-width);

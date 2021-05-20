@@ -27,8 +27,8 @@
 
 // ----------------------------------------- flex -----------------------------------------
 
-@mixin flex($wrap, $justify: flex-start, $align: flex-start) {
-  display: flex;
+@mixin flex($wrap, $justify: flex-start, $align: flex-start, $display: flex) {
+  display: $display;
   flex-flow: row $wrap;
   justify-content: $justify;
   align-items: $align;
@@ -49,8 +49,8 @@
 
 // ----------------------------------------- hover lines -----------------------------------------
 
-@mixin hover-center-line($height, $bottom, $color, $transition) {
-  position: relative;
+@mixin hover-center-line($height, $bottom, $color, $transition, $position: relative) {
+  position: $position;
 
   &::after {
     position: absolute;
@@ -70,8 +70,8 @@
   }
 }
 
-@mixin hover-left-line($height, $bottom, $color, $duration) {
-  position: relative;
+@mixin hover-left-line($height, $bottom, $color, $transition, $position: relative) {
+  position: $position;
 
   &::after {
     position: absolute;
@@ -81,7 +81,7 @@
     background: $color;
     width: 0%;
     height: $height;
-    transition: $duration;
+    transition: $transition;
   }
 
   &:hover::after {
@@ -90,8 +90,8 @@
   }
 }
 
-@mixin hover-right-line($height, $bottom, $color, $duration) {
-  position: relative;
+@mixin hover-right-line($height, $bottom, $color, $transition, $position: relative) {
+  position: $position;
 
   &::after {
     position: absolute;
@@ -101,7 +101,7 @@
     background: $color;
     width: 0%;
     height: $height;
-    transition: $duration;
+    transition: $transition;
   }
 
   &:hover::after {
@@ -143,8 +143,8 @@
   text-transform: $tt;
 }
 
-@mixin text-fade($height, $color) {
-  position: relative;
+@mixin text-fade($height, $color, $position: relative) {
+  position: $position;
 
   &::after {
     position: absolute;

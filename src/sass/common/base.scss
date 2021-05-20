@@ -1,11 +1,3 @@
-* {
-  transition: all var(--d-all), background-position 0s;
-}
-
-body {
-  --size: 100px;
-}
-
 .hidden {
   position: absolute;
   pointer-events: none;

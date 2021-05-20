@@ -1,0 +1,39 @@
+@use '../utilities' as *;
+
+// ----------------------------------------- public -----------------------------------------
+
+.b-burger {
+  --p-size: 100px;
+  --p-display: none;
+}
+
+// ----------------------------------------- local -----------------------------------------
+
+.b-burger {
+  --l-border-color: var(--c-header-text);
+  --l-color: var(--c-header-text);
+  
+  &:hover {
+    --l-border-color: var(--c-active);
+    --l-color: var(--c-active);
+  }
+}
+
+// ----------------------------------------- styles -----------------------------------------
+
+.b-burger {
+  display: var(--p-display);
+
+  padding: size(10);
+  border: size(1) solid var(--l-border-color);
+  border-radius: size(6);
+
+  color: var(--l-color);
+
+  transition: var(--d-all);
+
+  &__icon {
+    font-size: size(33);
+    line-height: size(35);
+  }
+}

@@ -1,0 +1,25 @@
+@use '../utilities' as *;
+
+// ----------------------------------------- public -----------------------------------------
+
+.b-nav {
+  --p-size: 100px;
+  --p-display: flex;
+}
+
+// ----------------------------------------- styles -----------------------------------------
+
+.b-nav {
+  &__list {
+    @include flex(wrap, flex-start, flex-start, var(--p-display));
+  }
+
+  &__item {
+    padding: 0 size(15);
+  }
+
+  &__link {
+    @include hover-center-line(size(1), size(-10), var(--c-header-text), var(--d-all));
+    @include text(var(--ff-header), var(--fw-regular), size(16), size(34), var(--c-header-text), uppercase);
+  }
+}

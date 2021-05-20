@@ -57,7 +57,7 @@
 // ----------------------------------------- public -----------------------------------------
 
 /**
-* constructs size formula - value dependency on --size var
+* constructs size formula - value dependency on --p-size var
 *
 * @exapmle
 * // returns calc(22 * (var(--size) / 100))
@@ -70,7 +70,7 @@
 
 @function size($value) {
   $value: validate($value, 'number');
-  @return _calc('#{number.strip-unit($value)} * (var(--size) / 100)');
+  @return _calc('#{number.strip-unit($value)} * (var(--p-size) / 100)');
 }
 
 /**
