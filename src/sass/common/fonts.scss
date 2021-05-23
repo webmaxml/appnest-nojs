@@ -1,17 +1,17 @@
-@use '../utilities' as *;
-
-.fab {
-  font-family: 'Font Awesome 5 Brands';
-  font-weight: var(--fw-regular);
-}
-
-.far {
-  font-family: 'Font Awesome 5 Free';
-  font-weight: var(--fw-regular);
-}
-
-.fa,
-.fas {
-  font-family: 'Font Awesome 5 Free';
-  font-weight: var(--fw-black);
+@mixin fonts {
+  .fab {
+    font-family: 'Font Awesome 5 Brands';
+    font-weight: var(--fw-regular);
+  }
+  
+  .far {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: var(--fw-regular);
+  }
+  
+  .fa,
+  .fas {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: var(--fw-black);
+  }
 }

@@ -1,39 +1,38 @@
 @use '../utilities' as *;
 
-// ----------------------------------------- public -----------------------------------------
+@mixin b-burger($action, $args...) {
+  .b-burger {
+    @if $action == 'init' { @include _main; @include _hover; }
+    @else if $action == 'show' { @include show-block; }
+    @else if $action == 'hide' { @include hide; }
+    @else if $action == 'original-size' { @include original-size; }
+    @else if $action == 'fluid-size' { @include fluid-text-size; }
+    @else if $action == 'area' { @include area($args...); }
 
-.b-burger {
-  --p-size: 100px;
-  --p-display: none;
-}
-
-// ----------------------------------------- local -----------------------------------------
-
-.b-burger {
-  --l-border-color: var(--c-header-text);
-  --l-color: var(--c-header-text);
-  
-  &:hover {
-    --l-border-color: var(--c-active);
-    --l-color: var(--c-active);
+    @else { @error 'No such action - #{$action}'; }
   }
 }
 
-// ----------------------------------------- styles -----------------------------------------
-
-.b-burger {
-  display: var(--p-display);
-
+@mixin _main {
   padding: size(10);
-  border: size(1) solid var(--l-border-color);
+  border-width: size(1);
+  border-style: solid;
   border-radius: size(6);
-
-  color: var(--l-color);
 
   transition: var(--d-all);
 
   &__icon {
     font-size: size(33);
     line-height: size(35);
+  }
+}
+
+@mixin _hover {
+  border-color: var(--c-header-text);
+  color: var(--c-header-text);
+  
+  &:hover {
+    border-color: var(--c-active);
+    color: var(--c-active);
   }
 }

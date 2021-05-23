@@ -25,28 +25,6 @@
   }
 }
 
-// ----------------------------------------- flex -----------------------------------------
-
-@mixin flex($wrap, $justify: flex-start, $align: flex-start, $display: flex) {
-  display: $display;
-  flex-flow: row $wrap;
-  justify-content: $justify;
-  align-items: $align;
-}
-
-// ----------------------------------------- grid -----------------------------------------
-
-@mixin grid($template) {
-  display: grid;
-  @include p(grid-template, $template);
-}
-
-@mixin area($area, $justify: start, $align: start) {
-  grid-area: $area;
-  @include p(justify-self, $justify);
-  @include p(align-self, $align);
-}
-
 // ----------------------------------------- hover lines -----------------------------------------
 
 @mixin hover-center-line($height, $bottom, $color, $transition, $position: relative) {
@@ -132,16 +110,7 @@
   }
 }
 
-// ----------------------------------------- text -----------------------------------------
-
-@mixin text($ff, $fw, $fz, $lh, $c, $tt: null) {
-  font-family: $ff;
-  font-weight: $fw;
-  font-size: $fz;
-  line-height: $lh;
-  color: $c;
-  text-transform: $tt;
-}
+// ----------------------------------------- text-fade -----------------------------------------
 
 @mixin text-fade($height, $color, $position: relative) {
   position: $position;
@@ -158,4 +127,49 @@
 
     background: linear-gradient(to bottom, transparent, $color);
   }
+}
+
+// ----------------------------------------- media -----------------------------------------
+
+@mixin from_0 { @content; }
+
+// mobile
+@mixin from_320 { @media screen and (min-width: 320px) { @content; } }
+@mixin from_360 { @media screen and (min-width: 360px) { @content; } }
+@mixin from_375 { @media screen and (min-width: 375px) { @content; } }
+@mixin from_393 { @media screen and (min-width: 393px) { @content; } }
+@mixin from_412 { @media screen and (min-width: 412px) { @content; } }
+@mixin from_480 { @media screen and (min-width: 480px) { @content; } }
+
+// tablet
+@mixin from_600 { @media screen and (min-width: 600px) { @content; } }
+@mixin from_768 { @media screen and (min-width: 768px) { @content; } }
+@mixin from_800 { @media screen and (min-width: 800px) { @content; } }
+@mixin from_834 { @media screen and (min-width: 834px) { @content; } }
+@mixin from_960 { @media screen and (min-width: 960px) { @content; } }
+@mixin from_1024 { @media screen and (min-width: 1024px) { @content; } }
+
+// desktop
+@mixin from_1280 { @media screen and (min-width: 1280px) { @content; } }
+@mixin from_1366 { @media screen and (min-width: 1366px) { @content; } }
+@mixin from_1440 { @media screen and (min-width: 1440px) { @content; } }
+@mixin from_1536 { @media screen and (min-width: 1536px) { @content; } }
+@mixin from_1600 { @media screen and (min-width: 1600px) { @content; } }
+@mixin from_1920 { @media screen and (min-width: 1920px) { @content; } }
+@mixin from_2560 { @media screen and (min-width: 2560px) { @content; } }
+@mixin from_3840 { @media screen and (min-width: 3840px) { @content; } }
+
+// ----------------------------------------- common mixins -----------------------------------------
+
+@mixin original-size { --size: 100px; }
+@mixin fluid-text-size { --size: var(--fluid-text); }
+
+@mixin show-block { display: block; }
+@mixin show-flex { display: flex; }
+@mixin hide { display: none; }
+
+@mixin area($area, $justify, $align) { 
+  grid-area: $area; 
+  justify-self: $justify; 
+  align-self: $align; 
 }

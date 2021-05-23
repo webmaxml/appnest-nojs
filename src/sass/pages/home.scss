@@ -1,0 +1,37 @@
+@use '../utilities' as *;
+@use '../reset';
+@use '../assets';
+@use '../common';
+@use '../blocks';
+@use '../containers';
+
+@mixin home {
+  @include reset.reset;
+  @include reset.normalize;
+
+  @include assets.fontawesome;
+  @include assets.icofont;
+
+  @include common.vars;
+  @include common.fonts; 
+  @include common.icons;
+  @include common.base;
+
+  @include blocks.b-burger('init');
+  @include blocks.b-logo('init');
+  @include blocks.b-nav('init');
+  @include blocks.b-get-btn('init');
+
+  @include containers.c-top-line('init');
+
+  @include from_0 {
+    @include containers.c-top-line('grid-with-burger');
+  }
+
+  // ----------------------------------------- mobile -----------------------------------------
+
+
+  @include from_1024 {
+    @include containers.c-top-line('grid-with-nav');
+  }
+}

@@ -1,0 +1,34 @@
+@use '../utilities' as *;
+@use '../containers/c-top-line';
+
+#home {
+  
+  .c-top-line {
+    $bp1: 1024;
+
+    &__burger { 
+      @include p(--p-size, var(--fluid-text));
+      @include p(--p-display, block ($bp1: none));
+    }
+  
+    &__logo { 
+      @include p(--p-size, var(--fluid-text)); 
+    }
+  
+    &__nav {
+      @include p(--p-display, none ($bp1: flex));
+    }
+  
+    &__get-btn { 
+      @include p(--p-size, var(--fluid-text));
+    }  
+
+    @include c-top-line.mobile;
+
+    @media screen and (min-width: 1024px) {
+      @include c-top-line.desktop;
+    }
+  }
+}
+
+

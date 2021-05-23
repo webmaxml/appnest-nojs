@@ -1,35 +1,39 @@
 @use '../utilities' as *;
 
-// ----------------------------------------- public -----------------------------------------
+@mixin b-get-btn($action, $args...) {
+  .b-get-btn {
+    @if $action == 'init' { @include _main; @include _hover; }
+    @else if $action == 'original-size' { @include original-size; }
+    @else if $action == 'fluid-size' { @include fluid-text-size; }
+    @else if $action == 'area' { @include area($args...); }
 
-.b-get-btn {
-  --p-size: 100px;
-}
-
-// ----------------------------------------- local -----------------------------------------
-
-.b-get-btn {
-  --l-bg: transparent;
-  --l-border-color: var(--c-header-text);
-  
-  &:hover {
-    --l-bg: var(--c-active);
-    --l-border-color: var(--c-active);
+    @else { @error 'No such action - #{$action}'; }
   }
 }
 
-// ----------------------------------------- styles -----------------------------------------
-
-.b-get-btn {
+@mixin _main {
   display: block;
 
   padding: size(20) size(34);
-  border: size(1) solid var(--l-border-color);
+  border-width: size(1);
+  border-style: solid;
   border-radius: size(32);
 
-  background: var(--l-bg);
-
-  @include text(var(--ff-header), var(--fw-semi-bold), size(16), size(16), var(--c-header-text), uppercase);
+  font-family: var(--ff-header);
+  font-weight: var(--fw-semi-bolc);
+  font-size: size(16);
+  line-height: size(16);
+  color: var(--c-header-text);
+  text-transform: uppercase;
 
   transition: var(--d-all);
+}
+
+@mixin _hover {
+  border-color: var(--c-header-text);
+
+  &:hover {
+    background: var(--c-active);
+    border-color: var(--c-active);
+  }
 }

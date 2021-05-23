@@ -1,5 +1,3 @@
-@use 'reset';
-@use 'assets';
-@use 'common';
-@use 'blocks';
-@use 'containers';
+@use 'pages';
+
+@include pages.home;

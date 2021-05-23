@@ -1,44 +1,44 @@
 @use '../utilities' as *;
+@use '../blocks';
 
-// ----------------------------------------- breakpoints -----------------------------------------
+@mixin c-top-line($action, $args...) {
+  .c-top-line {
+    @if $action == 'init' { @include _main; }
+    @else if $action == 'grid-with-burger' { @include _grid-with-burger; }
+    @else if $action == 'grid-with-nav' { @include _grid-with-nav; }
 
-$bp1: 1024;
-
-// ----------------------------------------- config -----------------------------------------
-
-.c-top-line {
-  &__logo { 
-    @include p(--p-size, var(--fluid-text)); 
-  }
-
-  &__nav {
-    @include p(--p-display, none ($bp1: flex));
-  }
-
-  &__burger { 
-    @include p(--p-size, var(--fluid-text));
-    @include p(--p-display, block ($bp1: none));
-  }
-
-  &__get-btn { 
-    @include p(--p-size, var(--fluid-text));
+    @else { @error 'No such action - #{$action}'; }
   }
 }
 
-// ----------------------------------------- styles -----------------------------------------
+@mixin _main {
+  @include blocks.b-burger('fluid-size');
+  @include blocks.b-logo('fluid-size');
+  @include blocks.b-nav('original-size');
+  @include blocks.b-get-btn('fluid-size');
 
-.c-top-line {
-  &__burger  { @include area(b, start, center); }
-  &__logo    { @include area(l, start, center); }
-  &__nav     { @include area(n, center, center); }
-  &__get-btn { @include area(g, end, center); }
+  @include blocks.b-burger('area', b, start, center);
+  @include blocks.b-logo('area', l, start, center);
+  @include blocks.b-nav('area', n, center, center);
+  @include blocks.b-get-btn('area', g, end, center);
 
-  @include grid(
+  display: grid;
+}
+
+@mixin _grid-with-burger {
+  @include blocks.b-burger('show');
+  @include blocks.b-nav('hide');
+
+  grid-template: 
     "b . l . g" max-content
-    / max-content 15px max-content 1fr max-content
-    (
-      $bp1: "l n g" max-content
-           / 1fr max-content 1fr
-    )
-  );
+    / max-content 15px max-content 1fr max-content;
+}
+
+@mixin _grid-with-nav {
+  @include blocks.b-burger('hide');
+  @include blocks.b-nav('show');
+
+  grid-template: 
+    "l n g" max-content
+    / 1fr max-content 1fr;
 }

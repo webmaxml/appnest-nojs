@@ -1,5 +1,7 @@
-.hidden {
-  position: absolute;
-  pointer-events: none;
-  opacity: 0;
+@mixin base {
+  .hidden {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+  }
 }

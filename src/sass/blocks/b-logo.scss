@@ -1,0 +1,15 @@
+@use '../utilities' as *;
+
+@mixin b-logo($action, $args...) {
+  .b-logo {
+    @if $action == 'init' { @include _main; }
+    @else if $action == 'original-size' { @include original-size; }
+    @else if $action == 'fluid-size' { @include fluid-text-size; }
+    @else if $action == 'area' { @include area($args...); }
+
+    @else { @error 'No such action - #{$action}'; }
+  }
+}
+
+@mixin _main {
+}

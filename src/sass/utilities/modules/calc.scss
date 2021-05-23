@@ -70,7 +70,7 @@
 
 @function size($value) {
   $value: validate($value, 'number');
-  @return _calc('#{number.strip-unit($value)} * (var(--p-size) / 100)');
+  @return _calc('#{number.strip-unit($value)} * (var(--size) / 100)');
 }
 
 /**
