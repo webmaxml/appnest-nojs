@@ -13,7 +13,7 @@
   @include assets.icofont;
 
   @include common.vars;
-  @include common.fonts; 
+  @include common.fonts;
   @include common.icons;
   @include common.base;
 
@@ -28,10 +28,85 @@
     @include containers.c-top-line('grid-with-burger');
   }
 
-  // ----------------------------------------- mobile -----------------------------------------
+// ----------------------------------------- mobile -----------------------------------------
 
+  @include from_320 {
+    
+  }
+
+  @include from_360 {
+    
+  }
+
+  @include from_393 {
+    
+  }
+
+  @include from_412 {
+    
+  }
+
+  @include from_480 {
+    
+  }
+
+// ----------------------------------------- tablet -----------------------------------------
+
+  @include from_600 {
+    
+  }
+
+  @include from_768 {
+    
+  }
+
+  @include from_800 {
+    
+  }
+
+  @include from_834 {
+    
+  }
+
+  @include from_960 {
+    
+  }
 
   @include from_1024 {
     @include containers.c-top-line('grid-with-nav');
+  }
+
+// ----------------------------------------- desktop -----------------------------------------
+
+  @include from_1280 {
+    
+  }
+
+  @include from_1366 {
+    
+  }
+
+  @include from_1440 {
+    
+  }
+
+  @include from_1536 {
+    
+  }
+
+  @include from_1600 {
+    
+  }
+
+  @include from_1920 {
+    
+  }
+
+  @include from_2560 {
+    
+  }
+
+  @include from_3840 {
+    
   }
 }
