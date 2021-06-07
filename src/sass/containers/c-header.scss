@@ -1,0 +1,38 @@
+@use '../utilities' as *;
+@use 'c-top-line' as *;
+@use 'c-header-content' as *;
+
+@mixin c-header($action: 'content', $args...) {
+  .c-header {
+    @include common-action($action, $args...) { @content; };
+    @if $action == 'main' { @include _main; }
+  }
+}
+
+@mixin _main {
+  @include overlay(--c-overlay, 0.9);
+  @include p(padding-top, fluid (320: 15px, 1280: 57px));
+
+  &__wrap {
+    @extend %container;
+    @include _grid;
+  }
+}
+
+@mixin _grid {
+  @include p(--v-padding, fluid (320: 100px, 1280: 155px)); 
+
+  @include c-top-line{ width: 100%; };
+  @include c-header-content{ width: 100%; };
+
+  @include c-top-line('area', t, start, start);
+  @include c-header-content('area', c, start, start);
+
+  display: grid;
+  grid-template:
+    "t" max-content
+    "." var(--v-padding)
+    "c" max-content
+    "." var(--v-padding)
+    / 1fr;
+}

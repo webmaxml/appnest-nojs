@@ -4,10 +4,15 @@
   .b-header-img {
     @include common-action($action, $args...) { @content; };
     @if $action == 'main' { @include _main; }
+    @if $action == 'fluid-size' { @include _fluid-size; }
   }
 }
 
 @mixin _main {
   width: size(540);
   height: size(623);
+}
+
+@mixin _fluid-size {
+  --size: var(--fluid-header-img-size);
 }

@@ -1,0 +1,72 @@
+@use '../utilities' as *;
+
+@mixin b-mobile-menu($action: 'content', $args...) {
+  .b-mobile-menu {
+    @include common-action($action, $args...) { @content; };
+    @if $action == 'main' { @include _main; }
+  }
+}
+
+@mixin _main {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+
+  width: size(300);
+  height: 100%;
+
+  background: var(--c-h2);
+
+  &__top {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding: size(15);
+  }
+
+  &__burger-btn {
+    margin-right: size(60);
+  }
+
+  &__burger-icon {
+    font-size: size(20);
+    color: var(--c-header-text);
+  }
+
+  &__home-link {
+
+  }
+
+  &__logo {
+
+  }
+
+  &__list {
+
+  }
+
+  &__item {
+
+  }
+
+  &__link {
+    display: block;
+
+    padding: size(15) 0;
+
+    font-family: var(--ff-header);
+    font-weight: var(--fw-regular);
+    font-size: size(16);
+    line-height: size(20);
+    color: var(--c-header-text);
+    text-transform: uppercase;
+    text-align: center;
+
+    &:hover {
+      background: var(--c-text);
+    }
+  }
+}

@@ -13,13 +13,13 @@
 
 @mixin _main {
   @include b-header-text('fluid-text-size');
-  @include b-header-img('fluid-text-size');
+  @include b-header-img('fluid-size');
 
   display: grid;
 }
 
 @mixin _mobile-grid {
-  @include b-header-text('center');
+  @include b-header-text('text-center');
   @include b-header-text { margin-top: -10px; };
 
   @include b-header-text('area', t, center, start);
@@ -36,7 +36,7 @@
 }
 
 @mixin _desktop-grid {
-  @include b-header-text('left');
+  @include b-header-text('text-left');
 
   @include b-header-text('area', t, center, start);
   @include b-header-img('area', i, end, start);

@@ -44,7 +44,6 @@ $css: (
   '--d-all': 0.3s,
 
   // fluid
-  // '--fluid-h-padding': fluid (320: 15px, 768: 45px, 1280: 15px),
-  '--fluid-text': fluid (320: 60px, 1280: 100px),
-  '--fluid-img-1': fluid (320: 30px, 1280: 100px),
+  '--fluid-text-size': fluid (320: 60px, 1280: 100px),
+  '--fluid-header-img-size': fluid (320: 30px, 1280: 100px),
 );

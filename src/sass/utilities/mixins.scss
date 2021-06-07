@@ -162,34 +162,23 @@
 // ----------------------------------------- common actions -----------------------------------------
 
 @mixin common-action($action, $args...) {
-  @if $action == 'original-size'   { @include original-size; }
-  @if $action == 'fluid-text-size' { @include fluid-text-size; }
+  @if $action == 'original-size'   { --size: 100px; }
+  @if $action == 'fluid-text-size' { --size: var(--fluid-text-size); }
 
-  @if $action == 'show-block'      { @include show-block; }
-  @if $action == 'show-flex'       { @include show-flex; }
-  @if $action == 'hide'            { @include hide; }
+  @if $action == 'show-block'      { display: block; }
+  @if $action == 'show-flex'       { display: flex;  }
+  @if $action == 'hide'            { display: none; }
  
-  @if $action == 'center'          { @include center; }
-  @if $action == 'left'            { @include left; }
-  @if $action == 'right'           { @include right; }
+  @if $action == 'text-center'     { text-align: center; }
+  @if $action == 'text-left'       { text-align: left; }
+  @if $action == 'text-right'      { text-align: right; }
  
-  @if $action == 'area'            { @include area($args...); }
+  @if $action == 'area'            { @include _area($args...); }
  
   @if $action == 'content'         { @content; }
 }
 
-@mixin original-size { --size: 100px; }
-@mixin fluid-text-size { --size: var(--fluid-text); }
-
-@mixin show-block { display: block; }
-@mixin show-flex { display: flex; }
-@mixin hide { display: none; }
-
-@mixin center { text-align: center; }
-@mixin left { text-align: left; }
-@mixin right { text-align: right; }
-
-@mixin area($area, $justify, $align) { 
+@mixin _area($area, $justify, $align) { 
   grid-area: $area; 
   justify-self: $justify; 
   align-self: $align; 

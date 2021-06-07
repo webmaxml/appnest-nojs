@@ -30,9 +30,13 @@
   @include blocks.b-header-text('main');
   @include blocks.b-header-img('main');
 
+  @include blocks.b-mobile-menu('main');
+  @include blocks.b-mobile-menu('original-size');
+
   @include containers.c-top-line('main');
   @include containers.c-vendor-btn-list('main');
   @include containers.c-header-content('main');
+  @include containers.c-header('main');
 }
 
 @mixin _media {
