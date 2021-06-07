@@ -1,33 +1,31 @@
 @use '../utilities' as *;
-@use '../blocks';
+@use '../blocks' as *;
 
-@mixin c-top-line($action, $args...) {
+@mixin c-top-line($action: 'content', $args...) {
   .c-top-line {
-    @if $action == 'init' { @include _main; }
-    @else if $action == 'grid-with-burger' { @include _grid-with-burger; }
-    @else if $action == 'grid-with-nav' { @include _grid-with-nav; }
-
-    @else { @error 'No such action - #{$action}'; }
+    @include common-action($action, $args...) { @content; };
+    @if $action == 'main' { @include _main; }
+    @if $action == 'grid-with-burger' { @include _grid-with-burger; }
+    @if $action == 'grid-with-nav' { @include _grid-with-nav; }
   }
 }
 
 @mixin _main {
-  @include blocks.b-burger('fluid-size');
-  @include blocks.b-logo('fluid-size');
-  @include blocks.b-nav('original-size');
-  @include blocks.b-get-btn('fluid-size');
-
-  @include blocks.b-burger('area', b, start, center);
-  @include blocks.b-logo('area', l, start, center);
-  @include blocks.b-nav('area', n, center, center);
-  @include blocks.b-get-btn('area', g, end, center);
+  @include b-burger('fluid-text-size');
+  @include b-logo('fluid-text-size');
+  @include b-nav('original-size');
+  @include b-get-btn('fluid-text-size');
 
   display: grid;
 }
 
 @mixin _grid-with-burger {
-  @include blocks.b-burger('show');
-  @include blocks.b-nav('hide');
+  @include b-burger('show-block');
+  @include b-nav('hide');
+
+  @include b-burger('area', b, start, center);
+  @include b-logo('area', l, start, center);
+  @include b-get-btn('area', g, end, center);
 
   grid-template: 
     "b . l . g" max-content
@@ -35,8 +33,12 @@
 }
 
 @mixin _grid-with-nav {
-  @include blocks.b-burger('hide');
-  @include blocks.b-nav('show');
+  @include b-burger('hide');
+  @include b-nav('show-block');
+
+  @include b-logo('area', l, start, center);
+  @include b-nav('area', n, center, center);
+  @include b-get-btn('area', g, end, center);
 
   grid-template: 
     "l n g" max-content

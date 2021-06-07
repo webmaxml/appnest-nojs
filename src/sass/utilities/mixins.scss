@@ -159,7 +159,24 @@
 @mixin from_2560 { @media screen and (min-width: 2560px) { @content; } }
 @mixin from_3840 { @media screen and (min-width: 3840px) { @content; } }
 
-// ----------------------------------------- common mixins -----------------------------------------
+// ----------------------------------------- common actions -----------------------------------------
+
+@mixin common-action($action, $args...) {
+  @if $action == 'original-size'   { @include original-size; }
+  @if $action == 'fluid-text-size' { @include fluid-text-size; }
+
+  @if $action == 'show-block'      { @include show-block; }
+  @if $action == 'show-flex'       { @include show-flex; }
+  @if $action == 'hide'            { @include hide; }
+ 
+  @if $action == 'center'          { @include center; }
+  @if $action == 'left'            { @include left; }
+  @if $action == 'right'           { @include right; }
+ 
+  @if $action == 'area'            { @include area($args...); }
+ 
+  @if $action == 'content'         { @content; }
+}
 
 @mixin original-size { --size: 100px; }
 @mixin fluid-text-size { --size: var(--fluid-text); }
@@ -168,8 +185,15 @@
 @mixin show-flex { display: flex; }
 @mixin hide { display: none; }
 
+@mixin center { text-align: center; }
+@mixin left { text-align: left; }
+@mixin right { text-align: right; }
+
 @mixin area($area, $justify, $align) { 
   grid-area: $area; 
   justify-self: $justify; 
   align-self: $align; 
 }
+
+
+

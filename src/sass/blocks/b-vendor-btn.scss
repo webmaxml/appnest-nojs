@@ -1,13 +1,9 @@
 @use '../utilities' as *;
 
-@mixin b-vendor-btn($action, $args...) {
+@mixin b-vendor-btn($action: 'content', $args...) {
   .b-vendor-btn {
-    @if $action == 'init' { @include _main; }
-    @else if $action == 'original-size' { @include original-size; }
-    @else if $action == 'fluid-size' { @include fluid-text-size; }
-    @else if $action == 'area' { @include area($args...); }
-
-    @else { @error 'No such action - #{$action}'; }
+    @include common-action($action, $args...) { @content; };
+    @if $action == 'main' { @include _main; }
   }
 }
 
@@ -17,25 +13,17 @@
   @include _style;
 
   width: size(170);
-  border: size(1) solid var(--border-color);
+  border-width: size(1);
+  border-style: solid;
   border-radius: size(7);
 
-  background: var(--background);
-
   transition: var(--d-all);
-
-  &__icon {
-    width: var(--icon-width);
-    height: 29em;
-    background-position: var(--icon-bg-pos);
-  }
 
   &__text {
     font-family: var(--ff-header);
     font-weight: var(--fw-light);
     font-size: size(9);
     line-height: size(11);
-    color: var(--color);
     text-transform: uppercase;
   }
 
@@ -44,7 +32,6 @@
     font-weight: var(--fw-semi-bold);
     font-size: size(16);
     line-height: size(15);
-    color: var(--color);
     text-transform: uppercase;
   }
 }
@@ -65,32 +52,44 @@
 
 @mixin _type {
   &--apple {
-    & .b-vendor-btn__icon { --icon-width: 25em; }
-
     &.b-vendor-btn--light {
-      & .b-vendor-btn__icon { --icon-bg-pos: -5em -5em; }
+      & .b-vendor-btn__icon {
+        width: 25em;
+        height: 29em;
+        background-position: -5em -5em; 
+      }
     }
 
     &.b-vendor-btn--dark {
-      & .b-vendor-btn__icon { --icon-bg-pos: -40em -5em; }
+      & .b-vendor-btn__icon { 
+        width: 25em;
+        height: 29em;
+        background-position: -40em -5em; 
+      }
 
       &:hover {
-        & .b-vendor-btn__icon { --icon-bg-pos: -5em -5em; }
+        & .b-vendor-btn__icon { background-position: -5em -5em; }
       }
     }
   }
   &--play {
-    & .b-vendor-btn__icon { --icon-width: 27em; }
-
     &.b-vendor-btn--light {
-      & .b-vendor-btn__icon { --icon-bg-pos: -220em -5em; }
+      & .b-vendor-btn__icon { 
+        width: 27em;
+        height: 29em;
+        background-position: -220em -5em; 
+      }
     }
 
     &.b-vendor-btn--dark {
-      & .b-vendor-btn__icon { --icon-bg-pos: -130em -95em; }
+      & .b-vendor-btn__icon {
+        width: 27em;
+        height: 29em;
+        background-position: -130em -95em;  
+      }
 
       &:hover {
-        & .b-vendor-btn__icon { --icon-bg-pos: -220em -5em; }
+        & .b-vendor-btn__icon { background-position: -220em -5em; }
       }
     }
   }
@@ -98,20 +97,18 @@
 
 @mixin _style {
   &--light {
-    --background: transparent;
-    --border-color: var(--c-header-text);
-    --color: var(--c-header-text);
+    border-color: var(--c-header-text);
+    color: var(--c-header-text);
   }
 
   &--dark {
-    --background: transparent;
-    --border-color: var(--c-h2);
-    --color: var(--c-h2);
+    border-color: var(--c-h2);
+    color: var(--c-h2);
   }
 
   &--light:hover, &--dark:hover {
-    --background: var(--c-active);
-    --border-color: var(--c-active);
-    --color: var(--c-header-text);
+    background: var(--c-active);
+    border-color: var(--c-active);
+    color: var(--c-header-text);
   }
 }

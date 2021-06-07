@@ -1,0 +1,52 @@
+@use '../utilities' as *;
+@use '../blocks' as *;
+@use 'c-vendor-btn-list' as *;
+
+@mixin c-header-content($action: 'content', $args...) {
+  .c-header-content {
+    @include common-action($action, $args...) { @content; };
+    @if $action == 'main' { @include _main; }
+    @if $action == 'mobile-grid' { @include _mobile-grid; }
+    @if $action == 'desktop-grid' { @include _desktop-grid; }
+  }
+}
+
+@mixin _main {
+  @include b-header-text('fluid-text-size');
+  @include b-header-img('fluid-text-size');
+
+  display: grid;
+}
+
+@mixin _mobile-grid {
+  @include b-header-text('center');
+  @include b-header-text { margin-top: -10px; };
+
+  @include b-header-text('area', t, center, start);
+  @include b-header-img('area', i, center, start);
+  @include c-vendor-btn-list('area', v, center, start);
+
+  grid-template:
+    "t" max-content
+    "." 50px
+    "i" max-content
+    "." 50px
+    "v" max-content
+    / 1fr;
+}
+
+@mixin _desktop-grid {
+  @include b-header-text('left');
+
+  @include b-header-text('area', t, center, start);
+  @include b-header-img('area', i, end, start);
+  @include c-vendor-btn-list('area', v, start, start);
+
+  grid-template:
+    ". i" max-content
+    "t i" max-content
+    ". i" 50px
+    "v i" max-content
+    ". i" max-content
+    / 1fr 1fr;
+}

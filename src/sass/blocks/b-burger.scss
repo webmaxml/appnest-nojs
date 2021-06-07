@@ -1,41 +1,28 @@
 @use '../utilities' as *;
 
-@mixin b-burger($action, $args...) {
+@mixin b-burger($action: 'content', $args...) {
   .b-burger {
-    @if $action == 'init' { @include _main; }
-    @else if $action == 'show' { @include show-block; }
-    @else if $action == 'hide' { @include hide; }
-    @else if $action == 'original-size' { @include original-size; }
-    @else if $action == 'fluid-size' { @include fluid-text-size; }
-    @else if $action == 'area' { @include area($args...); }
-
-    @else { @error 'No such action - #{$action}'; }
+    @include common-action($action, $args...) { @content; };
+    @if $action == 'main' { @include _main; }
   }
 }
 
 @mixin _main {
-  @include _hover;
-
   padding: size(10);
-  border: size(1) solid var(--border-color);
+  border: size(1) solid var(--c-header-text);
   border-radius: size(6);
 
-  color: var(--color);
+  color: var(--c-header-text);
 
   transition: var(--d-all);
+
+  &:hover {
+    border-color: var(--c-active);
+    color: var(--c-active);
+  }
 
   &__icon {
     font-size: size(33);
     line-height: size(35);
-  }
-}
-
-@mixin _hover {
-  --border-color: var(--c-header-text);
-  --color: var(--c-header-text);
-  
-  &:hover {
-    --border-color: var(--c-active);
-    --color: var(--c-active);
   }
 }

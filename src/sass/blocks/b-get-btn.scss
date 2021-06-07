@@ -1,23 +1,17 @@
 @use '../utilities' as *;
 
-@mixin b-get-btn($action, $args...) {
+@mixin b-get-btn($action: 'content', $args...) {
   .b-get-btn {
-    @if $action == 'init' { @include _main; }
-    @else if $action == 'original-size' { @include original-size; }
-    @else if $action == 'fluid-size' { @include fluid-text-size; }
-    @else if $action == 'area' { @include area($args...); }
-
-    @else { @error 'No such action - #{$action}'; }
+    @include common-action($action, $args...) { @content; };
+    @if $action == 'main' { @include _main; }
   }
 }
 
 @mixin _main {
-  @include _hover;
-
   display: block;
 
   padding: size(20) size(34);
-  border: size(1) solid var(--border-color);
+  border: size(1) solid var(--c-header-text);
   border-radius: size(32);
 
   font-family: var(--ff-header);
@@ -27,17 +21,10 @@
   color: var(--c-header-text);
   text-transform: uppercase;
 
-  background: var(--background);
-
   transition: var(--d-all);
-}
-
-@mixin _hover {
-  --background: transparent;
-  --border-color: var(--c-header-text);
 
   &:hover {
-    --background: var(--c-active);
-    --border-color: var(--c-active);
+    background: var(--c-active);
+    border-color: var(--c-active);
   }
 }

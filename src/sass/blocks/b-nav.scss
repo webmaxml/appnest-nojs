@@ -1,17 +1,11 @@
 @use '../utilities' as *;
 
-@mixin b-nav($action, $args...) {
+@mixin b-nav($action: 'content', $args...) {
   .b-nav {
-    @if $action == 'init' { @include _main; }
-    @else if $action == 'original-size' { @include original-size; }
-    @else if $action == 'show' { @include show-block; }
-    @else if $action == 'hide' { @include hide; }
-    @else if $action == 'area' { @include area($args...); }
-
-    @else { @error 'No such action - #{$action}'; }
+    @include common-action($action, $args...) { @content; };
+    @if $action == 'main' { @include _main; }
   }
 }
- 
 
 @mixin _main {
   &__list {

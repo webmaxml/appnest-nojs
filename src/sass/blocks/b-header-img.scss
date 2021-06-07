@@ -1,11 +1,13 @@
 @use '../utilities' as *;
 
-@mixin b-logo($action: 'content', $args...) {
-  .b-logo {
+@mixin b-header-img($action: 'content', $args...) {
+  .b-header-img {
     @include common-action($action, $args...) { @content; };
     @if $action == 'main' { @include _main; }
   }
 }
 
 @mixin _main {
+  width: size(540);
+  height: size(623);
 }

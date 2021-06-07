@@ -6,6 +6,11 @@
 @use '../containers';
 
 @mixin home {
+  @include _main;
+  @include _media;
+}
+
+@mixin _main {
   @include reset.reset;
   @include reset.normalize;
 
@@ -17,20 +22,27 @@
   @include common.icons;
   @include common.base;
 
-  @include blocks.b-burger('init');
-  @include blocks.b-logo('init');
-  @include blocks.b-nav('init');
-  @include blocks.b-get-btn('init');
-  @include blocks.b-vendor-btn('init');
-  @include blocks.b-vendor-btn('original-size');
+  @include blocks.b-burger('main');
+  @include blocks.b-logo('main');
+  @include blocks.b-nav('main');
+  @include blocks.b-get-btn('main');
+  @include blocks.b-vendor-btn('main');
+  @include blocks.b-header-text('main');
+  @include blocks.b-header-img('main');
 
-  @include containers.c-top-line('init');
+  @include containers.c-top-line('main');
+  @include containers.c-vendor-btn-list('main');
+  @include containers.c-header-content('main');
+}
+
+@mixin _media {
+
+  // ----------------------------------------- mobile -----------------------------------------
 
   @include from_0 {
     @include containers.c-top-line('grid-with-burger');
+    @include containers.c-header-content('mobile-grid');
   }
-
-// ----------------------------------------- mobile -----------------------------------------
 
   @include from_320 {
     
@@ -59,7 +71,7 @@
   }
 
   @include from_768 {
-    
+    @include containers.c-header-content('desktop-grid');
   }
 
   @include from_800 {
