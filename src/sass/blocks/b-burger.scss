@@ -2,7 +2,7 @@
 
 @mixin b-burger($action, $args...) {
   .b-burger {
-    @if $action == 'init' { @include _main; @include _hover; }
+    @if $action == 'init' { @include _main; }
     @else if $action == 'show' { @include show-block; }
     @else if $action == 'hide' { @include hide; }
     @else if $action == 'original-size' { @include original-size; }
@@ -14,10 +14,13 @@
 }
 
 @mixin _main {
+  @include _hover;
+
   padding: size(10);
-  border-width: size(1);
-  border-style: solid;
+  border: size(1) solid var(--border-color);
   border-radius: size(6);
+
+  color: var(--color);
 
   transition: var(--d-all);
 
@@ -28,11 +31,11 @@
 }
 
 @mixin _hover {
-  border-color: var(--c-header-text);
-  color: var(--c-header-text);
+  --border-color: var(--c-header-text);
+  --color: var(--c-header-text);
   
   &:hover {
-    border-color: var(--c-active);
-    color: var(--c-active);
+    --border-color: var(--c-active);
+    --color: var(--c-active);
   }
 }

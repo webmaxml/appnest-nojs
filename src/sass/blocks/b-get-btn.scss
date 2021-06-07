@@ -2,7 +2,7 @@
 
 @mixin b-get-btn($action, $args...) {
   .b-get-btn {
-    @if $action == 'init' { @include _main; @include _hover; }
+    @if $action == 'init' { @include _main; }
     @else if $action == 'original-size' { @include original-size; }
     @else if $action == 'fluid-size' { @include fluid-text-size; }
     @else if $action == 'area' { @include area($args...); }
@@ -12,11 +12,12 @@
 }
 
 @mixin _main {
+  @include _hover;
+
   display: block;
 
   padding: size(20) size(34);
-  border-width: size(1);
-  border-style: solid;
+  border: size(1) solid var(--border-color);
   border-radius: size(32);
 
   font-family: var(--ff-header);
@@ -26,14 +27,17 @@
   color: var(--c-header-text);
   text-transform: uppercase;
 
+  background: var(--background);
+
   transition: var(--d-all);
 }
 
 @mixin _hover {
-  border-color: var(--c-header-text);
+  --background: transparent;
+  --border-color: var(--c-header-text);
 
   &:hover {
-    background: var(--c-active);
-    border-color: var(--c-active);
+    --background: var(--c-active);
+    --border-color: var(--c-active);
   }
 }

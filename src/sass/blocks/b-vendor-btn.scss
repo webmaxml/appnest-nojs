@@ -1,107 +1,117 @@
 @use '../utilities' as *;
 
-// ----------------------------------------- public -----------------------------------------
+@mixin b-vendor-btn($action, $args...) {
+  .b-vendor-btn {
+    @if $action == 'init' { @include _main; }
+    @else if $action == 'original-size' { @include original-size; }
+    @else if $action == 'fluid-size' { @include fluid-text-size; }
+    @else if $action == 'area' { @include area($args...); }
 
-.b-vendor-btn {
-  --p-size: 100px;
-}
-
-// ----------------------------------------- local -----------------------------------------
-
-.b-vendor-btn {
-  --l-apple-width: 25em;
-  --l-play-width: 27em;
-  --l-apple-light: -5em -5em;
-  --l-apple-dark: -40em -5em;
-  --l-play-light: -220em -5em;
-  --l-play-dark: -130em -95em;
-
-  &--light {
-    --l-bg: transparent;
-    --l-border-color: var(--c-header-text);
-    --l-color: var(--c-header-text);
-  }
-
-  &--dark {
-    --l-bg: transparent;
-    --l-border-color: var(--c-h2);
-    --l-color: var(--c-h2);
-  }
-
-  &--light:hover, &--dark:hover {
-    --l-bg: var(--c-active);
-    --l-border-color: var(--c-active);
-    --l-color: var(--c-header-text);
-  }
-
-  &--apple {
-    & .b-vendor-btn__icon { --l-width: var(--l-apple-width); }
-
-    &.b-vendor-btn--light {
-      & .b-vendor-btn__icon { --l-pos: var(--l-apple-light); }
-    }
-
-    &.b-vendor-btn--dark {
-      & .b-vendor-btn__icon { --l-pos: var(--l-apple-dark); }
-
-      &:hover {
-        & .b-vendor-btn__icon { --l-pos: var(--l-apple-light); }
-      }
-    }
-  }
-
-  &--play {
-    & .b-vendor-btn__icon { --l-width: var(--l-play-width); }
-
-    &.b-vendor-btn--light {
-      & .b-vendor-btn__icon { --l-pos: var(--l-play-light); }
-    }
-
-    &.b-vendor-btn--dark {
-      & .b-vendor-btn__icon { --l-pos: var(--l-play-dark); }
-
-      &:hover {
-        & .b-vendor-btn__icon { --l-pos: var(--l-play-light); }
-      }
-    }
+    @else { @error 'No such action - #{$action}'; }
   }
 }
 
-
-// ----------------------------------------- styles -----------------------------------------
-
-.b-vendor-btn {
-  &__icon   { @include area(i, start, start); }
-  &__text   { @include area(t, start, end); }
-  &__store  { @include area(s, start, start); }
-
-  @include grid(
-    ". . . . ." size(13)
-    ". i . t ." max-content
-    ". i . s ." max-content
-    ". . . . ." size(13)
-    / 1fr max-content size(9) max-content 1fr
-  );
+@mixin _main {
+  @include _grid;
+  @include _type;
+  @include _style;
 
   width: size(170);
-  border: size(1) solid var(--l-border-color);
+  border: size(1) solid var(--border-color);
   border-radius: size(7);
 
-  background: var(--l-bg);
+  background: var(--background);
 
   transition: var(--d-all);
 
   &__icon {
-    width: var(--l-width);
+    width: var(--icon-width);
     height: 29em;
-    background-position: var(--l-pos);
+    background-position: var(--icon-bg-pos);
   }
 
   &__text {
-    @include text(var(--ff-header), var(--fw-light), size(9), size(11), var(--l-color), uppercase);
+    font-family: var(--ff-header);
+    font-weight: var(--fw-light);
+    font-size: size(9);
+    line-height: size(11);
+    color: var(--color);
+    text-transform: uppercase;
   }
 
   &__store {
-    @include text(var(--ff-header), var(--fw-semi-bold), size(16), size(15), var(--l-color), uppercase);
+    font-family: var(--ff-header);
+    font-weight: var(--fw-semi-bold);
+    font-size: size(16);
+    line-height: size(15);
+    color: var(--color);
+    text-transform: uppercase;
+  }
+}
+
+@mixin _grid {
+  &__icon  { grid-area: i; justify-self: start; align-self: start; }
+  &__text  { grid-area: t; justify-self: start; align-self: end; }
+  &__store { grid-area: s; justify-self: start; align-self: start; }
+  
+  display: grid;
+  grid-template:
+    ". . . . ." size(13)
+    ". i . t ." max-content
+    ". i . s ." max-content
+    ". . . . ." size(13)
+    / 1fr max-content size(9) max-content 1fr;
+}
+
+@mixin _type {
+  &--apple {
+    & .b-vendor-btn__icon { --icon-width: 25em; }
+
+    &.b-vendor-btn--light {
+      & .b-vendor-btn__icon { --icon-bg-pos: -5em -5em; }
+    }
+
+    &.b-vendor-btn--dark {
+      & .b-vendor-btn__icon { --icon-bg-pos: -40em -5em; }
+
+      &:hover {
+        & .b-vendor-btn__icon { --icon-bg-pos: -5em -5em; }
+      }
+    }
+  }
+  &--play {
+    & .b-vendor-btn__icon { --icon-width: 27em; }
+
+    &.b-vendor-btn--light {
+      & .b-vendor-btn__icon { --icon-bg-pos: -220em -5em; }
+    }
+
+    &.b-vendor-btn--dark {
+      & .b-vendor-btn__icon { --icon-bg-pos: -130em -95em; }
+
+      &:hover {
+        & .b-vendor-btn__icon { --icon-bg-pos: -220em -5em; }
+      }
+    }
+  }
+}
+
+@mixin _style {
+  &--light {
+    --background: transparent;
+    --border-color: var(--c-header-text);
+    --color: var(--c-header-text);
+  }
+
+  &--dark {
+    --background: transparent;
+    --border-color: var(--c-h2);
+    --color: var(--c-h2);
+  }
+
+  &--light:hover, &--dark:hover {
+    --background: var(--c-active);
+    --border-color: var(--c-active);
+    --color: var(--c-header-text);
   }
 }

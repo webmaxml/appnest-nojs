@@ -21,6 +21,8 @@
   @include blocks.b-logo('init');
   @include blocks.b-nav('init');
   @include blocks.b-get-btn('init');
+  @include blocks.b-vendor-btn('init');
+  @include blocks.b-vendor-btn('original-size');
 
   @include containers.c-top-line('init');
 
