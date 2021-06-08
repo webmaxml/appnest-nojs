@@ -1,7 +1,7 @@
 {
-  "name": "template-nojs",
+  "name": "appnest",
   "version": "1.0.0",
-  "description": "template for html and css only",
+  "description": "appnest landing page",
   "scripts": {
     "dev": "webpack serve --mode=development --config webpack.dev.config.js",
     "build": "webpack --mode=production --config webpack.prod.config.js",
@@ -10,27 +10,29 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/webmaxml/template-nojs.git"
+    "url": "git+https://github.com/webmaxml/appnest-nojs.git"
   },
   "keywords": [],
   "author": "webmaxml",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/webmaxml/template-nojs/issues"
+    "url": "https://github.com/webmaxml/appnest-nojs/issues"
   },
-  "homepage": "https://github.com/webmaxml/template-nojs#readme",
+  "homepage": "https://github.com/webmaxml/appnest-nojs#readme",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.26.1",
+    "@typescript-eslint/parser": "^4.26.1",
     "autoprefixer": "^10.2.1",
     "browser-sync": "^2.26.14",
     "concurrently": "^5.3.0",
     "copy-webpack-plugin": "^7.0.0",
     "css-loader": "^5.0.1",
     "cssnano": "^4.1.10",
-    "eslint": "^7.19.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.22.1",
+    "eslint": "^7.28.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-promise": "^5.1.0",
     "handlebars": "^4.7.6",
     "handlebars-loader": "^1.7.1",
     "html-webpack-plugin": "^5.0.0",
@@ -44,6 +46,9 @@
     "sass": "^1.32.7",
     "sass-loader": "^11.0.0",
     "style-loader": "^2.0.0",
+    "ts-loader": "^9.2.3",
+    "tsconfig-paths-webpack-plugin": "^3.5.1",
+    "typescript": "^4.3.2",
     "webpack": "^5.21.2",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2"

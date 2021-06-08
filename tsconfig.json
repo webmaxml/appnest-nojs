@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "isolatedModules": true,
+    "module": "CommonJS",
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "baseUrl": "src",
+    "paths": {
+        "types/*": ["types/*"],
+        "js/*": ["js/*"],
+        "adapters/*": ["js/adapters/*"],
+        "classes/*": ["js/classes/*"],
+        "controllers/*": ["js/controllers/*"],
+        "mappers/*": ["js/mappers/*"],
+        "models/*": ["js/models/*"],
+        "views/*": ["js/views/*"]
+    },
+  }
+}
