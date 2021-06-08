@@ -15,13 +15,13 @@
     "baseUrl": "src",
     "paths": {
         "types/*": ["types/*"],
-        "js/*": ["js/*"],
-        "adapters/*": ["js/adapters/*"],
-        "classes/*": ["js/classes/*"],
-        "controllers/*": ["js/controllers/*"],
-        "mappers/*": ["js/mappers/*"],
-        "models/*": ["js/models/*"],
-        "views/*": ["js/views/*"]
+        "js/*": ["ts/*"],
+        "adapters/*": ["ts/adapters/*"],
+        "classes/*": ["ts/classes/*"],
+        "controllers/*": ["ts/controllers/*"],
+        "mappers/*": ["ts/mappers/*"],
+        "models/*": ["ts/models/*"],
+        "views/*": ["ts/views/*"]
     },
   }
 }
