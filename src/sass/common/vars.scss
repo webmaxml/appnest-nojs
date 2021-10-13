@@ -1,7 +1,0 @@
-@use '../utilities' as *;
-
-@mixin vars {
-  :root {
-    @each $var, $value in $css { @include p($var, $value); }
-  }
-}

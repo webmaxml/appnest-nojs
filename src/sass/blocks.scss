@@ -1,0 +1,531 @@
+@use 'utilities' as *;
+@use 'placeholders';
+
+// <<{ b-nav
+
+@mixin b-nav($action: 'content', $args...) {
+  .b-nav {
+    @include common-action($action, $args...) { @content; };
+
+    // <<{ main
+
+    @if $action == 'main' {
+
+      // <<{ root
+
+
+      // }>>
+
+      // <<{ __list
+
+      &__list {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+      }
+
+      // }>>
+
+      // <<{ __item
+
+      &__item {
+        padding: 0 size(15);
+      }
+
+      // }>>
+
+      // <<{ __link
+
+      &__link {
+        @include hover-center-line(size(1), size(-10), var(--c-header-text), var(--d-all));
+
+        font-family: var(--ff-header);
+        font-weight: var(--fw-regular);
+        font-size: size(16);
+        line-height: size(34);
+        color: var(--c-header-text);
+        text-transform: uppercase;
+      }
+
+      // }>>
+
+    }
+
+    // }>>
+
+  }
+
+}
+
+// }>>
+
+// <<{ b-logo
+
+@mixin b-logo($action: 'content', $args...) {
+  .b-logo {
+    @include common-action($action, $args...) { @content; };
+
+  // <<{ main
+
+    @if $action == 'main' {
+      
+      // <<{ root
+
+
+      // }>>
+
+    }
+
+  // }>>
+
+  }
+}
+
+// }>>
+
+// <<{ b-vendor-btn
+
+@mixin b-vendor-btn($action: 'content', $args...) {
+  .b-vendor-btn {
+    @include common-action($action, $args...) { @content; };
+
+// <<{ main
+
+    @if $action == 'main' {
+
+      // <<{ root
+
+      display: grid;
+      grid-template:
+        ". . . . ." size(13)
+        ". i . t ." max-content
+        ". i . s ." max-content
+        ". . . . ." size(13)
+        / 1fr max-content size(9) max-content 1fr;
+
+      width: size(170);
+
+      border-width: size(1);
+      border-style: solid;
+      border-radius: size(7);
+
+      transition: var(--d-all);
+
+
+      // }>>
+
+      // <<{ --light
+
+      &--light { 
+        border-color: var(--c-header-text); 
+        color: var(--c-header-text);
+        
+        &:hover {
+          background: var(--c-active);
+          border-color: var(--c-active);
+          color: var(--c-header-text);
+        }
+      }
+
+      // }>>
+
+      // <<{ --dark
+
+      &--dark { 
+        border-color: var(--c-h2); 
+        color: var(--c-h2);
+
+        &:hover {
+          background: var(--c-active);
+          border-color: var(--c-active);
+          color: var(--c-header-text);
+        }
+      }
+
+      // }>>
+
+      // <<{ __icon
+
+      &__icon  {
+        grid-area: i;
+        justify-self: start;
+        align-self: start;
+
+        .b-vendor-btn--apple.b-vendor-btn--light      & { @extend %icon-apple; }
+        .b-vendor-btn--apple.b-vendor-btn--dark       & { @extend %icon-apple-dark; }
+        .b-vendor-btn--apple.b-vendor-btn--dark:hover & { @extend %icon-apple; }
+
+        .b-vendor-btn--play.b-vendor-btn--light      & { @extend %icon-play-store; }
+        .b-vendor-btn--play.b-vendor-btn--dark       & { @extend %icon-play-store-dark; }
+        .b-vendor-btn--play.b-vendor-btn--dark:hover & { @extend %icon-play-store; }
+      }
+      
+      // }>>
+
+      // <<{ __text
+
+      &__text  { 
+        grid-area: t; 
+        justify-self: start; 
+        align-self: end; 
+
+        font-family: var(--ff-header);
+        font-weight: var(--fw-light);
+        font-size: size(9);
+        line-height: size(11);
+        text-transform: uppercase;
+      }
+
+      // }>>
+
+      // <<{ __store
+
+      &__store { 
+        grid-area: s; 
+        justify-self: start; 
+        align-self: start; 
+
+        font-family: var(--ff-header);
+        font-weight: var(--fw-semi-bold);
+        font-size: size(16);
+        line-height: size(15);
+        text-transform: uppercase;
+      }
+
+      // }>>
+
+    }
+
+// }>>
+
+  }
+
+}
+
+// }>>
+
+// <<{ b-burger
+
+@mixin b-burger($action: 'content', $args...) {
+  .b-burger {
+    @include common-action($action, $args...) { @content; };
+
+  // <<{ main
+
+    @if $action == 'main' {
+
+      // <<{ root
+
+      padding: size(10);
+      border: size(1) solid var(--c-header-text);
+      border-radius: size(6);
+
+      color: var(--c-header-text);
+
+      transition: var(--d-all);
+
+      &:hover {
+        border-color: var(--c-active);
+        color: var(--c-active);
+      }
+
+      // }>>
+
+      // <<{ __icon
+
+      &__icon {
+        font-size: size(33);
+        line-height: size(35);
+      }
+
+      // }>>
+
+    }
+
+  // }>>
+
+  }
+}
+
+// }>>
+
+// <<{ b-get-btn
+
+@mixin b-get-btn($action: 'content', $args...) {
+  .b-get-btn {
+    @include common-action($action, $args...) { @content; };
+
+  // <<{ main
+
+    @if $action == 'main' {
+
+      // <<{ root
+
+      display: block;
+
+      padding: size(20) size(34);
+      border: size(1) solid var(--c-header-text);
+      border-radius: size(32);
+
+      font-family: var(--ff-header);
+      font-weight: var(--fw-semi-bolc);
+      font-size: size(16);
+      line-height: size(16);
+      color: var(--c-header-text);
+      text-transform: uppercase;
+
+      transition: var(--d-all);
+
+      &:hover {
+        background: var(--c-active);
+        border-color: var(--c-active);
+      }
+
+      // }>>
+
+    }
+
+  // }>>
+
+  }
+}
+
+// }>>
+
+// <<{ b-header-text
+
+@mixin b-header-text($action: 'content', $args...) {
+  .b-header-text {
+    @include common-action($action, $args...) { @content; };
+
+  // <<{ main
+
+    @if $action == 'main' {
+
+      // <<{ root
+
+      max-width: size(670);
+
+      // }>>
+
+      // <<{ __header
+
+      &__header {
+        font-family: var(--ff-header);
+        font-weight: var(--fw-light);
+        font-size: size(36);
+        line-height: size(52);
+        color: var(--c-header-text);
+        text-transform: uppercase;
+      }
+
+      // }>>
+
+      // <<{ __header-bold
+
+      &__header-bold {
+        display: block;
+
+        font-weight: var(--fw-bold);
+        font-size: size(48);
+      }
+
+      // }>>
+
+      // <<{ __header-light
+
+      &__header-light {
+        font-weight: var(--fw-light);
+      }
+
+      // }>>
+
+      // <<{ __header-accent
+
+      &__header-accent {
+        color: var(--c-accent);
+      }
+
+      // }>>
+
+      // <<{ __text
+
+      &__text {
+        margin-top: size(20);
+
+        font-family: var(--ff-header);
+        font-weight: var(--fw-regular);
+        font-size: size(18);
+        line-height: size(30);
+        color: var(--c-header-text);
+      }
+
+      // }>>
+
+    }
+
+  // }>>
+
+  }
+}
+
+// }>>
+
+// <<{ b-header-img
+
+@mixin b-header-img($action: 'content', $args...) {
+  .b-header-img {
+    @include common-action($action, $args...) { @content; };
+
+// <<{ main
+
+    @if $action == 'main' {
+
+      // <<{ root
+
+      width: size(540);
+      height: size(623);
+
+      // }>>
+
+    }
+
+// }>>
+
+  // <<{ fluid-size
+
+    @if $action == 'fluid-size' {
+
+      // <<{ root
+
+      --size: var(--fluid-header-img-size);
+
+      // }>>
+
+    }
+
+  // }>>
+
+  }
+}
+
+// }>>
+
+// <<{ b-mobile-menu
+
+
+@mixin b-mobile-menu($action: 'content', $args...) {
+  .b-mobile-menu {
+    @include common-action($action, $args...) { @content; };
+
+// <<{ main
+
+    @if $action == 'main' {
+
+      // <<{ root
+
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1;
+
+      width: size(300);
+      height: 100%;
+
+      background: var(--c-h2);
+
+      // }>>
+
+      // <<{ __top
+
+      &__top {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center;
+
+        padding: size(15);
+      }
+
+      // }>>
+
+      // <<{ __burger-btn
+
+      &__burger-btn {
+        margin-right: size(60);
+      }
+
+      // }>>
+
+      // <<{ __burger-icon
+
+      &__burger-icon {
+        font-size: size(20);
+        color: var(--c-header-text);
+      }
+
+      // }>>
+
+      // <<{ __home-link
+
+      &__home-link {
+
+      }
+
+      // }>>
+
+      // <<{ __logo
+
+      &__logo {
+
+      }
+
+      // }>>
+
+      // <<{ __list
+
+      &__list {
+
+      }
+
+      // }>>
+
+      // <<{ __item
+
+      &__item {
+
+      }
+
+      // }>>
+
+      // <<{ __link
+
+      &__link {
+        display: block;
+
+        padding: size(15) 0;
+
+        font-family: var(--ff-header);
+        font-weight: var(--fw-regular);
+        font-size: size(16);
+        line-height: size(20);
+        color: var(--c-header-text);
+        text-transform: uppercase;
+        text-align: center;
+
+        &:hover {
+          background: var(--c-text);
+        }
+      }
+
+      // }>>
+
+    }
+
+// }>>
+
+  }
+}
+
+// }>>
