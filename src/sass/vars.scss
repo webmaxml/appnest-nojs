@@ -1,0 +1,48 @@
+@use 'sass:string';
+
+$css: (
+  // font-weight
+  '--fw-thin': 100,
+  '--fw-extra-light': 200,
+  '--fw-light': 300,
+  '--fw-regular': 400,
+  '--fw-medium': 500,
+  '--fw-semi-bold': 600,
+  '--fw-bold': 700,
+  '--fw-extra-bold': 800,
+  '--fw-black': 900,
+
+  // font-family
+  '--ff-header': string.unquote("Poppins, sans-serif"),
+  '--ff-text': string.unquote("Raleway, sans-serif"),
+
+  // color
+  '--c-accent': #00cff1,
+  '--c-active': #24c657,
+  '--c-overlay': #35203b,
+
+  '--c-overview1': #ff45c4,
+  '--c-overview2': #ff9d46,
+
+  '--c-header-text': #ffffff,
+  '--c-text': #565656,
+
+  '--c-h2': #282828,
+  '--c-h3': #414040,
+  '--c-pagination': #ebe9ff,
+
+  '--c-bg1': #fbfbfb,
+  '--c-bg2': #ffffff,
+  
+  '--c-facebook': #3b5998,
+  '--c-twitter': #55acee,
+  '--c-instagram': #6a453b,
+  '--c-linked': #007ab9,
+
+  // duration
+  '--d-all': 0.3s,
+
+  // fluid
+  '--fluid-text-size': fluid (320: 60px, 1280: 100px),
+  '--fluid-header-img-size': fluid (320: 30px, 1280: 100px),
+);

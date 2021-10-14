@@ -1,0 +1,38 @@
+@use '../functions' as *; 
+@use '../mixins' as *; 
+
+@mixin b-get-btn($action: 'content', $args...) {
+  .b-get-btn {
+    @include common-actions($action, $args...) { @content; };
+
+  // <<{ main
+
+    @if $action == 'main' {
+
+      display: block;
+
+      padding: size(20) size(34);
+      border: size(1) solid var(--c-header-text);
+      border-radius: size(32);
+
+      font-family: var(--ff-header);
+      font-weight: var(--fw-semi-bolc);
+      font-size: size(16);
+      line-height: size(16);
+      color: var(--c-header-text);
+      text-transform: uppercase;
+
+      transition: var(--d-all);
+
+      &:hover {
+        background: var(--c-active);
+        border-color: var(--c-active);
+      }
+
+    }
+
+  // }>>
+
+  }
+}
+

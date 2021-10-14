@@ -1,0 +1,48 @@
+@use '../assets';
+@use '../placeholders'; // placeholders have global scope, so they can be included once globaly and used everywhere
+@use '../blocks' as *;
+@use '../containers' as *;
+
+@mixin init {
+
+// <<{ assets
+
+@include assets.reset;
+@include assets.normalize;
+@include assets.fontawesome;
+@include assets.icofont;
+@include assets.vars;
+@include assets.fonts;
+@include assets.icons;
+@include assets.common;
+
+// }>>
+
+// <<{ blocks
+
+@include b-burger('main');
+@include b-logo('main');
+@include b-nav('main');
+@include b-get-btn('main');
+@include b-vendor-btn('main');
+@include b-header-text('main');
+@include b-header-img('main');
+@include b-mobile-menu('main');
+@include b-mobile-menu('original-size');
+
+// }>>
+
+// <<{ containers
+
+@include c-top-line('main');
+@include c-vendor-btn-list('main');
+@include c-header-content('main');
+@include c-header('main');
+
+@include c-top-line('grid-with-burger');
+@include c-header-content('mobile-grid');
+
+// }>>
+  
+}
+

@@ -1,0 +1,6 @@
+@use '../containers' as *;
+
+@mixin from_768 {
+  @include c-header-content('desktop-grid');
+}
+

@@ -1,0 +1,58 @@
+@use '../functions/types' as *;
+
+// <<{ prop - outputs declaration in css
+
+@mixin prop($prop, $value) { 
+  $prop: validate($prop, 'string');
+  #{$prop}: $value; 
+}
+
+// }>>
+
+// <<{ breakpoints - outputs min-width media queries in css
+
+// $bps - (768px: block, 1024px: none)
+
+@mixin breakpoints($prop, $bps) {
+  $prop: validate($prop, 'string');
+  $bps: validate($bps, 'map');
+
+  @each $width, $value in $bps {
+    @if unit($width) != 'px' { @error "width must be px number, '#{inspect($width)}' - provided"; }
+
+    @media screen and (min-width: $width) {
+      @include prop($prop, $value);
+    }
+  }
+}
+
+// }>>
+
+// <<{ block - outputs block in css
+
+@mixin block($selector) {
+  #{$selector} { 
+    @content; 
+  }
+}
+
+// }>>
+
+// <<{ root-block - outputs root block in css
+
+@mixin root-block($selector) {
+  @at-root #{$selector} { 
+    @content; 
+  }
+}
+
+// }>>
+
+// <<{ output - simply outputs content
+
+@mixin output {
+  @content; 
+}
+
+// }>>
+

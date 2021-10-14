@@ -1,0 +1,32 @@
+@use 'controllers' as *;
+
+@include init;
+
+// mobile
+@media screen and (min-width: 320px) {} 
+@media screen and (min-width: 360px) {} 
+@media screen and (min-width: 375px) {}
+@media screen and (min-width: 393px) {} 
+@media screen and (min-width: 412px) {} 
+@media screen and (min-width: 480px) {} 
+
+// tablet
+@media screen and (min-width: 600px) {} 
+@media screen and (min-width: 768px) { @include from_768; }
+@media screen and (min-width: 800px) {}
+@media screen and (min-width: 834px) {}
+@media screen and (min-width: 960px) {}
+@media screen and (min-width: 1024px) { @include from_1024; }
+
+// desktop
+@media screen and (min-width: 1280px) {}
+@media screen and (min-width: 1366px) {}
+@media screen and (min-width: 1440px) {}
+@media screen and (min-width: 1536px) {}
+@media screen and (min-width: 1600px) {}
+@media screen and (min-width: 1920px) {}
+@media screen and (min-width: 2560px) {}
+@media screen and (min-width: 3840px) {}
+
+
+

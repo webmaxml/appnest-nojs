@@ -1,0 +1,9 @@
+@use '../vars' as *;
+@use '../mixins' as *;
+
+@mixin vars {
+  :root {
+    @each $var, $value in $css { @include p($var, $value); }
+  }
+}
+

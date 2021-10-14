@@ -1,0 +1,18 @@
+@use '../functions' as *;
+@use '../mixins' as *;
+
+@mixin b-logo($action: 'content', $args...) {
+  .b-logo {
+    @include common-actions($action, $args...) { @content; };
+
+  // <<{ main
+
+    @if $action == 'main' {
+
+    }
+
+  // }>>
+
+  }
+}
+

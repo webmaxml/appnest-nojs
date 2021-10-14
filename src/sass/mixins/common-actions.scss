@@ -1,0 +1,24 @@
+
+@mixin _area($area, $justify, $align) { 
+  grid-area: $area; 
+  justify-self: $justify; 
+  align-self: $align; 
+}
+
+@mixin common-actions($action, $args...) {
+  @if $action == 'original-size'   { --size: 100px; }
+  @if $action == 'fluid-text-size' { --size: var(--fluid-text-size); }
+
+  @if $action == 'show-block'      { display: block; }
+  @if $action == 'show-flex'       { display: flex;  }
+  @if $action == 'hide'            { display: none; }
+ 
+  @if $action == 'text-center'     { text-align: center; }
+  @if $action == 'text-left'       { text-align: left; }
+  @if $action == 'text-right'      { text-align: right; }
+ 
+  @if $action == 'area'            { @include _area($args...); }
+ 
+  @if $action == 'content'         { @content; }
+}
+

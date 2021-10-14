@@ -1,0 +1,23 @@
+@use 'types' as *;
+@use 'list';
+
+// <<{ strip-unit() - strips units from number value
+
+@function strip-unit($value) {
+  $value: validate($value, 'number');
+  @return $value / ($value * 0 + 1);
+}
+
+// }>>
+
+// <<{ to-px() - converts number to px value
+
+@function to-px($value, $args...) {
+  $value: validate($value, 'number', 'list', 'map');
+
+  @if is($value, 'number') { @return strip-unit($value) * 1px; } 
+  @if is($value, 'list', 'map') { @return list.map($value, get-function('to-px')); } 
+}
+
+// }>>
+

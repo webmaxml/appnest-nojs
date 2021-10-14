@@ -1,0 +1,41 @@
+@use '../functions' as *; 
+@use '../mixins' as *; 
+
+@mixin b-nav($action: 'content', $args...) {
+  .b-nav {
+    @include common-actions($action, $args...) { @content; };
+
+    // <<{ main
+
+    @if $action == 'main' {
+
+      &__list {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+      }
+
+      &__item {
+        padding: 0 size(15);
+      }
+
+      &__link {
+        @include hover-center-line(size(1), size(-10), var(--c-header-text), var(--d-all));
+
+        font-family: var(--ff-header);
+        font-weight: var(--fw-regular);
+        font-size: size(16);
+        line-height: size(34);
+        color: var(--c-header-text);
+        text-transform: uppercase;
+      }
+
+    }
+
+    // }>>
+
+  }
+
+}
+

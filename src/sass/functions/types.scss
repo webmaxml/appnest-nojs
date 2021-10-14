@@ -1,0 +1,18 @@
+
+// <<{ is() - checks if value is of provided types
+
+@function is($value, $types...) { 
+  @each $type in $types { @if type-of($value) == $type { @return true; } }
+  @return false;
+}
+
+// }>>
+
+// <<{ validate() - validates value to be of provided types
+
+@function validate($value, $types...) {
+  @if is($value, $types...) { @return $value; }
+  @error "Wrong type: '#{$types}' expected, '#{type-of($value)}' provided";
+}
+
+// }>>

@@ -1,0 +1,31 @@
+@use '../functions' as *; 
+@use '../mixins' as *; 
+
+@mixin b-header-img($action: 'content', $args...) {
+  .b-header-img {
+    @include common-actions($action, $args...) { @content; };
+
+// <<{ main
+
+    @if $action == 'main' {
+
+      width: size(540);
+      height: size(623);
+
+    }
+
+// }>>
+
+  // <<{ fluid-size
+
+    @if $action == 'fluid-size' {
+
+      --size: var(--fluid-header-img-size);
+
+    }
+
+  // }>>
+
+  }
+}
+

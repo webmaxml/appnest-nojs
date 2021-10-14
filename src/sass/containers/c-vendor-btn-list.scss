@@ -1,22 +1,27 @@
-@use '../utilities' as *;
-@use '../blocks' as *;
+@use '../mixins' as *; 
+@use '../blocks' as *; 
 
 @mixin c-vendor-btn-list($action: 'content', $args...) {
   .c-vendor-btn-list {
-    @include common-action($action, $args...) { @content; };
-    @if $action == 'main' { @include _main; }
+    @include common-actions($action, $args...) { @content; };
+
+// <<{ main
+
+    @if $action == 'main' {
+      @include b-vendor-btn('fluid-text-size');
+
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: flex-start;
+      align-items: flex-start;
+
+      &__item {
+        &:first-child { margin-right: 30px; } 
+      }
+    }
+
+// }>>
+
   }
 }
 
-@mixin _main {
-  @include b-vendor-btn('fluid-text-size');
-
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-
-  &__item {
-    &:first-child { margin-right: 30px; } 
-  }
-}

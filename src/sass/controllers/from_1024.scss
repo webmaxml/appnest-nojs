@@ -1,0 +1,6 @@
+@use '../containers' as *;
+
+@mixin from_1024 {
+  @include c-top-line('grid-with-nav');
+}
+

@@ -1,0 +1,22 @@
+
+// <<{ container
+
+%container {
+  max-width: 1200px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// }>>
+
+// <<{ container-no-padding
+
+%container-no-padding {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// }>>

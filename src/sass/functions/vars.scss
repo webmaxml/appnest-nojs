@@ -1,0 +1,37 @@
+@use 'sass:meta';
+@use '../vars';
+
+// <<{ _vars() - gets variables map from vars file
+
+@function _vars() { @return meta.module-variables('vars'); }
+
+// }>>
+
+// <<{ has() - whether variables map has provided variable
+
+@function has($names...) {
+  $vars: _vars();
+  @each $name in $names {
+    $vars: map-get($vars, $name);
+    @if not $vars { @return false; }
+  }
+
+  @return true;
+}
+
+// }>>
+
+// <<{ get() - gets variable value
+
+@function get($names...) {
+  $value: _vars();
+  @each $name in $names {
+    $value: map-get($value, $name);
+    @if not $value { @error "Nu such variable: '#{$name}'"; }
+  }
+
+  @return $value;
+}
+
+// }>>
+

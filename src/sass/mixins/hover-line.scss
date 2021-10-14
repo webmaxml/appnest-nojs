@@ -1,0 +1,73 @@
+
+// <<{ hover-center-line - draws increasing from center line on hover
+
+@mixin hover-center-line($height, $bottom, $color, $transition, $position: relative) {
+  position: $position;
+
+  &::after {
+    position: absolute;
+    left: 50%;
+    bottom: $bottom;
+    content: '';
+    width: 0%;
+    height: $height;
+    background: $color;
+    transition: $transition;
+  }
+
+  &:hover::after {
+    display: block;
+    left: 0;
+    width: 100%;
+  }
+}
+
+// }>>
+
+// <<{ hover-left-line - draws increasing from left line on hover
+
+@mixin hover-left-line($height, $bottom, $color, $transition, $position: relative) {
+  position: $position;
+
+  &::after {
+    position: absolute;
+    left: 0;
+    bottom: $bottom;
+    content: '';
+    background: $color;
+    width: 0%;
+    height: $height;
+    transition: $transition;
+  }
+
+  &:hover::after {
+    display: block;
+    width: 100%;
+  }
+}
+
+// }>>
+
+// <<{ hover-right-line - draws increasing from right line on hover
+
+@mixin hover-right-line($height, $bottom, $color, $transition, $position: relative) {
+  position: $position;
+
+  &::after {
+    position: absolute;
+    right: 0;
+    bottom: $bottom;
+    content: '';
+    background: $color;
+    width: 0%;
+    height: $height;
+    transition: $transition;
+  }
+
+  &:hover::after {
+    display: block;
+    width: 100%;
+  }
+}
+
+// }>>

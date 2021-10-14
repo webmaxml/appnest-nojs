@@ -1,46 +1,57 @@
-@use '../utilities' as *;
-@use '../blocks' as *;
+@use '../mixins' as *; 
+@use '../blocks' as *; 
 
 @mixin c-top-line($action: 'content', $args...) {
   .c-top-line {
-    @include common-action($action, $args...) { @content; };
-    @if $action == 'main' { @include _main; }
-    @if $action == 'grid-with-burger' { @include _grid-with-burger; }
-    @if $action == 'grid-with-nav' { @include _grid-with-nav; }
+    @include common-actions($action, $args...) { @content; };
+
+// <<{ main
+
+    @if $action == 'main' {
+      @include b-burger('fluid-text-size');
+      @include b-logo('fluid-text-size');
+      @include b-nav('original-size');
+      @include b-get-btn('fluid-text-size');
+
+      display: grid;
+    }
+
+// }>>
+
+// <<{ grid-with-burger
+
+    @if $action == 'grid-with-burger' {
+      @include b-burger('show-block');
+      @include b-nav('hide');
+
+      @include b-burger('area', b, start, center);
+      @include b-logo('area', l, start, center);
+      @include b-get-btn('area', g, end, center);
+
+      grid-template: 
+        "b . l . g" max-content
+        / max-content 15px max-content 1fr max-content;
+    }
+
+// }>>
+
+// <<{ grid-with-nav
+
+    @if $action == 'grid-with-nav' {
+      @include b-burger('hide');
+      @include b-nav('show-block');
+
+      @include b-logo('area', l, start, center);
+      @include b-nav('area', n, center, center);
+      @include b-get-btn('area', g, end, center);
+
+      grid-template: 
+        "l n g" max-content
+        / 1fr max-content 1fr;
+    }
+
+// }>>
+
   }
 }
 
-@mixin _main {
-  @include b-burger('fluid-text-size');
-  @include b-logo('fluid-text-size');
-  @include b-nav('original-size');
-  @include b-get-btn('fluid-text-size');
-
-  display: grid;
-}
-
-@mixin _grid-with-burger {
-  @include b-burger('show-block');
-  @include b-nav('hide');
-
-  @include b-burger('area', b, start, center);
-  @include b-logo('area', l, start, center);
-  @include b-get-btn('area', g, end, center);
-
-  grid-template: 
-    "b . l . g" max-content
-    / max-content 15px max-content 1fr max-content;
-}
-
-@mixin _grid-with-nav {
-  @include b-burger('hide');
-  @include b-nav('show-block');
-
-  @include b-logo('area', l, start, center);
-  @include b-nav('area', n, center, center);
-  @include b-get-btn('area', g, end, center);
-
-  grid-template: 
-    "l n g" max-content
-    / 1fr max-content 1fr;
-}

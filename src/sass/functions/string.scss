@@ -1,0 +1,43 @@
+@use 'types' as *;
+
+// <<{ first-slice() - gets first string slice before separator
+
+@function first-slice($str, $sep) {
+  $str: validate($str, 'string');
+  $sep: validate($sep, 'string', 'null');
+
+  @return if(
+    $sep and str-index($str, $sep), 
+    if($sep == '', str-slice($str, 1, 1), str-slice($str, 1, str-index($str, $sep) - 1)),
+    $str
+  );
+}
+
+// }>>
+
+// <<{ last-slice() - gets last string slice after separator
+
+@function last-slice($str, $sep) {
+  $str: validate($str, 'string');
+  $sep: validate($sep, 'string', 'null');
+
+  @return if(
+    $sep and str-index($str, $sep),
+    if($sep == '', str-slice($str, 2), str-slice($str, str-index($str, $sep) + str-length($sep))),
+    ''
+  );
+}
+
+// }>>
+
+// <<{ split() - splits string into list
+
+@function split($str, $sep: null) {
+  $str: validate($str, 'string');
+  $sep: validate($sep, 'string', 'null');
+
+  @return if($str == '', (), join((first-slice($str, $sep)), split(last-slice($str, $sep), $sep)));
+}
+
+// }>>
+

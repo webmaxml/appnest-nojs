@@ -1,0 +1,8 @@
+@mixin common {
+  .hidden {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+
