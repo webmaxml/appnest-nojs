@@ -1,5 +1,5 @@
-@use '../../../git_modules/sass-scripts/functions' as *;
-@use '../../../git_modules/sass-scripts/mixins' as *;
+@use 'sass-scripts/functions' as *;
+@use 'sass-scripts/mixins' as *;
 
 @mixin b-mobile-menu($action: 'content', $args...) {
   .b-mobile-menu {

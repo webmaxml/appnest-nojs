@@ -25,6 +25,7 @@ const devServer = {
 // ----------------------------------------- resolve -----------------------------------------
 
 const resolve = {
+  modules: [path.resolve(__dirname, 'git_modules'), 'node_modules'],
   plugins: [
     new TsconfigPathsPlugin({ extensions: ['.ts', '.tsx', '.js'] })
   ],

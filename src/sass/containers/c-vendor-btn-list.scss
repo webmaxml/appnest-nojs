@@ -1,4 +1,4 @@
-@use '../../../git_modules/sass-scripts/mixins' as *;
+@use 'sass-scripts/mixins' as *;
 @use '../blocks' as *; 
 
 @mixin c-vendor-btn-list($action: 'content', $args...) {
