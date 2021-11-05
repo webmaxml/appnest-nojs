@@ -1,5 +1,3 @@
-@use 'sass:string';
-
 $css: (
   // font-weight
   '--fw-thin': 100,
@@ -13,8 +11,8 @@ $css: (
   '--fw-black': 900,
 
   // font-family
-  '--ff-header': string.unquote("Poppins, sans-serif"),
-  '--ff-text': string.unquote("Raleway, sans-serif"),
+  '--ff-header': unquote("Poppins, sans-serif"),
+  '--ff-text': unquote("Raleway, sans-serif"),
 
   // color
   '--c-accent': #00cff1,

@@ -1,4 +1,5 @@
 @use '../../../git_modules/sass-scripts/mixins' as *;
+@use '../vars' as *;
 @use 'c-top-line' as *; 
 @use 'c-header-content' as *; 
 
@@ -9,7 +10,7 @@
 // <<{ main
 
     @if $action == 'main' {
-      @include overlay(--c-overlay, 0.9);
+      @include overlay(map-get($css, '--c-overlay'), 0.9);
       @include p(padding-top, fluid (320: 15px, 1280: 57px));
 
       &__wrap {
