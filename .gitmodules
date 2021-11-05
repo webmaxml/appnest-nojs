@@ -1,0 +1,3 @@
+[submodule "git_modules/sass-scripts"]
+	path = git_modules/sass-scripts
+	url = git@github.com:webmaxml/sass-scripts.git

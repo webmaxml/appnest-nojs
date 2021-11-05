@@ -1,5 +1,5 @@
-@use '../functions' as *;
-@use '../mixins' as *;
+@use '../../../git_modules/sass-scripts/functions' as *;
+@use '../../../git_modules/sass-scripts/mixins' as *;
 
 @mixin b-logo($action: 'content', $args...) {
   .b-logo {
